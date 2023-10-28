@@ -7,6 +7,7 @@ import { ComptesComponent } from './comptes/comptes.component';
 import { ChatsComponent } from './chats/chats.component';
 import { FamillesComponent } from './benficiaires/familles/familles.component';
 import { MineursComponent } from './benficiaires/mineurs/mineurs.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MineursComponent } from './benficiaires/mineurs/mineurs.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
