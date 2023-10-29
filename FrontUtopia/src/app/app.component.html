@@ -5,33 +5,22 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul ngbNav [(activeId)]="active" #nav="ngbNav" class="navbar-nav">
-        <li [ngbNavItem]="1" class="nav-item">
-          <a ngbNavLink class="nav-link active" aria-current="page" href="#">Comptes</a>
-          <ng-template ngbNavContent>
-            <app-comptes></app-comptes>
-          </ng-template>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/compte">Comptes</a>
         </li>
-        <li [ngbNavItem]="2" class="nav-item">
-          <a ngbNavLink class="nav-link" href="#">Chat</a>
-          <ng-template ngbNavContent>
-            <app-chats></app-chats>
-          </ng-template>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/chat">Chat</a>
         </li>
-        <li [ngbNavItem]="3" class="nav-item">
-          <a ngbNavLink class="nav-link" href="#">Famille</a>
-          <ng-template ngbNavContent>
-            <app-familles></app-familles>
-          </ng-template>  
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/famille">Famille</a>
         </li>
-        <li [ngbNavItem]="3" class="nav-item">
-          <a ngbNavLink class="nav-link" href="#">Reporting</a>
-          <ng-template ngbNavContent>
-          </ng-template>  
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/Reporting">Reporting</a> 
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<router-outlet></router-outlet>

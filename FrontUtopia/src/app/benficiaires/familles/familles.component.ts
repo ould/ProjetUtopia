@@ -21,8 +21,6 @@ export class FamillesComponent {
 
   private searchTerms = new Subject<string>();
 
-  
-
   search(term: string): void {
     this.searchTerms.next(term);
   }

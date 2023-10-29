@@ -1,5 +1,10 @@
+import { Personne } from "src/app/interfaces/Personne";
+
 export interface Famille {
     id: number;
-    name: string;
-    telephone: string;  
+    nomFamille: string;
+    personnes : Personne[];
 }
+
+
+

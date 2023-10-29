@@ -1,1 +1,63 @@
-<p>famille-detail works!</p>
+<div class="container-fluid">
+
+  <form *ngIf="familleInput">
+    <h2>{{familleInput.nomFamille | uppercase}}</h2>
+    <div class="">
+      <button class="btnCarrousel prevBtn" type="button" data-bs-target="#carouselIdentite" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="btnCarrousel nextBtn" type="button" data-bs-target="#carouselIdentite" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="row">
+      <span id="carouselIdentite" class="carousel slide ">
+        <div class="carousel-inner">
+          <app-personne *ngFor="let personneIndex of familleInput.personnes" [personneInput]="personneIndex"
+            [lectureSeuleInput]="lectureSeule" [ActiveInput]="personneIndex == familleInput.personnes[0] ">
+          </app-personne>
+        </div>
+      </span>
+    </div>
+
+
+
+
+    <div class="form-group col-md-3">
+      <label for="famille-nom" class="form-label">Nom : </label>
+      <input id="famille-nom" class="form-control" [(ngModel)]="familleInput.id" placeholder="Nom"
+        disabled="{{lectureSeule}}">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" id="inputCity">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <select id="inputState" class="form-control">
+          <option selected>Choose...</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">Zip</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck">
+        <label class="form-check-label" for="gridCheck">
+          Check me out
+        </label>
+      </div>
+    </div>
+    <button *ngIf="!lectureSeule" type="button" (click)="save()">Sauvegarder</button>
+    <button *ngIf="lectureSeule" type="button" (click)="change()">Modifier</button>
+  </form>
+  <button type="button" (click)="goBack()">Retour</button>
+</div>

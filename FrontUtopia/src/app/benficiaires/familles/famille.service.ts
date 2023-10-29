@@ -15,9 +15,20 @@ export class FamilleService {
     // if not search term, return empty array.
     return of([]);
   }
-  const famillesResult = FamillesMock.filter(h => h.name.startsWith(term))!;
+  const famillesResult = FamillesMock.filter(h => h.nomFamille.startsWith(term))!;
   return of(famillesResult);
 }
+
+getFamille(id: number): Observable<Famille> {
+  if (id === 0) {
+    // if not search term, return empty array.
+    return of();
+  }
+  const famillesResult = FamillesMock.find(h => h.id === id)!;
+  return of(famillesResult);
+}
+
+
 
   constructor() { }
 }
