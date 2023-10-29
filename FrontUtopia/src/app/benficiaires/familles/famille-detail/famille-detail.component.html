@@ -1,1 +1,10 @@
-<p>famille-detail works!</p>
+<div *ngIf="famille">
+    <h2>{{famille.name | uppercase}}</h2>
+    <div>
+      <label for="famille-name">Nom : </label>
+      <input id="famille-name" [(ngModel)]="famille.name" placeholder="name" disabled="{{lectureSeule}}">
+    </div>
+  </div>
+  <button type="button" (click)="goBack()">Retour</button>
+  <button *ngIf="!lectureSeule" type="button" (click)="save()">Sauvegarder</button>
+  <button *ngIf="lectureSeule" type="button" (click)="change()">Modifier</button>

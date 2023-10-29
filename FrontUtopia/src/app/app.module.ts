@@ -10,6 +10,7 @@ import { ChatsComponent } from './chats/chats.component';
 import { FamillesComponent } from './benficiaires/familles/familles.component';
 import { MineursComponent } from './benficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './benficiaires/familles/famille-detail/famille-detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FamilleDetailComponent } from './benficiaires/familles/famille-detail/f
     ChatsComponent,
     FamillesComponent,
     MineursComponent,
-    FamilleDetailComponent
+    FamilleDetailComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

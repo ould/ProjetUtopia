@@ -19,5 +19,16 @@ export class FamilleService {
   return of(famillesResult);
 }
 
+getFamille(id: number): Observable<Famille> {
+  if (id === 0) {
+    // if not search term, return empty array.
+    return of();
+  }
+  const famillesResult = FamillesMock.find(h => h.id === id)!;
+  return of(famillesResult);
+}
+
+
+
   constructor() { }
 }
