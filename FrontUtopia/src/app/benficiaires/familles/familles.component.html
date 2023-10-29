@@ -1,1 +1,19 @@
-<p>familles works!</p>
+<h2>Familles</h2>
+    <div *ngIf="barreRecherche">
+        <div>
+            <form class="d-flex" role="search">
+                <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                <span class="btn btn-outline-success">Ajouter nouvelle famille</span>
+            </form>
+        </div>
+        <ol class="list-group list-group-numbered">
+            <li *ngFor="let familleIndex of familles$ | async" class="list-group-item d-flex justify-content-between align-items-start">
+                <div  class="ms-2 me-auto">
+                    <div class="fw-bold">{{familleIndex.name}}</div>
+                    {{familleIndex.telephone}}
+                </div>
+                <a routerLink="/detail/{{familleIndex.id}}" class="badge bg-primary rounded-pill">Modifier</a>
+            </li>
+        </ol>
+    </div>
