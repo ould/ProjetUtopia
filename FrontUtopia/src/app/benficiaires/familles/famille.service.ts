@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Famille } from './famille';
+import { Famille } from '../../interfaces/famille';
 import { Observable, of } from 'rxjs';
 
 

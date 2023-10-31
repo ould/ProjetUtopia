@@ -1,4 +1,4 @@
-import { Famille } from './famille';
+import { Famille } from '../../interfaces/famille';
 import { Personne } from 'src/app/interfaces/Personne';
 
 

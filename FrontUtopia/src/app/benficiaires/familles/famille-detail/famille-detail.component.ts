@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Famille } from '../famille';
+import { Famille } from '../../../interfaces/famille';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';

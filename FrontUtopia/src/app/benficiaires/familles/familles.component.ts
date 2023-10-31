@@ -4,7 +4,7 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Famille } from './famille';
+import { Famille } from '../../interfaces/famille';
 import { FamilleService } from './famille.service';
 
 
