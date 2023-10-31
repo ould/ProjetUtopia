@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Famille } from '../../../interfaces/famille';
+import { Personne } from 'src/app/interfaces/Personne';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
@@ -23,8 +24,20 @@ export class FamilleDetailComponent {
 
   getFamille(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.familleService.getFamille(id)
-      .subscribe(famille => this.familleInput = famille);
+
+    if (id === 0) {
+      let ajoutFamille: Famille = {
+          id: 0,
+          nomFamille: 'Nouvelle famille',
+          personnes: [{nom:'', prenom:''}]
+      };
+      this.lectureSeule = false;
+      this.familleInput = ajoutFamille;
+    }
+    else {
+      this.familleService.getFamille(id)
+        .subscribe(famille => this.familleInput = famille);
+    }
   }
 
   goBack(): void {
