@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Famille } from '../famille';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { FamilleService } from '../famille.service';
+
 import { Location } from '@angular/common';
 
 import { FamilleService } from '../famille.service';
@@ -12,6 +17,7 @@ import { FamilleService } from '../famille.service';
   styleUrls: ['./famille-detail.component.css']
 })
 export class FamilleDetailComponent {
+
 
   @Input() familleInput?: Famille;
 
@@ -49,6 +55,8 @@ export class FamilleDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private familleService: FamilleService,
+    private familleService: FamilleService,
     private location: Location
+  ) { }
   ) { }
 }
