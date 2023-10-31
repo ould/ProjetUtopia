@@ -12,25 +12,25 @@
 
     <div class="row">
       <div class="form-group col-md-3 col">
-        <label for="famille-nom" class="form-label">Composition : </label>
-        <input id="famille-nom" class="form-control" [(ngModel)]="familleInput.composition" placeholder="Nom"
+        <label for="famille-composition" class="form-label">Composition : </label>
+        <input id="famille-composition" class="form-control" [(ngModel)]="familleInput.composition" placeholder="Composition"
           disabled="{{lectureSeule}}">
       </div>
       <div class="form-group col-md-3 col">
-        <label for="famille-nom" class="form-label">Nationalité : </label>
-        <input id="famille-nom" class="form-control" [(ngModel)]="familleInput.nationalite" placeholder="Nom"
+        <label for="famille-nationalite" class="form-label">Nationalité : </label>
+        <input id="famille-nationalite" class="form-control" [(ngModel)]="familleInput.nationalite" placeholder="Nationalité"
           disabled="{{lectureSeule}}">
       </div>
 
     </div>
 
     <div class="form-group ">
-      <label for="famille-nom" class="form-label">Commentaire : </label>
-      <input id="famille-nom" class="form-control" [(ngModel)]="familleInput.commentaire" placeholder="Nom"
+      <label for="famille-Commentaire" class="form-label">Commentaire : </label>
+      <input id="famille-Commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" placeholder="Commentaire"
         disabled="{{lectureSeule}}">
     </div>
 
    
   </div>
-  <button type="button" (click)="goBack()">Retour</button>
+  <button class="btn btn-primary" type="button" (click)="goBack()">Retour</button>
 </div>
