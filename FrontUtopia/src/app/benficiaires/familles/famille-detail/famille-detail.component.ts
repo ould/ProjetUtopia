@@ -13,7 +13,7 @@ import { FamilleService } from '../famille.service';
 export class FamilleDetailComponent {
 
 
-  @Input() familleInput?: Famille;
+  @Input() familleInput!: Famille;
 
   lectureSeule = true;
 

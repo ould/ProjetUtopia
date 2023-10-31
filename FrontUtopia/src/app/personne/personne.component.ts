@@ -8,7 +8,7 @@ import { Personne } from '../interfaces/Personne';
 })
 export class PersonneComponent {
 
-  @Input() personneInput!: Personne;
+  @Input() personnesInput!: Personne[];
   @Input() lectureSeuleInput!: Boolean;
   @Input() ActiveInput!: Boolean;
 
