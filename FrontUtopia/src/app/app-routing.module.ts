@@ -8,6 +8,7 @@ import { ChatsComponent } from './chats/chats.component';
 import { FamillesComponent } from './beneficiaires/familles/familles.component';
 import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 // path case sensitive
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: 'accueil', component: DashboardComponent },
   { path: 'famille', component: FamillesComponent },
   { path: 'detailFamille/:id', component: FamilleDetailComponent },
-  { path: 'ajouterFamille/:id', component: FamilleDetailComponent }
+  { path: 'ajouterFamille/:id', component: FamilleDetailComponent },
+  { path: 'login', component: LoginComponent }
+  
 ];
 
 @NgModule({

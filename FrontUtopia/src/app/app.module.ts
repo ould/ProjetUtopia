@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { AdminModule } from './admin/admin.module';
 
 import { AppComponent } from './app.component';
 import { ComptesComponent } from './comptes/comptes.component';
@@ -12,6 +13,7 @@ import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonneComponent } from './personne/personne.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import { PersonneComponent } from './personne/personne.component';
     MineursComponent,
     FamilleDetailComponent,
     DashboardComponent,
-    PersonneComponent
+    PersonneComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
