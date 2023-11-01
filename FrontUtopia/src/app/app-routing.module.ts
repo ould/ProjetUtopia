@@ -5,9 +5,9 @@ import { AppComponent } from './app.component';
 import { ComptesComponent } from './comptes/comptes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChatsComponent } from './chats/chats.component';
-import { FamillesComponent } from './benficiaires/familles/familles.component';
-import { MineursComponent } from './benficiaires/mineurs/mineurs.component';
-import { FamilleDetailComponent } from './benficiaires/familles/famille-detail/famille-detail.component';
+import { FamillesComponent } from './beneficiaires/familles/familles.component';
+import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
+import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
 
 
 // path case sensitive
