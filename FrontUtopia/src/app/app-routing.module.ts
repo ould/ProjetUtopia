@@ -9,16 +9,19 @@ import { FamillesComponent } from './beneficiaires/familles/familles.component';
 import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
 import { LoginComponent } from './auth/login/login.component';
+import { AdminComponent } from './admin/admin/admin.component';
 
 
 // path case sensitive
 const routes: Routes = [
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: 'accueil', component: DashboardComponent },
   { path: 'famille', component: FamillesComponent },
   { path: 'detailFamille/:id', component: FamilleDetailComponent },
   { path: 'ajouterFamille/:id', component: FamilleDetailComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LoginComponent },
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
+  { path: '**', component: LoginComponent },
   
 ];
 

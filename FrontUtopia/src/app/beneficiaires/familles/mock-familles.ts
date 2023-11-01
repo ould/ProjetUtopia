@@ -10,6 +10,7 @@ const identiteMock: Personne[] = [
 
 
 export const FamillesMock: Famille[] = [
-  { id: 2, nomFamille:'familleUne', personnes: identiteMock, composition: 'Couple', nationalite : 'france', commentaire :'test test etc' }
+  { id: 2, nomFamille:'familleUne', personnes: identiteMock, composition: 'Couple', nationalite : 'france', commentaire :'test test etc' },
+  { id: 2, nomFamille:'FamilleDeux', personnes: identiteMock, composition: 'Couple', nationalite : 'france', commentaire :'test test etc' },
 ];
 
