@@ -4,6 +4,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
+import { HttpClientModule } from '@angular/common/http';
+
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
 import { ComptesComponent } from './comptes/comptes.component';
@@ -32,7 +36,14 @@ import { LoginComponent } from './auth/login/login.component';
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    AdminModule
+    AdminModule,
+    HttpClientModule,
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false })
   ],
   providers: [],
   bootstrap: [AppComponent]
