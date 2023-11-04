@@ -10,6 +10,7 @@ import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AdminComponent } from './admin/admin/admin.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 
 // path case sensitive
@@ -17,11 +18,10 @@ const routes: Routes = [
   { path: 'accueil', component: DashboardComponent },
   { path: 'famille', component: FamillesComponent },
   { path: 'detailFamille/:id', component: FamilleDetailComponent },
-  { path: 'ajouterFamille/:id', component: FamilleDetailComponent },
+  { path: 'ajouterFamille', component: FamilleDetailComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LoginComponent },
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
-  { path: '**', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' }
   
 ];
 

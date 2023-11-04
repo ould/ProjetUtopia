@@ -4,6 +4,7 @@ import { Personne } from 'src/app/interfaces/Personne';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
+import { IfStmt } from '@angular/compiler';
 
 
 @Component({
@@ -24,10 +25,10 @@ export class FamilleDetailComponent {
 
   getFamille(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if (id === 0) {
+    console.log(id)
+    if (id == 0) {
+      //todo : verifier si ajoute famille
       let ajoutFamille: Famille = {
-          id: 0,
           nomFamille: 'Nouvelle famille',
           personnes: [{nom:'', prenom:''}]
       };
@@ -46,11 +47,22 @@ export class FamilleDetailComponent {
 
   save(): void {
     this.lectureSeule = true
-    // if (this.famille) {
-    //   this.familleService.updatefamille(this.famille)
-    //     .subscribe(() => this.goBack());
-    // }
+    if (this.familleInput.personnes[0].nom == '') {
+      this.lectureSeule = false;
+    }
+    else if (this.familleInput.id == null) {
+      this.familleInput.nomFamille = this.familleInput.personnes[0].nom;
+      this.familleService.addFamille(this.familleInput)
+        .subscribe(() => this.goBack());
+    }
+
+    else if (this.familleInput) {
+      this.familleInput.nomFamille = this.familleInput.personnes[0].nom;
+      this.familleService.updateFamille(this.familleInput)
+        .subscribe(() => this.goBack());
+    }
   }
+
 
   change(): void {
     this.lectureSeule = false

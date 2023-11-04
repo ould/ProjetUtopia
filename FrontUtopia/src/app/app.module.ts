@@ -18,6 +18,7 @@ import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonneComponent } from './personne/personne.component';
 import { LoginComponent } from './auth/login/login.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginComponent } from './auth/login/login.component';
     FamilleDetailComponent,
     DashboardComponent,
     PersonneComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

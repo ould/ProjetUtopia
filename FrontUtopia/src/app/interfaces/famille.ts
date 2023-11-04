@@ -1,7 +1,7 @@
 import { Personne } from "src/app/interfaces/Personne";
 
 export interface Famille {
-    id: number;
+    id?:number;
     nomFamille: string;
     personnes: Personne[];
     composition?: string;

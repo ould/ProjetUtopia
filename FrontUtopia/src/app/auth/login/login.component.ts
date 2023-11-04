@@ -15,15 +15,13 @@ export class LoginComponent {
   }
 
   getMessage() {
-    return 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+    return 'Logged in';
   }
 
   login() {
     this.message = 'Trying to log in ...';
-
-    this.authService.login().subscribe(() => {
-      this.message = this.getMessage();
-      if (this.authService.isLoggedIn) {
+    this.authService.login();
+      if (this.authService.isAuthenticated()) {
         // Usually you would use the redirect URL from the auth service.
         // However to keep the example simple, we will always redirect to `/admin`.
         const redirectUrl = '/admin';
@@ -31,7 +29,6 @@ export class LoginComponent {
         // Redirect the user
         this.router.navigate([redirectUrl]);
       }
-    });
   }
 
   logout() {
