@@ -11,6 +11,7 @@ import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/
 import { LoginComponent } from './auth/login/login.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { ReportingComponent } from './reporting/reporting.component';
 
 
 // path case sensitive
@@ -19,6 +20,8 @@ const routes: Routes = [
   { path: 'famille', component: FamillesComponent },
   { path: 'detailFamille/:id', component: FamilleDetailComponent },
   { path: 'ajouterFamille', component: FamilleDetailComponent },
+  { path: 'chat', component: ChatsComponent },
+  { path: 'reporting', component: ReportingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' }

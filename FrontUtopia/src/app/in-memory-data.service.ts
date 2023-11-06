@@ -3,6 +3,8 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Famille } from './interfaces/famille';
 import { Personne } from './interfaces/Personne';
 import { Login } from './interfaces/login';
+import { Message } from './interfaces/message';
+import { Chat } from './interfaces/chat';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,19 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 1, statut: false}
     ]
 
-    return {familles, loggedIn};
+    const Messages: Message[] = [
+      {id:0, nomPersonne: 'bene1', message: 'message bene1'},
+      {id:0, nomPersonne: 'bene2', message: 'message bene2'}
+    ]
+
+    const chats:Chat[] = [
+      {id:1, nomChat:'MAB 12/01', messages:Messages},
+      {id:1, nomChat:' Benevole MNA 12/01', messages:Messages}
+    ]
+
+
+
+    return {familles, loggedIn, chats};
   }
   
 

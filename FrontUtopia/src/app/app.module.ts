@@ -19,6 +19,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonneComponent } from './personne/personne.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
+import { ReportingComponent } from './reporting/reporting.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { LogoutComponent } from './auth/logout/logout.component';
     DashboardComponent,
     PersonneComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ChatDetailComponent,
+    ReportingComponent
   ],
   imports: [
     BrowserModule,

@@ -54,7 +54,6 @@ export class AuthService {
       let loginObject : Login = {id: 1, statut: logged}
     this.http.post(this.loggedUrl, loginObject, this.httpOptions)
     .subscribe(() => this._isAuthenticated =logged )
-
   }
 
   
