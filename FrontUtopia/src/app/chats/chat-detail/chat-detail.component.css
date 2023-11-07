@@ -1,0 +1,39 @@
+li {
+    border: none;
+}
+
+.messageLook {
+
+    background-color: darkseagreen;
+    float: none;
+    overflow: hidden;
+    border-radius: 10%;
+    margin-bottom: 1%;
+
+
+}
+
+.blockMessage{
+    margin-bottom: 5%;
+}
+
+.spanMessage{
+
+    margin: 10%;
+}
+
+
+.borderMessage{
+    border: solid;
+    height: 30em;
+}
+
+
+.inputMessage{
+    width: 100%;
+}
+
+div {
+    float: left;
+}
+

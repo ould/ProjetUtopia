@@ -25,14 +25,20 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 1, statut: false}
     ]
 
-    const Messages: Message[] = [
-      {id:0, nomPersonne: 'bene1', message: 'message bene1'},
-      {id:0, nomPersonne: 'bene2', message: 'message bene2'}
+    const Messages1: Message[] = [
+      {id:0, nomPersonne: 'bene1', message: 'message voila bene1'},
+      {id:1, nomPersonne: 'bene2', message: 'message bene2'}
     ]
 
+    const Messages2: Message[] = [
+      {id:0, nomPersonne: 'referent', message: 'encore un autre bene1 blablalbla blalal blala'},
+      {id:1, nomPersonne: 'admin', message: 'oui bene2 ok'}
+    ]
+
+
     const chats:Chat[] = [
-      {id:1, nomChat:'MAB 12/01', messages:Messages},
-      {id:1, nomChat:' Benevole MNA 12/01', messages:Messages}
+      {id:1, nomChat:'MAB 12/01', messages:Messages1},
+      {id:2, nomChat:' Benevole MNA 12/01', messages:Messages2}
     ]
 
 

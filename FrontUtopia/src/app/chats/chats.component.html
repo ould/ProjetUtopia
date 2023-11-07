@@ -9,8 +9,8 @@
             </li>
         </ol>
       </div>
-      <div class="col">
-       <app-chat-detail *ngIf="selectedChat" [ChatInput]="selectedChat" >
+      <div class="col" *ngIf="selectedChat">
+       <app-chat-detail [ChatInput]="selectedChat" >
        </app-chat-detail>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Chat } from '../interfaces/chat';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
