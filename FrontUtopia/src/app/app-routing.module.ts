@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'reporting', component: ReportingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' }
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
+  { path: '**', component: DashboardComponent }
   
 ];
 

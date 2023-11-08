@@ -21,6 +21,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 import { ReportingComponent } from './reporting/reporting.component';
+import { AdminRoutingModule } from './admin/admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -39,11 +40,12 @@ import { ReportingComponent } from './reporting/reporting.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     NgbModule,
     FormsModule,
     AdminModule,
     HttpClientModule,
+    AdminRoutingModule,
+    AppRoutingModule,
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
