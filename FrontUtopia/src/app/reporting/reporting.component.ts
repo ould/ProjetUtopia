@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class ReportingComponent {
 
+tableauBase: string[] = ["Familles","Demandes"]
+phrase = "Vous voulez un rapport concernant : "
+
+
 }

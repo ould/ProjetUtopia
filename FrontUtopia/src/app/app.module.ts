@@ -22,6 +22,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
+import { RequeteDetailComponent } from './reporting/requete-detail/requete-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
     LoginComponent,
     LogoutComponent,
     ChatDetailComponent,
-    ReportingComponent
+    ReportingComponent,
+    RequeteDetailComponent
   ],
   imports: [
     BrowserModule,

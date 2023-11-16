@@ -1,0 +1,8 @@
+<div *ngIf="tableauInput" class="d-flex align-items-start">
+  <div  class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    <button *ngFor="let Index of tableauInput" (click)="selectReporting(Index)" class="nav-link" id="v-{{Index}}" data-bs-toggle="pill" [attr.data-bs-target]="'#' + Index" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">{{Index}}</button>
+  </div>
+  <div  class="tab-content" id="v-pills-tabContent">
+    <div *ngFor="let Index of tableauInput" class="tab-pane fade show" id="{{Index}}" role="tabpanel" [attr.aria-labelledby]="'v'+Index"><app-requete-detail [tableauInput]="next" ></app-requete-detail></div>
+  </div>
+</div>
