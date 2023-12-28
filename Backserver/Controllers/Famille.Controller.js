@@ -36,7 +36,7 @@ module.exports = {
     const updatedFamille = await Famille.findOneAndUpdate(filter, result, {
       returnOriginal: false
     });
-    res.send({ updatedFamille })
+    res.send(updatedFamille)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -50,7 +50,22 @@ module.exports = {
       const doesExist = await Famille.findOne({ familleId: id })
       if (!doesExist)
       throw createError.NotFound(`${id} not found`);
-      res.send(await Famille.findOne({ familleId: id }))
+      res.send(doesExist)
+
+    } catch (error) {
+      if (error.isJoi === true) error.status = 422
+      next(error)
+    }
+  },
+
+  search: async (req, res, next) => {
+    try {
+      const nom = req.params.nomFamille
+      
+      const doesExist = await Famille.find({"nomFamille": {$regex : nom}})
+      if (!doesExist)
+      throw createError.NotFound(`${id} not found`);
+      res.send(doesExist)
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -63,7 +78,7 @@ module.exports = {
       const id = req.params.id
       
       const doesExist = await Famille.findOneAndDelete({ familleId: id })
-      res.send({ doesExist })
+      res.send(doesExist)
       
     } catch (error) {
       if (error.isJoi === true) error.status = 422

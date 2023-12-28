@@ -23,37 +23,33 @@ export class FamilleDetailComponent {
   lectureSeule = true;
 
   ngOnInit(): void {
-    this.getFamille();
+    const route = String(this.route.snapshot.url);
+    console.log(route)
+    if(route.includes("detailFamille")){
+      this.getFamille();
+    }
+    else{
+      this.familleInput = {nomFamille: "Nouvelle Famille", personnesId: [] }
+      this.personnes.push({nom:"", type:"2"})
+      this.lectureSeule = false
+    }
   }
 
   getFamille(): void {
     const id = String(this.route.snapshot.paramMap.get('id'));
-    // if (id == "") {
-    //   //todo : verifier si ajoute famille
-    //   // let ajoutFamille: Famille = {
-    //   //     nomFamille: 'Nouvelle famille',
-    //   //     personnes: [{nom:'', prenom:''}]
-    //   // };
-    //   // this.lectureSeule = false;
-    //   // this.familleInput = notj  ;
-    // }
-    // else {
-      
-      this.familleService.getFamille(id)
-          .subscribe(famille => {
-            this.familleInput = famille;
-            famille.personnesId.forEach(personneid => 
-              this.getPersonne(personneid));
-          });
-      
-    //}
+    this.familleService.getFamille(id)
+      .subscribe(famille => {
+        this.familleInput = famille;
+        famille.personnesId.forEach(personneid =>
+          this.getPersonne(personneid));
+      });
   }
 
-  getPersonne(personneId : string): void {
+  getPersonne(personneId: string): void {
     this.personneService.getPersonne(personneId)
-    .subscribe((personne: Personne) => {
-      this.personnes.push(personne);
-    });
+      .subscribe((personne: Personne) => {
+        this.personnes.push(personne);
+      });
   }
 
 
@@ -62,10 +58,9 @@ export class FamilleDetailComponent {
   }
 
   save(): void {
-    this.lectureSeule = true
-    // if (this.familleInput.personnes[0].nom == '') {
-    //   this.lectureSeule = false;
-    // }
+    this.lectureSeule = this.VerificationCoherence()
+
+    
     // else if (this.familleInput.familleId == null) {
     //   this.familleInput.nomFamille = this.familleInput.personnes[0].nom;
     //   this.familleService.addFamille(this.familleInput)
@@ -84,7 +79,12 @@ export class FamilleDetailComponent {
     this.lectureSeule = false
   }
 
-
+  VerificationCoherence(): boolean {
+    if (this.personnes[0].nom == '') {
+      return false;
+    }
+    return true;
+  }
 
 
   constructor(

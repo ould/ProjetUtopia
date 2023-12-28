@@ -4,9 +4,11 @@ const FamilleController = require('../Controllers/Famille.Controller')
 
 familleRouter.get('/:id', FamilleController.get)
 
-familleRouter.post('/save', FamilleController.save)
+familleRouter.get('/search/:nomFamille', FamilleController.search)
 
-familleRouter.post('/update', FamilleController.update)
+familleRouter.post('/', FamilleController.save)
+
+familleRouter.put('/', FamilleController.update)
 
 familleRouter.delete('/:id', FamilleController.delete)
 

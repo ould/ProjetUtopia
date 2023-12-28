@@ -4,9 +4,9 @@ export interface Famille {
     familleId?:string;
     nomFamille: string;
     personnesId: string[];
-    composition: string;
-    nationalite: string;
-    commentaire: string;
+    composition?: string;
+    nationalite?: string;
+    commentaire?: string;
 }
 
 
