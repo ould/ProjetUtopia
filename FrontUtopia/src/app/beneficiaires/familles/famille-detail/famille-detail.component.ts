@@ -45,7 +45,6 @@ export class FamilleDetailComponent {
             famille.personnesId.forEach(personneid => 
               this.getPersonne(personneid));
           });
-      
     //}
   }
 

@@ -4,9 +4,9 @@ const PersonneController = require('../Controllers/Personne.Controller')
 
 personneRouter.get('/:id', PersonneController.get)
 
-personneRouter.post('/save', PersonneController.save)
+personneRouter.post('/', PersonneController.save)
 
-personneRouter.post('/update', PersonneController.update)
+personneRouter.put('/', PersonneController.update)
 
 personneRouter.delete('/:id', PersonneController.delete)
 
