@@ -1,31 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Famille } from '../../interfaces/famille';
-import { Observable, of } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, flatMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { Personne } from 'src/app/interfaces/Personne';
+import { PersonneService } from 'src/app/personne/personne.service';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamilleService {
 
-  private familleUrl = 'api/familles';  // URL to web api (meme nom que database)
+  private familleUrl = 'http://localhost:3000/famille';  // URL to web api (meme nom que database)
+  private personneUrl = 'api/personnes';
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
     /** POST: add a new Famille to the server */
 addFamille(Famille: Famille): Observable<Famille> {
+
+  // var listPersonneId:string[]
+  // Famille.personnes.forEach(personne => {
+  //   this.addPersonne(personne).subscribe(id => listPersonneId.push(id))
+  //   console.log(listPersonneId)
+  // });
+
+
+
   return this.http.post<Famille>(this.familleUrl, Famille, this.httpOptions).pipe(
-    tap((newFamille: Famille) => this.log(`added Famille w/ id=${newFamille.id}`)),
+    tap((newFamille: Famille) => this.log(`added Famille w/ id=${newFamille.familleId}`)),
     catchError(this.handleError<Famille>('addFamille'))
   );
 }
 
   /** PUT: update the Famille on the server */
+  addPersonne(Personne: Personne): Observable<any> {
+    return this.http.put(this.personneUrl, Personne, this.httpOptions).pipe(
+      tap(_ => this.log(`add Personne id=${Personne.nom}`)),
+      catchError(this.handleError<any>('addPersonne'))
+    );
+}
+
+  /** PUT: update the Famille on the server */
   updateFamille(Famille: Famille): Observable<any> {
     return this.http.put(this.familleUrl, Famille, this.httpOptions).pipe(
-      tap(_ => this.log(`updated Famille id=${Famille.id}`)),
+      tap(_ => this.log(`updated Famille id=${Famille.familleId}`)),
       catchError(this.handleError<any>('updateFamille'))
   );
 }
@@ -57,16 +78,29 @@ deleteFamille(id: number): Observable<Famille> {
   );
 }
 
-getFamille(id: number): Observable<Famille> {
-  if (id === 0) {
+getFamille(id: string): Observable<Famille> {
+  if (id === "") {
     // if not search term, return empty array.
     return of();
   }
+  console.log("test")
   const url = `${this.familleUrl}/${id}`;
-  return this.http.get<Famille>(url).pipe(
-    tap(_ => this.log(`fetched famille id=${id}`)),
+  var familleResult = this.http.get<Famille>(url).pipe(
+    tap(_ =>  this.log(`fetched famille id=${id}`)),
+
+    // map((famille :Famille) => {
+    //   famille.personnesId.forEach(personneid => {
+    //     this.personneService.getPersonne(personneid)
+    //       .pipe(
+    //         map(personne => familleResult.subscribe(push(personne))));
+    //     })
+    //   }),
+
     catchError(this.handleError<Famille>(`getFamille id=${id}`))
-  );
+    );
+    console.log(familleResult)
+return familleResult;
+
 }
 
 private handleError<T>(operation = 'operation', result?: T) {
@@ -88,5 +122,6 @@ private log(message: string) {
 }
 
 constructor(
-  private http: HttpClient) { }
+  private http: HttpClient,
+  private personneService: PersonneService) { }
 }

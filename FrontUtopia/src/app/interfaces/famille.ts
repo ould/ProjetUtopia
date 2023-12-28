@@ -1,12 +1,12 @@
 import { Personne } from "src/app/interfaces/Personne";
 
 export interface Famille {
-    id?:number;
+    familleId?:string;
     nomFamille: string;
-    personnes: Personne[];
-    composition?: string;
-    nationalite?: string;
-    commentaire?: string;
+    personnesId: string[];
+    composition: string;
+    nationalite: string;
+    commentaire: string;
 }
 
 

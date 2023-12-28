@@ -1,9 +1,12 @@
 export interface Personne {
+    type: string;
     nom: string;
     prenom: string;
     telephone?: string;
-    DDN?: string;
+    ddn?: string;
+    nationalite?: string;
     situation?: string;
+    commentaire?: string;
 
     
 }
