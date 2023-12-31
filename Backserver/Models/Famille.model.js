@@ -3,11 +3,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const FamilleSchema = new Schema({
-  familleId: {
-    type: String,
-    required: false,
-    unique: true,
-  },
   nomFamille: {
     type: String,
     required: true,
@@ -17,10 +12,6 @@ const FamilleSchema = new Schema({
     required: true,
   },
   composition: {
-    type: String,
-    required: true,
-  },
-  nationalite: {
     type: String,
     required: true,
   },

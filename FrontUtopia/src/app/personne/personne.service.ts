@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Personne } from '../interfaces/Personne';
-import { Observable, of } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { identifierName } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -28,24 +29,54 @@ export class PersonneService {
     return personne
   }
 
-  addPersonne(Personne: Personne): Observable<Personne> {
+  addPersonne(Personne: Personne): Observable<string> {
     return this.http.post<Personne>(this.personneUrl, Personne, this.httpOptions).pipe(
-      tap((newper: Personne) => this.log(`add personne id=${newper.nom}`)),
+      tap((newper: Personne) => this.log(`add personne id=${newper.id}`)),
       catchError(this.handleError<any>('addPersonne'))
     );
   }
 
-  updatePersonne(Personne: Personne): Observable<Personne> {
+  updatePersonne(Personne: Personne): Observable<string> {
     return this.http.put<Personne>(this.personneUrl, Personne, this.httpOptions).pipe(
       tap(_ => this.log(`updated personne id=${_.nom}`)),
       catchError(this.handleError<any>('updatePersonne'))
     );
   }
 
+  addOrUpdate(pers: Personne): Observable<string> {
+    if(!pers.id){
+      return this.addPersonne(pers);
+    }
+    else{
+      const doesExist = this.getPersonne(pers.id);
+      if(doesExist){
+        return this.updatePersonne(pers);
+      }
+      else{
+        this.handleError<any>('addOrUpdate Famille: ' + pers.id)
+        return doesExist
+      }
+    }
+  }
+
+  addOrUpdateAll(pers: Personne[]): Observable<string[]> {
+    var listeId =[];
+    let personObservables: Observable<string>[] =  [];
+    const ee = pers.forEach(personne => {
+
+      personObservables.push(this.addOrUpdate(personne))
+
+    })
+
+    return forkJoin(personObservables)
+
+    //TODO delete personne si erreur 
+  }
+
   deletePersonne(id: string): Observable<Personne> {
     const url = `${this.personneUrl}/${id}`;
     return this.http.delete<Personne>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted Famille id=${id}`)),
+      tap(_ => this.log(`deleted Personne id=${_.id}`)),
       catchError(this.handleError<Personne>('deletePersonne'))
     );
   }

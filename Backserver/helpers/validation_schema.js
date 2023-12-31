@@ -6,11 +6,10 @@ const authSchema = Joi.object({
 })
 
 const familleSchema = Joi.object({
-  familleId: Joi.string().lowercase().required(),
-  nomFamille: Joi.string().required(),
+  id: Joi.string().hex().length(24).optional(),
+  nomFamille: Joi.string().min(5).required(),
   personnesId: Joi.array().required(),
   composition: Joi.string().required(),
-  nationalite: Joi.string().required(),
   
   commentaire: Joi.string().optional()
 })
@@ -20,8 +19,8 @@ const personneSchema = Joi.object({
   type: Joi.number().required(),
   nom: Joi.string().required(),
   prenom: Joi.string().required(),
-  nationalite: Joi.string().required(),
   
+  nationalite: Joi.string().optional(),
   ddn: Joi.date().optional(),
   situation: Joi.string().optional(),
   email: Joi.string().email().lowercase().optional(),

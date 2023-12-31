@@ -9,13 +9,9 @@ module.exports = {
       
       const result = await familleSchema.validateAsync(req.body)
 
-      // const doesExist = await Famille.findOne({ id: result.id })
-      // if (doesExist)
-      //   throw createError.Conflict(`${result.email} is already been registered`)
-
       const famille = new Famille(result)
       const savedFamille = await famille.save()
-      const savedFamilleId = savedFamille.familleId
+      const savedFamilleId = savedFamille._id
 
       res.send({ savedFamilleId })
     } catch (error) {
@@ -28,15 +24,15 @@ module.exports = {
     try {
       const result = await familleSchema.validateAsync(req.body)
 
-      const doesExist = await Famille.findOne({ familleId: result.familleId })
+      const doesExist = await Famille.findOne({ _id: result._id })
       if (!doesExist)
-      throw createError.NotFound(`${result.familleId} not found`);
+      throw createError.NotFound(`${result.id} not found`);
     
-    const filter = { familleId: result.familleId };
+    const filter = { _id: result._id };
     const updatedFamille = await Famille.findOneAndUpdate(filter, result, {
       returnOriginal: false
     });
-    res.send(updatedFamille)
+    res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -47,7 +43,7 @@ module.exports = {
     try {
       const id = req.params.id
       
-      const doesExist = await Famille.findOne({ familleId: id })
+      const doesExist = await Famille.findOne({ _id: id })
       if (!doesExist)
       throw createError.NotFound(`${id} not found`);
       res.send(doesExist)
@@ -61,10 +57,10 @@ module.exports = {
   search: async (req, res, next) => {
     try {
       const nom = req.params.nomFamille
-      
+
       const doesExist = await Famille.find({"nomFamille": {$regex : nom}})
       if (!doesExist)
-      throw createError.NotFound(`${id} not found`);
+      throw createError.NotFound(`${nom} not found`);
       res.send(doesExist)
 
     } catch (error) {
@@ -77,8 +73,8 @@ module.exports = {
     try {
       const id = req.params.id
       
-      const doesExist = await Famille.findOneAndDelete({ familleId: id })
-      res.send(doesExist)
+      const doesExist = await Famille.findOneAndDelete({ _id: id })
+      res.send(doesExist._id)
       
     } catch (error) {
       if (error.isJoi === true) error.status = 422

@@ -34,7 +34,7 @@ module.exports = {
     const updatedPersonne = await Personne.findOneAndUpdate(filter, result, {
       returnOriginal: false
     });
-    res.send(updatedPersonne)
+    res.send(updatedPersonne.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -61,7 +61,7 @@ module.exports = {
       const id = req.params.id
       
       const doesExist = await Personne.findOneAndDelete({ _id: id })
-      res.send(doesExist)
+      res.send(doesExist.id)
     
     } catch (error) {
       if (error.isJoi === true) error.status = 422

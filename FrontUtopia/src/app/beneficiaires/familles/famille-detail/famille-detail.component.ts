@@ -5,8 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
 import { PersonneService } from 'src/app/personne/personne.service';
-import { IfStmt } from '@angular/compiler';
-import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -25,19 +23,19 @@ export class FamilleDetailComponent {
   ngOnInit(): void {
     const route = String(this.route.snapshot.url);
     console.log(route)
-    if(route.includes("detailFamille")){
+    if (route.includes("detailFamille")) {
       this.getFamille();
     }
-    else{
-      this.familleInput = {nomFamille: "Nouvelle Famille", personnesId: [] }
-      this.personnes.push({nom:"", type:"2"})
+    else {
+      this.familleInput = { nomFamille: "Nouvelle Famille", personnesId: [] }
+      this.personnes.push({ nom: "", type: "2" })
       this.lectureSeule = false
     }
   }
 
   getFamille(): void {
-    const id = String(this.route.snapshot.paramMap.get('id'));
-    this.familleService.getFamille(id)
+    const nom = String(this.route.snapshot.paramMap.get('id'));
+    this.familleService.getFamille(nom)
       .subscribe(famille => {
         this.familleInput = famille;
         famille.personnesId.forEach(personneid =>
@@ -58,20 +56,22 @@ export class FamilleDetailComponent {
   }
 
   save(): void {
-    this.lectureSeule = this.VerificationCoherence()
+    this.lectureSeule = this.VerificationCoherence();
 
-    
-    // else if (this.familleInput.familleId == null) {
-    //   this.familleInput.nomFamille = this.familleInput.personnes[0].nom;
-    //   this.familleService.addFamille(this.familleInput)
-    //     .subscribe(() => this.goBack());
-    // }
+    this.personnes.forEach(personne => {
+      personne.type = "2";
+    })
 
-    // else if (this.familleInput) {
-    //   this.familleInput.nomFamille = this.familleInput.personnes[0].nom;
-    //   this.familleService.updateFamille(this.familleInput)
-    //     .subscribe(() => this.goBack());
-    // }
+    this.personneService.addOrUpdateAll(this.personnes)
+      .subscribe(ids => {
+        this.familleInput.personnesId = ids
+        console.log("les ids " + ids)
+        this.familleInput.nomFamille = this.personnes[0].nom + ids[0].slice(0, 5);
+        console.log(this.familleInput)
+        this.familleService.addOrUpdate(this.familleInput)
+          .subscribe(id => this.familleInput._id = id);
+      });
+
   }
 
 

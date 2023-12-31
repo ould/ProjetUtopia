@@ -1,4 +1,5 @@
 export interface Personne {
+    id?:string;
     type: string;
     nom: string;
     prenom?: string;
