@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -24,6 +24,7 @@ import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
 import { RequeteDetailComponent } from './reporting/requete-detail/requete-detail.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
     PersonneComponent,
     LoginComponent,
     LogoutComponent,
+    RegisterComponent,
     ChatDetailComponent,
     ReportingComponent,
     RequeteDetailComponent
@@ -45,6 +47,7 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
     BrowserModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     AdminModule,
     HttpClientModule,
     AdminRoutingModule,

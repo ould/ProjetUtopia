@@ -28,8 +28,8 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/auth', AuthRoute)
-app.use('/personne', personneRouter)
-app.use('/famille', familleRouter)
+app.use('/personne', verifyAccessToken, personneRouter)
+app.use('/famille', verifyAccessToken, familleRouter)
 
 app.get('/', verifyAccessToken, async (req, res, next) => {
   res.send('Hello from express.')

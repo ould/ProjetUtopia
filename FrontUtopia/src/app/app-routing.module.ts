@@ -12,6 +12,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ReportingComponent } from './reporting/reporting.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 
 // path case sensitive
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'reporting', component: ReportingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: '**', component: DashboardComponent }
   

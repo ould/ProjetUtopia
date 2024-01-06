@@ -1,4 +1,5 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,6 +12,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     next: HttpHandler): Observable<HttpEvent<any>> {
 
     const idToken = localStorage.getItem("id_token");
+    console.log("eesai " + idToken)
 
     if (idToken) {
       const cloned = req.clone({

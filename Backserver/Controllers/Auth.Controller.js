@@ -19,6 +19,7 @@ module.exports = {
       if (doesExist)
         throw createError.Conflict(`${result.email} is already been registered`)
 
+      result.droits = ["0"]
       const user = new User(result)
       const savedUser = await user.save()
       const accessToken = await signAccessToken(savedUser.id)

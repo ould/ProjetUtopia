@@ -40,10 +40,10 @@ export class AuthService {
   }
 
 
-  private setSession(authResult :string) {
+  private setSession(authResult :any) {
     const expiresAt = moment().add('5h', 'second'); //tODO depuis serveur
 
-    localStorage.setItem('id_token', authResult);
+    localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 
