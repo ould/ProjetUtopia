@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const FamilleSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   nomFamille: {
     type: String,
     required: true,

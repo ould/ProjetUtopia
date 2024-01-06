@@ -32,6 +32,7 @@ module.exports = {
     const updatedFamille = await Famille.findOneAndUpdate(filter, result, {
       returnOriginal: false
     });
+    updatedFamille.id = updatedFamille.id;
     res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -46,6 +47,7 @@ module.exports = {
       const doesExist = await Famille.findOne({ _id: id })
       if (!doesExist)
       throw createError.NotFound(`${id} not found`);
+      doesExist.id = doesExist._id;
       res.send(doesExist)
 
     } catch (error) {
@@ -61,6 +63,7 @@ module.exports = {
       const doesExist = await Famille.find({"nomFamille": {$regex : nom}})
       if (!doesExist)
       throw createError.NotFound(`${nom} not found`);
+      doesExist.id = doesExist._id;
       res.send(doesExist)
 
     } catch (error) {

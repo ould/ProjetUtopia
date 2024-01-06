@@ -86,7 +86,7 @@ export class FamilleService {
       tap(x => x.length ?
         this.log(`found famille matching "${term}"`) :
         this.log(`no famille matching "${term}"`)),
-        tap(x => console.log(x[0])),
+        tap(x => this.log(` "${x[0]._id}"`)),
       catchError(this.handleError<Famille[]>('searchFamilles', []))
     );
   }

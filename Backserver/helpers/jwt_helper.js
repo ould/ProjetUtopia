@@ -8,7 +8,7 @@ module.exports = {
       const payload = {}
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
-        expiresIn: '1h',
+        expiresIn: '5h',
         issuer: 'utopiaApp.fr',
         audience: userId,
       }
@@ -20,7 +20,7 @@ module.exports = {
         }
         resolve(token)
       })
-    })
+})
   },
   verifyAccessToken: (req, res, next) => {
     if (!req.headers['authorization']) return next(createError.Unauthorized())
@@ -72,7 +72,7 @@ module.exports = {
         (err, payload) => {
           if (err) return reject(createError.Unauthorized())
           const userId = payload.aud
-          
+
         }
       )
     })

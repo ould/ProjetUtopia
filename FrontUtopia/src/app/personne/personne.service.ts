@@ -44,15 +44,15 @@ export class PersonneService {
   }
 
   addOrUpdate(pers: Personne): Observable<string> {
-    if(!pers.id){
+    if (!pers.id) {
       return this.addPersonne(pers);
     }
-    else{
+    else {
       const doesExist = this.getPersonne(pers.id);
-      if(doesExist){
+      if (doesExist) {
         return this.updatePersonne(pers);
       }
-      else{
+      else {
         this.handleError<any>('addOrUpdate Famille: ' + pers.id)
         return doesExist
       }
@@ -60,8 +60,7 @@ export class PersonneService {
   }
 
   addOrUpdateAll(pers: Personne[]): Observable<string[]> {
-    var listeId =[];
-    let personObservables: Observable<string>[] =  [];
+    let personObservables: Observable<string>[] = [];
     const ee = pers.forEach(personne => {
 
       personObservables.push(this.addOrUpdate(personne))

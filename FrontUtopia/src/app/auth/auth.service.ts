@@ -1,62 +1,72 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of,  firstValueFrom} from 'rxjs';
+import * as moment from 'moment';
+import { Observable, of, firstValueFrom } from 'rxjs';
 import { catchError, map, tap, delay } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
+import { User } from '../interfaces/user';
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+
+  private authUrl = 'http://localhost:3000/auth';
+
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
-  // store the URL so we can redirect after logging in
-  //redirectUrl: string | null = null;
-  
-  private loggedUrl = 'api/loggedIn/1';  // URL to web api (meme nom que database)
-  
-  ngOnInit(): void {
-    this._isAuthenticated = this.getAuthenticated()
-  }
-  
-  
-  private _isAuthenticated: boolean = false
-  isAuthenticated(): boolean {
-    return this._isAuthenticated;
-  }
 
-  getAuthenticated(): boolean {
-    let aut = false;
-    this.http.get<Login>(this.loggedUrl).subscribe((value: Login) => {
-        aut = value.statut;
-      console.log('RecupAuth ' +aut)
-    });
-  return aut;
+
+  register(user: User): Observable<boolean> {
+    return this.http.post<boolean>(this.authUrl + "/register", user, this.httpOptions)
   }
 
 
-  login() {
-    console.log('login :');
-    this._isAuthenticated= true;
-    this.updateLogged(true)
+  login(user: User): Observable<string> {
+    return this.http.post<string>(this.authUrl + "/login", user, this.httpOptions).pipe(
+      tap(token => this.setSession(token))
+    )
   }
 
-  logout(){
+  logout() {
     console.log('logout :')
-    this._isAuthenticated= false;
-    this.updateLogged(false)
+    this.removeSession();
+    this.http.get<Login>(this.authUrl + "/logout").pipe(
+      tap(_ => this.removeSession())
+    );
   }
 
-    updateLogged(logged: boolean) {
-      console.log('update :' + logged)
-      let loginObject : Login = {id: 1, statut: logged}
-    this.http.post(this.loggedUrl, loginObject, this.httpOptions)
-    .subscribe(() => this._isAuthenticated =logged )
+
+  private setSession(authResult :string) {
+    const expiresAt = moment().add('5h', 'second'); //tODO depuis serveur
+
+    localStorage.setItem('id_token', authResult);
+    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 
-  
+
+  public isLoggedIn() {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
+
+  getExpiration() {
+    const expiration = localStorage.getItem("expires_at");
+    const expiresAt = JSON.parse(expiration ?? '0');
+    return moment(expiresAt);
+  }
+
+  private removeSession() {
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+  }
 
   constructor(
     private http: HttpClient) { }

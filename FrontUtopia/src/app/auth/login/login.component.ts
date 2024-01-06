@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -8,31 +10,32 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  message: string;
+  
+  form:FormGroup;
 
-  constructor(public authService: AuthService, public router: Router) {
-    this.message = this.getMessage();
-  }
+  constructor(private fb:FormBuilder, 
+               private authService: AuthService, 
+               private router: Router) {
 
-  getMessage() {
-    return 'Logged in';
+      this.form = this.fb.group({
+          email: ['',Validators.required],
+          password: ['',Validators.required]
+      });
   }
 
   login() {
-    this.message = 'Trying to log in ...';
-    this.authService.login();
-      if (this.authService.isAuthenticated()) {
-        // Usually you would use the redirect URL from the auth service.
-        // However to keep the example simple, we will always redirect to `/admin`.
-        const redirectUrl = '/admin';
+      const val :User = this.form.value;
 
-        // Redirect the user
-        this.router.navigate([redirectUrl]);
+      if (val.email && val.password) {
+          this.authService.login(val)
+              .subscribe(
+                  result => {
+                      console.log(result + " is logged in");
+                      this.router.navigateByUrl('/');
+                  }
+              );
       }
   }
 
-  logout() {
-    this.authService.logout();
-    this.message = this.getMessage();
-  }
+  
 }

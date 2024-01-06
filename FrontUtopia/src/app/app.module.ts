@@ -4,11 +4,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 
+import { AuthInterceptorService } from './auth-interceptor.service';
 import { AppComponent } from './app.component';
 import { ComptesComponent } from './comptes/comptes.component';
 import { ChatsComponent } from './chats/chats.component';
@@ -54,7 +55,13 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
     // Remove it when a real server is ready to receive requests.
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

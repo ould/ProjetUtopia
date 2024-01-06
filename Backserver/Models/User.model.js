@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
+const { string, array } = require('@hapi/joi')
 
 const UserSchema = new Schema({
   email: {
@@ -13,6 +14,18 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  droits:{
+    type: Array,
+    required: true,
+  },
+  nom:{
+    type: String,
+    required: false,
+  },
+  prenom:{
+    type: String,
+    required: false,
+  }
 })
 
 UserSchema.pre('save', async function (next) {
@@ -24,6 +37,7 @@ UserSchema.pre('save', async function (next) {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
+      this.droits = [0]
     }
     next()
   } catch (error) {

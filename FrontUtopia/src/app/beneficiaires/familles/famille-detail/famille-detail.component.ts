@@ -65,9 +65,7 @@ export class FamilleDetailComponent {
     this.personneService.addOrUpdateAll(this.personnes)
       .subscribe(ids => {
         this.familleInput.personnesId = ids
-        console.log("les ids " + ids)
         this.familleInput.nomFamille = this.personnes[0].nom + ids[0].slice(0, 5);
-        console.log(this.familleInput)
         this.familleService.addOrUpdate(this.familleInput)
           .subscribe(id => this.familleInput._id = id);
       });
