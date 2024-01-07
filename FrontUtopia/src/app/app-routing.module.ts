@@ -13,22 +13,27 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { authGuard } from './auth/auth.guard';
 
 
 // path case sensitive
 const routes: Routes = [
-  { path: 'accueil', component: DashboardComponent },
-  { path: 'famille', component: FamillesComponent },
-  { path: 'detailFamille/:id', component: FamilleDetailComponent },
-  { path: 'ajouterFamille', component: FamilleDetailComponent },
-  { path: 'chat', component: ChatsComponent },
-  { path: 'reporting', component: ReportingComponent },
+  {
+    path: '', canActivate: [authGuard], children: [
+      { path: 'accueil', component: DashboardComponent },
+      { path: 'famille', component: FamillesComponent },
+      { path: 'detailFamille/:id', component: FamilleDetailComponent },
+      { path: 'ajouterFamille', component: FamilleDetailComponent },
+      { path: 'chat', component: ChatsComponent },
+      { path: 'reporting', component: ReportingComponent },
+      { path: 'logout', component: LogoutComponent },
+    ]
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: '**', component: DashboardComponent }
-  
+
 ];
 
 @NgModule({

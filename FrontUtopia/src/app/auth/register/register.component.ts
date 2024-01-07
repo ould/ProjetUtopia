@@ -19,14 +19,15 @@ export class RegisterComponent {
 
       this.form = this.fb.group({
           email: ['',Validators.required],
-          password: ['',Validators.required]
+          password: ['',Validators.required],
+          passwordConfirm: ['',Validators.required]
       });
   }
 
   register() {
       const val :User = this.form.value;
 
-      if (val.email && val.password) {
+      if (val.email && val.password && this.form.value.passwordConfirm == this.form.value.password) {
         val.droits = ["0"]
           this.authService.register(val)
               .subscribe(
