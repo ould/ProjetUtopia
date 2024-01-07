@@ -75,6 +75,8 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const id = req.params.id
+
+      //TODO : delete all personnes 
       
       const doesExist = await Famille.findOneAndDelete({ _id: id })
       res.send(doesExist._id)

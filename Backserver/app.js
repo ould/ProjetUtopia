@@ -12,6 +12,8 @@ const personneRouter = require('./Routes/personne.route')
 
 
 const cors=require("cors");
+const chatRouter = require('./Routes/Chat.route')
+const messageRouter = require('./Routes/Message.route')
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
@@ -30,6 +32,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/auth', AuthRoute)
 app.use('/personne', verifyAccessToken, personneRouter)
 app.use('/famille', verifyAccessToken, familleRouter)
+app.use('/chat', verifyAccessToken, chatRouter)
+app.use('/message', verifyAccessToken, messageRouter)
 
 app.get('/', verifyAccessToken, async (req, res, next) => {
   res.send('Hello from express.')

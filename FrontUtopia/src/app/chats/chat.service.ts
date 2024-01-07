@@ -8,13 +8,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ChatService {
 
-  private chatUrl = 'api/chats';
+  private chatUrl = 'http://localhost:3000/chat';
+  private messageUrl = 'http://localhost:3000/message';
+
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
+
   
-  searchChats(): Observable<Chat[]> { 
-    return this.http.get<Chat[]>(this.chatUrl, this.httpOptions).pipe(
+  searchChats(term: string): Observable<Chat[]> { 
+    return this.http.get<Chat[]>(this.chatUrl + "/search/" + term, this.httpOptions).pipe(
     );
   }
 

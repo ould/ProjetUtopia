@@ -33,8 +33,25 @@ const personneSchema = Joi.object({
   commentaire: Joi.string().optional()
 })
 
+const chatSchema = Joi.object({
+  id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  messagesId: Joi.array().required(),
+  droitsLecturePersonneId: Joi.array().required(),
+  droitsEcriturePersonneId: Joi.array().required()
+})
+
+const messageSchema = Joi.object({
+  id: Joi.string().hex().length(24).optional(),
+  idPersonne: Joi.string().required(),
+  message: Joi.string().required(),
+  date: Joi.date().required()
+})
+
 module.exports = {
   authSchema,
   personneSchema,
-  familleSchema
+  familleSchema,
+  chatSchema,
+  messageSchema
 }
