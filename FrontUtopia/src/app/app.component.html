@@ -20,7 +20,8 @@
         </li>
       </ul>
       <button routerLink="/login">Login</button>
-      <button routerLink="/logout">Logout</button>
+      <button *ngIf="AuthService.isLoggedIn()" routerLink="/logout">Logout</button>
+      <button *ngIf="!AuthService.isLoggedIn()" routerLink="/register">S'enregistrer</button>
     </div>
   </div>
 </nav>

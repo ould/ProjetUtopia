@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --utopia-primary-color: #00a59e; /* Teal */
+  --utopia-background-color: #ffffff; /* Blanc */
+  --utopia-text-color: #333333; /* Gris foncé */
+  }

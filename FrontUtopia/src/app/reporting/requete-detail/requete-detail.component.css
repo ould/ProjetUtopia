@@ -1,0 +1,42 @@
+
+/* Style pour le conteneur du tableau et des onglets */
+.d-flex {
+    margin-top: 20px;
+  }
+  
+  /* Style pour la liste verticale des onglets */
+  .nav-pills {
+    width: 150px; /* Ajustez la largeur selon vos besoins */
+  }
+  
+  /* Style pour les onglets */
+  .nav-link {
+    color: var(--utopia-primary-color);
+    background-color: var(--utopia-background-color);
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  /* Style pour les onglets actifs */
+  .nav-link.active {
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+  }
+  
+  /* Style pour le contenu des onglets */
+  .tab-content {
+    width: 100%;
+  }
+  
+  /* Style pour les panneaux d'onglets */
+  .tab-pane {
+    padding: 20px;
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 8px;
+    background-color: var(--utopia-background-color);
+    color: var(--utopia-text-color);
+    margin-bottom: 10px;
+  }
+  

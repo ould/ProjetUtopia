@@ -4,6 +4,7 @@ const authSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
   
+  passwordConfirm : Joi.string().optional(),
   droits: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),

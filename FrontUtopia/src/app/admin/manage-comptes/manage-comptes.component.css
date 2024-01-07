@@ -1,0 +1,42 @@
+/* Style pour le tableau de bord de gestion des comptes */
+.admin-comptes-container {
+    padding: 20px;
+    background-color: var(--utopia-background-color);
+    color: var(--utopia-text-color);
+  }
+  
+  h2 {
+    color: var(--utopia-primary-color);
+  }
+  
+  p {
+    margin-bottom: 20px;
+  }
+  
+  /* Style pour la section d'actions admin */
+  .admin-actions {
+    margin-top: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+  }
+  
+  .btn-danger {
+    background-color: #dc3545; /* Rouge */
+    color: var(--utopia-background-color);
+  }
+  
+  .btn:hover {
+    background-color: darken(var(--utopia-primary-color), 10%);
+  }

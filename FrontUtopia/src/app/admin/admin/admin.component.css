@@ -1,0 +1,29 @@
+/* Style pour la section Admin */
+h2 {
+    color: var(--utopia-primary-color);
+    margin-bottom: 20px;
+  }
+  
+  /* Style pour la navigation */
+  nav {
+    margin-bottom: 20px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: var(--utopia-primary-color);
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  a:hover {
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+  }
+  
+  a.active {
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+  }

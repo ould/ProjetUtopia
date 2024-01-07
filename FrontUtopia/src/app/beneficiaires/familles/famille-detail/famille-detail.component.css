@@ -1,0 +1,50 @@
+
+/* Style pour la section famille */
+.container-fluid {
+    padding: 20px;
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: var(--utopia-primary-color);
+  }
+  
+  /* Style pour les boutons Modifier et Sauvegarder */
+  .btn-primary, .btn-success {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  /* Style pour les champs de formulaire */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    color: var(--utopia-primary-color);
+  }
+  
+  .form-control {
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 4px;
+    padding: 8px;
+  }
+  
+  /* Style pour le bouton Retour */
+  .btn-primary {
+    margin-top: 20px;
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: darken(var(--utopia-primary-color), 10%);
+  }

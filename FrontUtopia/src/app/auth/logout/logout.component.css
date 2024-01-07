@@ -1,0 +1,44 @@
+/* Style pour le message de déconnexion */
+.form-card {
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--utopia-background-color);
+    border: 2px solid var(--utopia-primary-color);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .form-card h2 {
+    font-size: 1.5em;
+    color: var(--utopia-primary-color);
+    margin-bottom: 20px;
+  }
+  
+  .action-buttons button {
+    padding: 8px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .action-buttons button:nth-child(1) {
+    color: var(--utopia-background-color);
+    background-color: var(--utopia-primary-color);
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-buttons button:nth-child(1):hover {
+    background-color: darken(var(--utopia-primary-color), 10%);
+  }
+  
+  .action-buttons button:nth-child(2) {
+    color: var(--utopia-primary-color);
+    background-color: var(--utopia-background-color);
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-buttons button:nth-child(2):hover {
+    background-color: darken(var(--utopia-primary-color), 10%);
+  }

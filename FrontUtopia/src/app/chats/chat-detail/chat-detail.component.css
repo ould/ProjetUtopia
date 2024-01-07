@@ -1,39 +1,38 @@
-li {
-    border: none;
-}
-
-.messageLook {
-
-    background-color: darkseagreen;
-    float: none;
-    overflow: hidden;
-    border-radius: 10%;
-    margin-bottom: 1%;
-
-
-}
-
-.blockMessage{
-    margin-bottom: 5%;
-}
-
-.spanMessage{
-
-    margin: 10%;
-}
-
-
-.borderMessage{
-    border: solid;
-    height: 30em;
-}
-
-
-.inputMessage{
-    width: 100%;
-}
-
-div {
-    float: left;
-}
-
+/* Style pour la carte du chat */
+.card {
+    border-radius: 15px;
+  }
+  
+  .card-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  
+  /* Style pour les icônes */
+  .card-header i {
+    cursor: pointer;
+  }
+  
+  /* Style pour les messages du chat */
+  .blockMessage {
+    border-radius: 15px;
+    background-color: rgba(57, 192, 237, 0.2);
+  }
+  
+  /* Style pour l'avatar */
+  .blockMessage img {
+    width: 45px;
+    height: 100%;
+    margin-right: 10px;
+  }
+  
+  /* Style pour le champ de texte */
+  textarea {
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  
+  /* Hover sur les messages */
+  .blockMessage:hover {
+    background-color: rgba(57, 192, 237, 0.3);
+  }

@@ -1,9 +1,47 @@
-.borderU{
-    border: solid 0.3em;
-    width: auto;
-    margin: 0.5em;
-    padding: 0.5em;
-    border-color: rgb(21, 173, 87);
-    height: fit-content;
-}
-
+/* Style pour la structure du chat */
+.container {
+    margin-top: 20px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .col {
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 8px;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: var(--utopia-background-color);
+    color: var(--utopia-text-color);
+  }
+  
+  .borderU {
+    border-top: 4px solid var(--utopia-primary-color);
+  }
+  
+  /* Style pour la liste des chats */
+  .list-group {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .list-group-item {
+    cursor: pointer;
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-group-item:hover {
+    background-color: var(--utopia-primary-color);
+    color: var(--utopia-background-color);
+  }
+  
+  /* Style pour le détail du chat */
+  .col:not(.borderU) {
+    margin-top: 10px;
+  }

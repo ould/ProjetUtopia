@@ -31,7 +31,7 @@ export class LoginComponent {
               .subscribe(
                   result => {
                       console.log(result + " is logged in");
-                      this.router.navigateByUrl('/');
+                      this.router.navigateByUrl('/accueil');
                   }
               );
       }
