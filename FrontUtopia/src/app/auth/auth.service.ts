@@ -13,7 +13,7 @@ import { User } from '../interfaces/user';
 })
 export class AuthService {
 
-  private authUrl = 'http://localhost:3000/auth';
+  private authUrl = 'api/auth';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })

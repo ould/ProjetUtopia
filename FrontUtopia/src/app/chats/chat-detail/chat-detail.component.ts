@@ -9,9 +9,7 @@ import { Location } from '@angular/common';
 })
 export class ChatDetailComponent {
 
-  /**
-   *
-   */
+
   constructor(private location: Location) {
 
   }

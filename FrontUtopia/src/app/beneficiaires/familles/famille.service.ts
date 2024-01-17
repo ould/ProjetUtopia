@@ -12,7 +12,7 @@ import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 })
 export class FamilleService {
 
-  private familleUrl = 'http://localhost:3000/famille';  // URL to web api (meme nom que database)
+  private familleUrl = 'api/famille';  // URL to web api (meme nom que database)
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -61,7 +61,7 @@ export class FamilleService {
         return doesExist
       }
     }
-
+    //TODO : faire monter l'erreur à l'utilisteur 
 
   }
 

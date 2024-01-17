@@ -48,12 +48,7 @@ import { RegisterComponent } from './auth/register/register.component';
     AdminModule,
     HttpClientModule,
     AdminRoutingModule,
-    AppRoutingModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-
+    AppRoutingModule
   ],
   providers: [
     {

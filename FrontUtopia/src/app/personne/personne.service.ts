@@ -10,7 +10,7 @@ import { identifierName } from '@angular/compiler';
 })
 export class PersonneService {
 
-  private personneUrl = 'http://localhost:3000/personne';
+  private personneUrl = 'api/personne';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })

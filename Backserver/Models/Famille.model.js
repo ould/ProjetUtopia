@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const FamilleSchema = new Schema({
   id: {
     type: String,
-    required: true,
+    required: false,
   },
   nomFamille: {
     type: String,

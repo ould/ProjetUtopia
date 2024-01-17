@@ -1,5 +1,4 @@
-const express = require('express')
-const personneRouter = express.Router()
+const personneRouter = (require('express')).Router()
 const PersonneController = require('../Controllers/Personne.Controller')
 
 personneRouter.get('/:id', PersonneController.get)
