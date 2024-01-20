@@ -2,7 +2,7 @@ const createError = require('http-errors')
 const User = require('../Models/User.model')
 const { authSchema } = require('../helpers/validation_schema')
 const { signAccessToken } = require('../helpers/jwt_helper')
-const { addDateDays } = require('../helpers/date')
+const { addDateHours } = require('../helpers/date')
 
 module.exports = {
   register: async (req, res, next) => {
@@ -36,7 +36,7 @@ module.exports = {
       throw createError.Unauthorized('Username/password not valid')
     
     const accessToken = await signAccessToken(user)
-    const expiresAt = addDateDays(1);
+    const expiresAt = addDateHours(20);
 
       res.send({ accessToken, user,  expiresAt})
     } catch (error) {
