@@ -5,14 +5,23 @@ const { chatSchema } = require('../helpers/validation_schema')
 module.exports = {
   save: async (req, res, next) => {
     try {
-      const result = await chatSchema.validateAsync(req.body)
+      const nomChat = req.body.nomChat
+      
+      if(!nomChat) throw new Error('Parameter is empty');
+      
+      
+      const token = req.payload
 
-      const chat = new Chat(result)
+      const chat = new Chat()
+      chat.nom = nomChat
+      chat.messagesId = []
+      chat.droitsEcriturePersonneId = [token.userId]
+      chat.creePar = token.userId
+      chat.dateCreation = Date.now()
+
       const savedChat = await chat.save()
-      const savedChatId = savedChat._id
-      const savedChatnom = savedChat.nom
 
-      res.send(savedChatId, savedChatnom)
+      res.send(savedChat)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

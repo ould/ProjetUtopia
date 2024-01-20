@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
-const { string, array } = require('@hapi/joi')
 
 const UserSchema = new Schema({
   email: {
@@ -23,6 +22,22 @@ const UserSchema = new Schema({
     required: false,
   },
   prenom:{
+    type: String,
+    required: false,
+  },
+  creePar: {
+    type: String,
+    required: true,
+  },
+  DateCreation: {
+    type: Date,
+    required: true,
+  },
+  dateModification : {
+    type: Date,
+    required: false,
+  },
+  modifiePar : {
     type: String,
     required: false,
   }

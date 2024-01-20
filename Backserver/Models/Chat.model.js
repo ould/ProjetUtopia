@@ -18,6 +18,22 @@ const ChatSchema = new Schema({
   droitsEcriturePersonneId: {
     type: Array,
     required: true,
+  },
+  creePar: {
+    type: String,
+    required: true,
+  },
+  dateCreation: {
+    type: Date,
+    required: true,
+  },
+  dateModification : {
+    type: Date,
+    required: false,
+  },
+  modifiePar : {
+    type: String,
+    required: false,
   }
 })
 

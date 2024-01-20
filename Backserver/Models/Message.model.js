@@ -14,6 +14,22 @@ const MessageSchema = new Schema({
   date: {
     type: Date,
     required: true
+  },
+  creePar: {
+    type: String,
+    required: true,
+  },
+  DateCreation: {
+    type: Date,
+    required: true,
+  },
+  dateModification : {
+    type: Date,
+    required: false,
+  },
+  modifiePar : {
+    type: String,
+    required: false,
   }
 })
 

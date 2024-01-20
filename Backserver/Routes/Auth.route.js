@@ -6,8 +6,8 @@ Authrouter.post('/register', AuthController.register)
 
 Authrouter.post('/login', AuthController.login)
 
-Authrouter.post('/refresh-token', AuthController.refreshToken)
+// Authrouter.post('/refresh-token', AuthController.refreshToken)
 
-Authrouter.delete('/logout', AuthController.logout)
+// Authrouter.delete('/logout', AuthController.logout)
 
 module.exports = Authrouter

@@ -2,20 +2,19 @@ import { Injectable } from '@angular/core';
 import { Famille } from '../../interfaces/famille';
 import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, flatMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { Personne } from 'src/app/interfaces/Personne';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { PersonneService } from 'src/app/personne/personne.service';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamilleService {
 
-  private familleUrl = 'api/famille';  // URL to web api (meme nom que database)
+  private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que database)
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*' })
   };
 
   getFamille(id: string): Observable<Famille> {
@@ -48,15 +47,15 @@ export class FamilleService {
   }
 
   addOrUpdate(fam: Famille): Observable<any> {
-    if(!fam._id){
+    if (!fam._id) {
       return this.addFamille(fam);
     }
-    else{
+    else {
       const doesExist = this.getFamille(fam._id);
-      if(doesExist){
+      if (doesExist) {
         return this.updateFamille(fam);
       }
-      else{
+      else {
         this.handleError<any>('addOrUpdate Famille : ' + fam._id)
         return doesExist
       }
@@ -86,7 +85,7 @@ export class FamilleService {
       tap(x => x.length ?
         this.log(`found famille matching "${term}"`) :
         this.log(`no famille matching "${term}"`)),
-        tap(x => this.log(` "${x[0]._id}"`)),
+      tap(x => this.log(` "${x[0]._id}"`)),
       catchError(this.handleError<Famille[]>('searchFamilles', []))
     );
   }

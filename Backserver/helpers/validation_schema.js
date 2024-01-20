@@ -8,6 +8,7 @@ const authSchema = Joi.object({
   droits: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
+
 })
 
 const familleSchema = Joi.object({
@@ -16,7 +17,12 @@ const familleSchema = Joi.object({
   personnesId: Joi.array().required(),
   composition: Joi.string().required(),
   
-  commentaire: Joi.string().optional()
+  commentaire: Joi.string().optional(),
+
+  creePar: Joi.string().required(),
+  dateCreation: Joi.string().required(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
 })
 
 const personneSchema = Joi.object({
@@ -30,7 +36,12 @@ const personneSchema = Joi.object({
   situation: Joi.string().optional(),
   email: Joi.string().email().lowercase().optional(),
   telephone: Joi.string().optional(),
-  commentaire: Joi.string().optional()
+  commentaire: Joi.string().optional(),
+
+  creePar: Joi.string().required(),
+  dateCreation: Joi.string().required(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
 })
 
 const chatSchema = Joi.object({
@@ -38,14 +49,24 @@ const chatSchema = Joi.object({
   nom: Joi.string().required(),
   messagesId: Joi.array().required(),
   droitsLecturePersonneId: Joi.array().required(),
-  droitsEcriturePersonneId: Joi.array().required()
+  droitsEcriturePersonneId: Joi.array().required(),
+
+  creePar: Joi.string().required(),
+  dateCreation: Joi.string().required(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
 })
 
 const messageSchema = Joi.object({
   id: Joi.string().hex().length(24).optional(),
   idPersonne: Joi.string().required(),
   message: Joi.string().required(),
-  date: Joi.date().required()
+  date: Joi.date().required(),
+
+  creePar: Joi.string().required(),
+  dateCreation: Joi.string().required(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
 })
 
 module.exports = {

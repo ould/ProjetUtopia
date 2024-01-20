@@ -33,14 +33,24 @@ const PersonneSchema = new Schema({
   commentaire: {
     type: String,
     required: false,
+  },
+  creePar: {
+    type: String,
+    required: true,
+  },
+  DateCreation: {
+    type: Date,
+    required: true,
+  },
+  dateModification : {
+    type: Date,
+    required: false,
+  },
+  modifiePar : {
+    type: String,
+    required: false,
   }
 })
-
-//TODO : if id is null
-// PersonneSchema.pre('save', function(next) {
-//   var doc = this;
-//   doc.personneId = counter.seq;
-// });
 
 const Personne = mongoose.model('personne', PersonneSchema)
 module.exports = Personne

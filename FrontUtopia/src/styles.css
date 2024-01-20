@@ -4,3 +4,7 @@
   --utopia-background-color: #ffffff; /* Blanc */
   --utopia-text-color: #333333; /* Gris foncé */
   }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

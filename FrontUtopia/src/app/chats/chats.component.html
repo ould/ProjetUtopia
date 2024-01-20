@@ -5,13 +5,14 @@
         <form class="d-flex" role="search">
           <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control me-2" type="search"
             placeholder="Search" aria-label="Search">
+            <button type="button" class="btn btn-primary ms-2" id="popupButton" (click)="openPopup(searchBox.value)">Nouveau chat</button>
         </form>
       </div>
       <ol class="list-group list-group-numbered">
-        <li *ngFor="let ChatIndex of chats$ | async" (click)="selectChat(ChatIndex.id)"
+        <li *ngFor="let ChatIndex of chats$ | async" (click)="selectChat(ChatIndex._id)"
           class="list-group-item d-flex justify-content-between align-items-start">
           <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ChatIndex.nomChat}}</div>
+            <div class="fw-bold">{{ChatIndex.nom}}</div>
           </div>
         </li>
       </ol>

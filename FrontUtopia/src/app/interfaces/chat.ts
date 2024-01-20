@@ -1,8 +1,8 @@
 import { Message } from "./message";
 
 export interface Chat {
-    id:number;
-    nomChat: string;
+    _id?:string;
+    nom: string;
     messages:Message[]
     droitsLecture?:any;
     droitsEcriture?:any;

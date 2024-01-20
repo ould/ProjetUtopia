@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
-import { Observable, of, firstValueFrom } from 'rxjs';
-import { catchError, map, tap, delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
-
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -13,7 +12,7 @@ import { User } from '../interfaces/user';
 })
 export class AuthService {
 
-  private authUrl = 'api/auth';
+  private authUrl = environment.apiUrl + 'auth';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -32,28 +31,22 @@ export class AuthService {
   }
 
   logout() {
-    console.log('logout :')
     this.removeSession();
     this.http.get<Login>(this.authUrl + "/logout").pipe(
       tap(_ => this.removeSession())
     );
   }
 
-
-  private setSession(authResult :any) {
-    const expiresAt = moment().add(authResult.expiresAt, 'second'); //tODO depuis serveur
-
-    console.log("lol")
-    console.log(authResult.user)
-    console.log(authResult.user.nom)
+  private setSession(authResult: any) {
     localStorage.setItem('user_name', authResult.user.nom);
     localStorage.setItem('id_token', authResult.accessToken);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+    localStorage.setItem("expires_at", authResult.expiresAt);
   }
 
-
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    console.log(Date.now())
+    console.log(this.getExpiration())
+    return Date.now() <  this.getExpiration() ;
   }
 
   isLoggedOut() {
@@ -64,11 +57,12 @@ export class AuthService {
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration ?? '0');
-    return moment(expiresAt);
+    return expiresAt;
   }
 
   private removeSession() {
     localStorage.removeItem("id_token");
+    localStorage.removeItem("user_name");
     localStorage.removeItem("expires_at");
   }
 

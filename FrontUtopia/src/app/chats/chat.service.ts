@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Chat } from '../interfaces/chat';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  private chatUrl = 'api/chat';
-  private messageUrl = 'api/message';
+  private chatUrl = environment.apiUrl + 'chat';
+  private messageUrl = environment.apiUrl + 'message';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*' })
   };
 
   
@@ -21,8 +22,22 @@ export class ChatService {
     );
   }
 
-  getChat(idChat : number):Observable<Chat> {
-    if (idChat === 0) {
+  searchFamilles(term: string): Observable<Chat[]> { //TODO : TOP 10 only, order by date desc
+    if (!term.trim()) {
+      // if not search term, return empty array.
+      return of([]);
+    }
+    return this.http.get<Chat[]>(this.chatUrl + "/search/" + term, this.httpOptions).pipe(
+      tap(x => x.length ?
+        this.log(`found famille matching "${term}"`) :
+        this.log(`no famille matching "${term}"`)),
+        tap(x => this.log(` "${x[0]._id}"`)),
+      catchError(this.handleError<Chat[]>('searchChats', []))
+    );
+  }
+
+  getChat(idChat : string):Observable<Chat> {
+    if (!idChat) {
       // if not search term, return empty array.
       return of();
     }
@@ -30,8 +45,9 @@ export class ChatService {
     return this.http.get<Chat>(url).pipe();
   }
 
-  addChat(Chat: Chat): Observable<Chat> {
-    return this.http.post<Chat>(this.chatUrl, Chat, this.httpOptions).pipe(
+  addChat(nomChat: string): Observable<Chat> {
+    const body = { nomChat: nomChat };
+    return this.http.post<Chat>(this.chatUrl, body, this.httpOptions).pipe(
       catchError(this.handleError<Chat>('addChat'))
     );
   }

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
 import { RequeteDetailComponent } from './reporting/requete-detail/requete-detail.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import { RegisterComponent } from './auth/register/register.component';
     RegisterComponent,
     ChatDetailComponent,
     ReportingComponent,
-    RequeteDetailComponent
+    RequeteDetailComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,10 @@ import { RegisterComponent } from './auth/register/register.component';
     AdminModule,
     HttpClientModule,
     AdminRoutingModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatDialogModule
+    
   ],
   providers: [
     {
