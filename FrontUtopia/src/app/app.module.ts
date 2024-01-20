@@ -25,6 +25,7 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
 import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
+import { GroupeComponent } from './groupe/groupe.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PopupComponent } from './popup/popup.component';
     ChatDetailComponent,
     ReportingComponent,
     RequeteDetailComponent,
-    PopupComponent
+    PopupComponent,
+    GroupeComponent
   ],
   imports: [
     BrowserModule,

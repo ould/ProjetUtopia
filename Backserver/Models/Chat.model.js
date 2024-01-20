@@ -37,5 +37,27 @@ const ChatSchema = new Schema({
   }
 })
 
+ChatSchema.pre('save', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateCreation = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
+ChatSchema.pre('updateOne', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateModification = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
 const Chat = mongoose.model('chat', ChatSchema)
 module.exports = Chat

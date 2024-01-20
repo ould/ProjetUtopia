@@ -1,19 +1,15 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const MessageSchema = new Schema({
+const GroupeSchema = new Schema({
 
-  idPersonne: {
+  nom: {
     type: String,
     required: true,
   },
-  message: {
+  commentaire: {
     type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true
+    required: false,
   },
   creePar: {
     type: String,
@@ -33,7 +29,7 @@ const MessageSchema = new Schema({
   }
 })
 
-MessageSchema.pre('save', async function (next) {
+GroupeSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
       this.dateCreation = Date.now()
@@ -45,7 +41,7 @@ MessageSchema.pre('save', async function (next) {
 })
 
 
-MessageSchema.pre('updateOne', async function (next) {
+GroupeSchema.pre('updateOne', async function (next) {
   try {
     if (this.isNew) {
       this.dateModification = Date.now()
@@ -56,5 +52,6 @@ MessageSchema.pre('updateOne', async function (next) {
   }
 })
 
-const Message = mongoose.model('message', MessageSchema)
-module.exports = Message
+
+const Groupe = mongoose.model('groupe', GroupeSchema)
+module.exports = Groupe

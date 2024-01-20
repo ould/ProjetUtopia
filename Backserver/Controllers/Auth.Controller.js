@@ -14,6 +14,8 @@ module.exports = {
         throw createError.Conflict(`${result.email} is already been registered`)
 
       result.droits = ["0"]
+      result.creePar = "0" //Créé par lui meme 
+
       const user = new User(result)
       const savedUser = await user.save()
       const accessToken = await signAccessToken(savedUser)
@@ -47,35 +49,4 @@ module.exports = {
   },
 
 
-  // refreshToken: async (req, res, next) => {
-  //   try {
-  //     const { refreshToken } = req.body
-  //     if (!refreshToken) throw createError.BadRequest()
-  //     const userId = await verifyRefreshToken(refreshToken)
-
-  //     const accessToken = await signAccessToken(userId)
-  //     //const refToken = await signRefreshToken(userId)
-  //     res.send({ accessToken: accessToken})
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // },
-
-  // logout: async (req, res, next) => {
-  //   try {
-  //     //const { refreshToken } = req.body
-  //     //if (!refreshToken) throw createError.BadRequest()
-  //     //const userId = await verifyRefreshToken(refreshToken)
-  //     // client.DEL(userId, (err, val) => {
-  //     //   if (err) {
-  //     //     console.log(err.message)
-  //     //     throw createError.InternalServerError()
-  //     //   }
-  //     //   console.log(val)
-  //     //   res.sendStatus(204)
-  //     // })
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // },
 }

@@ -38,7 +38,7 @@ const PersonneSchema = new Schema({
     type: String,
     required: true,
   },
-  DateCreation: {
+  dateCreation: {
     type: Date,
     required: true,
   },
@@ -49,6 +49,28 @@ const PersonneSchema = new Schema({
   modifiePar : {
     type: String,
     required: false,
+  }
+})
+
+PersonneSchema.pre('save', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateCreation = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
+PersonneSchema.pre('updateOne', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateModification = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
   }
 })
 

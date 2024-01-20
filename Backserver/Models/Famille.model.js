@@ -26,7 +26,7 @@ const FamilleSchema = new Schema({
     type: String,
     required: true,
   },
-  DateCreation: {
+  dateCreation: {
     type: Date,
     required: true,
   },
@@ -37,6 +37,28 @@ const FamilleSchema = new Schema({
   modifiePar : {
     type: String,
     required: false,
+  }
+})
+
+FamilleSchema.pre('save', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateCreation = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
+FamilleSchema.pre('updateOne', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateModification = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
   }
 })
 

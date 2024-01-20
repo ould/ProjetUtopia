@@ -6,6 +6,7 @@ module.exports = {
   save: async (req, res, next) => {
     try {
       const result = await messageSchema.validateAsync(req.body)
+      result.creePar = req.payload.userId
 
       const message = new Message(result)
       const savedmessage = await message.save()
@@ -25,13 +26,15 @@ module.exports = {
 
       const doesExist = await Message.findOne({ _id: result.id })
       if (!doesExist)
-      throw createError.NotFound(`${result.id} not found`);
-    
-    const filter = { _id: result.id };
-    const updatedMessage = await Message.findOneAndUpdate(filter, result, {
-      returnOriginal: false
-    });
-    res.send(updatedMessage.id)
+        throw createError.NotFound(`${result.id} not found`);
+
+      result.modifiePar = req.payload.userId
+
+      const filter = { _id: result.id };
+      const updatedMessage = await Message.findOneAndUpdate(filter, result, {
+        returnOriginal: false
+      });
+      res.send(updatedMessage.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -41,11 +44,11 @@ module.exports = {
   get: async (req, res, next) => {
     try {
       const id = req.params.id
-      
+
       const doesExist = await Message.findOne({ _id: id })
       if (!doesExist)
-      throw createError.NotFound(`${result} not found`);
-      res.send( doesExist )
+        throw createError.NotFound(`${result} not found`);
+      res.send(doesExist)
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -56,10 +59,10 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const id = req.params.id
-      
+
       const doesExist = await Message.findOneAndDelete({ _id: id })
       res.send(doesExist.id)
-    
+
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

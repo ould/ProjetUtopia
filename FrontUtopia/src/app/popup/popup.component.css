@@ -1,26 +1,14 @@
-/* Styles pour le dialogue */
-h2 {
-    color: #00a59e; /* Couleur du texte du titre */
-    font-size: 1.5em; /* Taille de la police pour le titre */
-    margin-bottom: 10px; /* Marge en bas du titre */
-  }
-/* Styles pour le dialogue */
-  p {
-    color: #333; /* Couleur du texte du paragraphe */
-    margin-bottom: 20px; /* Marge en bas du paragraphe */
-  }
-  
-  button {
-    margin-right: 10px; /* Marge à droite pour les boutons */
-  }
-  
-  /* Styles pour les boutons avec les couleurs d'Utopia56 */
-  button[color="primary"] {
-    background-color: #00a59e; /* Couleur du bouton "Primary" (vert) */
-    color: #fff; /* Couleur du texte du bouton "Primary" */
-  }
-  
-  button[color="warn"] {
-    background-color: #fff; /* Couleur du bouton "Warn" (blanc) */
-    color: #dc3545; /* Couleur du texte du bouton "Warn" (rouge) */
-  }
+:host {
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 16px 16px;
+}
+
+input {
+  margin: 8px 0;
+}
+
+button + button {
+  margin-left: 8px;
+}

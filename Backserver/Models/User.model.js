@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  droits:{
+  groupes:{
     type: Array,
     required: true,
   },
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  DateCreation: {
+  dateCreation: {
     type: Date,
     required: true,
   },
@@ -52,13 +52,27 @@ UserSchema.pre('save', async function (next) {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
-      this.droits = [0]
+      this.groupes = [0]
+      this.dateCreation = Date.now()
     }
     next()
   } catch (error) {
     next(error)
   }
 })
+
+
+UserSchema.pre('updateOne', async function (next) {
+  try {
+    if (this.isNew) {
+      this.dateModification = Date.now()
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 UserSchema.methods.isValidPassword = async function (password) {
   try {

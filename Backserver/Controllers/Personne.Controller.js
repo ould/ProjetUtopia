@@ -7,10 +7,11 @@ module.exports = {
   save: async (req, res, next) => {
     try {
       const result = await personneSchema.validateAsync(req.body)
+      result.creePar = req.payload.userId
 
-      // const doesExist = await Personne.findOne({ id: result.p })
-      // if (doesExist)
-      //   throw createError.Conflict(`${result.email} is already been registered`)
+      if (result._id)
+        throw createError.Conflict(`${result._id} is already id`)
+
       const personne = new Personne(result)
       const savedPersonne = await personne.save()
       const savefPersonneId = savedPersonne._id
@@ -28,13 +29,15 @@ module.exports = {
 
       const doesExist = await Personne.findOne({ _id: result.id })
       if (!doesExist)
-      throw createError.NotFound(`${result.id} not found`);
-    
-    const filter = { _id: result.id };
-    const updatedPersonne = await Personne.findOneAndUpdate(filter, result, {
-      returnOriginal: false
-    });
-    res.send(updatedPersonne.id)
+        throw createError.NotFound(`${result.id} not found`);
+
+      result.modifiePar = req.payload.userId
+
+      const filter = { _id: result.id };
+      const updatedPersonne = await Personne.findOneAndUpdate(filter, result, {
+        returnOriginal: false
+      });
+      res.send(updatedPersonne.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -44,11 +47,11 @@ module.exports = {
   get: async (req, res, next) => {
     try {
       const id = req.params.id
-      
+
       const doesExist = await Personne.findOne({ _id: id })
       if (!doesExist)
-      throw createError.NotFound(`${result} not found`);
-      res.send( doesExist )
+        throw createError.NotFound(`${result} not found`);
+      res.send(doesExist)
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -59,10 +62,10 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const id = req.params.id
-      
+
       const doesExist = await Personne.findOneAndDelete({ _id: id })
       res.send(doesExist.id)
-    
+
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

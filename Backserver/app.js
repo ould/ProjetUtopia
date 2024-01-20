@@ -14,6 +14,7 @@ const messageRouter = require('./Routes/Message.route')
 
 
 const cors=require("cors");
+const groupeRouter = require('./Routes/Groupe.route')
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
@@ -35,16 +36,10 @@ app.use('/api/famille', verifyAccessToken, familleRouter)
 app.use('/api/chat', verifyAccessToken, chatRouter)
 app.use('/api/personne', verifyAccessToken, personneRouter)
 app.use('/api/message', verifyAccessToken, messageRouter)
+app.use('/api/groupe', verifyAccessToken, groupeRouter)
 
 app.get('/api/', verifyAccessToken, async (req, res, next) => {
-  res.send('Hello from express.')
-})
-
-app.get('/api/test', async (req, res, next) => {
-  res.send('Hello from world.')
-})
-app.get('/api/test', async (req, res, next) => {
-  res.send('Hello from world.')
+  res.send('Hello !!.')
 })
 
 app.use(async (req, res, next) => {

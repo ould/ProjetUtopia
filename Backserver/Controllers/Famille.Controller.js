@@ -6,8 +6,9 @@ const client = require('../helpers/init_redis')
 module.exports = {
   save: async (req, res, next) => {
     try {
-      
+
       const result = await familleSchema.validateAsync(req.body)
+      result.creePar = req.payload.userId
 
       const famille = new Famille(result)
       const savedFamille = await famille.save()
@@ -26,14 +27,16 @@ module.exports = {
 
       const doesExist = await Famille.findOne({ _id: result._id })
       if (!doesExist)
-      throw createError.NotFound(`${result.id} not found`);
-    
-    const filter = { _id: result._id };
-    const updatedFamille = await Famille.findOneAndUpdate(filter, result, {
-      returnOriginal: false
-    });
-    updatedFamille.id = updatedFamille.id;
-    res.send(updatedFamille.id)
+        throw createError.NotFound(`${result.id} not found`);
+
+      result.modifiePar = req.payload.userId
+
+      const filter = { _id: result._id };
+      const updatedFamille = await Famille.findOneAndUpdate(filter, result, {
+        returnOriginal: false
+      });
+      updatedFamille.id = updatedFamille.id;
+      res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -43,10 +46,10 @@ module.exports = {
   get: async (req, res, next) => {
     try {
       const id = req.params.id
-      
+
       const doesExist = await Famille.findOne({ _id: id })
       if (!doesExist)
-      throw createError.NotFound(`${id} not found`);
+        throw createError.NotFound(`${id} not found`);
       doesExist.id = doesExist._id;
       res.send(doesExist)
 
@@ -60,9 +63,9 @@ module.exports = {
     try {
       const nom = req.params.nomFamille
 
-      const doesExist = await Famille.find({"nomFamille": {$regex : nom}})
+      const doesExist = await Famille.find({ "nomFamille": { $regex: nom } })
       if (!doesExist)
-      throw createError.NotFound(`${nom} not found`);
+        throw createError.NotFound(`${nom} not found`);
       doesExist.id = doesExist._id;
       res.send(doesExist)
 
@@ -77,10 +80,10 @@ module.exports = {
       const id = req.params.id
 
       //TODO : delete all personnes 
-      
+
       const doesExist = await Famille.findOneAndDelete({ _id: id })
       res.send(doesExist._id)
-      
+
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

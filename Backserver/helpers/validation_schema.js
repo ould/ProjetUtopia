@@ -19,8 +19,8 @@ const familleSchema = Joi.object({
   
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().required(),
-  dateCreation: Joi.string().required(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
   dateModification : Joi.string().optional(),
   modifiePar : Joi.string().optional()
 })
@@ -38,8 +38,8 @@ const personneSchema = Joi.object({
   telephone: Joi.string().optional(),
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().required(),
-  dateCreation: Joi.string().required(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
   dateModification : Joi.string().optional(),
   modifiePar : Joi.string().optional()
 })
@@ -51,8 +51,8 @@ const chatSchema = Joi.object({
   droitsLecturePersonneId: Joi.array().required(),
   droitsEcriturePersonneId: Joi.array().required(),
 
-  creePar: Joi.string().required(),
-  dateCreation: Joi.string().required(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
   dateModification : Joi.string().optional(),
   modifiePar : Joi.string().optional()
 })
@@ -63,8 +63,19 @@ const messageSchema = Joi.object({
   message: Joi.string().required(),
   date: Joi.date().required(),
 
-  creePar: Joi.string().required(),
-  dateCreation: Joi.string().required(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
+})
+
+const groupeSchema = Joi.object({
+  id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  commentaire: Joi.string().optional(),
+
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
   dateModification : Joi.string().optional(),
   modifiePar : Joi.string().optional()
 })
@@ -74,5 +85,6 @@ module.exports = {
   personneSchema,
   familleSchema,
   chatSchema,
-  messageSchema
+  messageSchema,
+  groupeSchema
 }
