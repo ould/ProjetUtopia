@@ -14,7 +14,7 @@ module.exports = {
       }
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
-        expiresIn: '5h',
+        expiresIn: '20h',
         issuer: 'utopiaApp.fr',
         audience: user._id+"",
       }
