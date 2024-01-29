@@ -6,6 +6,7 @@ const GroupeSchema = new Schema({
   nom: {
     type: String,
     required: true,
+    unique: true
   },
   commentaire: {
     type: String,
@@ -13,17 +14,17 @@ const GroupeSchema = new Schema({
   },
   creePar: {
     type: String,
-    required: true,
+    required: false,
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
-  dateModification : {
+  dateModification: {
     type: Date,
     required: false,
   },
-  modifiePar : {
+  modifiePar: {
     type: String,
     required: false,
   }
@@ -43,14 +44,14 @@ GroupeSchema.pre('save', async function (next) {
 
 GroupeSchema.pre('updateOne', async function (next) {
   try {
-    if (this.isNew) {
-      this.dateModification = Date.now()
-    }
+    this.dateModification = Date.now()
     next()
   } catch (error) {
     next(error)
   }
 })
+
+
 
 
 const Groupe = mongoose.model('groupe', GroupeSchema)

@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from '../auth/auth.guard';
+import { adminGuard } from './admin.guard';
 import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
+import { ManageGroupeComponent } from './manage-groupe/manage-groupe.component';
 
 const adminRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [authGuard], //TODO auth admin
+    canActivate: [adminGuard], //TODO auth admin
     children: [
       {
         path: '',
         children: [
           { path: 'comptes', component: ManageComptesComponent },
-          { path: '', component: AdminDashboardComponent }
+          { path: 'groupes', component: ManageGroupeComponent },
+          { path: '', component: AdminDashboardComponent },
         ]
       }
     ]

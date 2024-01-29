@@ -10,7 +10,7 @@ import { Groupe } from '../interfaces/groupe';
 export class GroupeService {
 
   
-  private groupeUrl = environment.apiUrl + 'role';
+  private groupeUrl = environment.apiUrl + 'groupe';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -19,24 +19,26 @@ export class GroupeService {
 
 
   isAdmin(): Observable<Boolean>{
-    return this.http.post<Boolean>(this.groupeUrl + "/isadmin","", this.httpOptions).pipe()
+    return this.http.post<Boolean>(this.groupeUrl + "/isadmin","", this.httpOptions).pipe(
+    )
   }
 
-  getUserRole(): Observable<Groupe>{
+  getUserGroupe(): Observable<Groupe>{
     return this.http.post<Groupe>(this.groupeUrl + "/getuserrole","", this.httpOptions).pipe()
   }
 
-  getAllRoles(): Observable<Groupe[]>{
-    return this.http.post<Groupe[]>(this.groupeUrl + "/getallrole","", this.httpOptions).pipe()
+  getAllGroupes(): Observable<any>{
+    return this.http.post<Groupe[]>(this.groupeUrl + "/getallrole","", this.httpOptions)
   }
 
-  addRole(groupe: Groupe): Observable<Groupe> {
-    return this.http.post<Groupe>(this.groupeUrl, groupe, this.httpOptions).pipe(
+  addGroupe(nomGroupe: string): Observable<Groupe> {
+    const nomGroupeVar = {nom : nomGroupe}
+    return this.http.post<Groupe>(this.groupeUrl, nomGroupeVar, this.httpOptions).pipe(
       catchError(this.handleError<any>('addRole'))
     );
   }
 
-  updateRole(groupe: Groupe): Observable<Groupe> {
+  updateGroupe(groupe: Groupe): Observable<Groupe> {
     return this.http.put<Groupe>(this.groupeUrl, groupe, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateRole'))
     );

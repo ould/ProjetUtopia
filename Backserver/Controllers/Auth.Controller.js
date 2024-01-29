@@ -18,6 +18,7 @@ module.exports = {
 
       const user = new User(result)
       const savedUser = await user.save()
+      console.log(savedUser.groupes)
       const accessToken = await signAccessToken(savedUser)
 
       res.send({ accessToken })

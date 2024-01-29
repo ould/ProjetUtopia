@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
+import { GroupeService } from '../groupe/groupe.service';
 
 
 @Injectable({
@@ -41,11 +42,13 @@ export class AuthService {
     localStorage.setItem('user_name', authResult.user.nom);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);
+    this.groupeService.isAdmin().subscribe(
+      _ => {console.log(_ + "eee");
+       localStorage.setItem("isAdmin", _+"");}
+    )
   }
 
   public isLoggedIn() {
-    console.log(Date.now())
-    console.log(this.getExpiration())
     return Date.now() <  this.getExpiration() ;
   }
 
@@ -66,5 +69,6 @@ export class AuthService {
   }
 
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private groupeService: GroupeService) { }
 }

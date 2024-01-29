@@ -42,11 +42,11 @@ const PersonneSchema = new Schema({
     type: Date,
     required: true,
   },
-  dateModification : {
+  dateModification: {
     type: Date,
     required: false,
   },
-  modifiePar : {
+  modifiePar: {
     type: String,
     required: false,
   }
@@ -65,9 +65,7 @@ PersonneSchema.pre('save', async function (next) {
 
 PersonneSchema.pre('updateOne', async function (next) {
   try {
-    if (this.isNew) {
-      this.dateModification = Date.now()
-    }
+    this.dateModification = Date.now()
     next()
   } catch (error) {
     next(error)

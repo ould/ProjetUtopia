@@ -80,11 +80,25 @@ const groupeSchema = Joi.object({
   modifiePar : Joi.string().optional()
 })
 
+
+const personneTypeSchema = Joi.object({
+  id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  commentaire: Joi.string().optional(),
+
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional(),
+  dateModification : Joi.string().optional(),
+  modifiePar : Joi.string().optional()
+})
+
+
 module.exports = {
   authSchema,
   personneSchema,
   familleSchema,
   chatSchema,
   messageSchema,
-  groupeSchema
+  groupeSchema,
+  personneTypeSchema
 }

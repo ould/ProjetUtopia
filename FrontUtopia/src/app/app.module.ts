@@ -26,6 +26,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
 import { GroupeComponent } from './groupe/groupe.component';
+import { ManageGroupeComponent } from './admin/manage-groupe/manage-groupe.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GroupeComponent } from './groupe/groupe.component';
     ReportingComponent,
     RequeteDetailComponent,
     PopupComponent,
-    GroupeComponent
+    GroupeComponent,
+    ManageGroupeComponent
   ],
   imports: [
     BrowserModule,

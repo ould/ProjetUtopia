@@ -30,11 +30,11 @@ const FamilleSchema = new Schema({
     type: Date,
     required: true,
   },
-  dateModification : {
+  dateModification: {
     type: Date,
     required: false,
   },
-  modifiePar : {
+  modifiePar: {
     type: String,
     required: false,
   }
@@ -53,9 +53,7 @@ FamilleSchema.pre('save', async function (next) {
 
 FamilleSchema.pre('updateOne', async function (next) {
   try {
-    if (this.isNew) {
-      this.dateModification = Date.now()
-    }
+    this.dateModification = Date.now()
     next()
   } catch (error) {
     next(error)

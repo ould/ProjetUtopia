@@ -1,39 +1,36 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const MessageSchema = new Schema({
+const PersonneTypeSchema = new Schema({
 
-  idPersonne: {
+  nom: {
     type: String,
     required: true,
+    unique: true
   },
-  message: {
+  commentaire: {
     type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true
+    required: false,
   },
   creePar: {
     type: String,
-    required: true,
+    required: false,
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
-  dateModification: {
+  dateModification : {
     type: Date,
     required: false,
   },
-  modifiePar: {
+  modifiePar : {
     type: String,
     required: false,
   }
 })
 
-MessageSchema.pre('save', async function (next) {
+PersonneTypeSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
       this.dateCreation = Date.now()
@@ -45,14 +42,17 @@ MessageSchema.pre('save', async function (next) {
 })
 
 
-MessageSchema.pre('updateOne', async function (next) {
+PersonneTypeSchema.pre('updateOne', async function (next) {
   try {
-    this.dateModification = Date.now()
+      this.dateModification = Date.now()
     next()
   } catch (error) {
     next(error)
   }
 })
 
-const Message = mongoose.model('message', MessageSchema)
-module.exports = Message
+
+
+
+const PersonneType = mongoose.model('personneType', PersonneTypeSchema)
+module.exports = PersonneType

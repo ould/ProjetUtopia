@@ -4,17 +4,19 @@ const createError = require('http-errors')
 require('dotenv').config()
 require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
+const {haveAdminRole} = require('./helpers/role_check')
 //require('./helpers/init_redis')
+
+const cors=require("cors");
 
 const AuthRoute = require('./Routes/Auth.route')
 const personneRouter = require('./Routes/personne.route')
 const familleRouter = require('./Routes/Famille.route')
 const chatRouter = require('./Routes/Chat.route')
 const messageRouter = require('./Routes/Message.route')
-
-
-const cors=require("cors");
 const groupeRouter = require('./Routes/Groupe.route')
+const personneTypeRouter = require('./Routes/PersonneType')
+
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
@@ -29,17 +31,16 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-
-
 app.use('/api/auth', AuthRoute)
 app.use('/api/famille', verifyAccessToken, familleRouter)
 app.use('/api/chat', verifyAccessToken, chatRouter)
 app.use('/api/personne', verifyAccessToken, personneRouter)
+app.use('/api/personneType', verifyAccessToken, haveAdminRole, personneTypeRouter)
 app.use('/api/message', verifyAccessToken, messageRouter)
 app.use('/api/groupe', verifyAccessToken, groupeRouter)
 
-app.get('/api/', verifyAccessToken, async (req, res, next) => {
-  res.send('Hello !!.')
+app.get('/api', async (req, res, next) => {
+  res.send('Hello !!')
 })
 
 app.use(async (req, res, next) => {
