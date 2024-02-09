@@ -1,7 +1,6 @@
 const createError = require('http-errors')
 const Personne = require('../Models/Personne.model')
 const { personneSchema } = require('../helpers/validation_schema')
-const client = require('../helpers/init_redis')
 
 module.exports = {
   save: async (req, res, next) => {

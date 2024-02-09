@@ -13,7 +13,7 @@ module.exports = {
       if (doesExist)
         throw createError.Conflict(`${result.email} is already been registered`)
 
-      result.droits = ["0"]
+      result.groupes = ["Lecteur"]
       result.creePar = "0" //Créé par lui meme 
 
       const user = new User(result)
@@ -33,15 +33,15 @@ module.exports = {
       const result = await authSchema.validateAsync(req.body)
       const user = await User.findOne({ email: result.email })
       if (!user) throw createError.NotFound('User not registered')
-      
+
       const isMatch = await user.isValidPassword(result.password)
       if (!isMatch)
-      throw createError.Unauthorized('Username/password not valid')
-    
-    const accessToken = await signAccessToken(user)
-    const expiresAt = addDateHours(20);
+        throw createError.Unauthorized('Username/password not valid')
 
-      res.send({ accessToken, user,  expiresAt})
+      const accessToken = await signAccessToken(user)
+      const expiresAt = addDateHours(20);
+
+      res.send({ accessToken, user, expiresAt })
     } catch (error) {
       if (error.isJoi === true)
         return next(createError.BadRequest('Invalid Username/Password'))

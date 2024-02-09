@@ -5,6 +5,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
 import { ManageGroupeComponent } from './manage-groupe/manage-groupe.component';
+import { ManagePersonneTypeComponent } from './manage-personne-type/manage-personne-type.component';
 
 const adminRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ const adminRoutes: Routes = [
         children: [
           { path: 'comptes', component: ManageComptesComponent },
           { path: 'groupes', component: ManageGroupeComponent },
+          { path: 'types', component: ManagePersonneTypeComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }

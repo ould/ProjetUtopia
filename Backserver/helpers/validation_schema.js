@@ -3,11 +3,21 @@ const Joi = require('@hapi/joi')
 const authSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
-  
-  passwordConfirm : Joi.string().optional(),
-  droits: Joi.array().optional(),
+
+  passwordConfirm: Joi.string().optional(),
+  groupes: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
+
+})
+
+const userSchema = Joi.object({
+  nom: Joi.string().required(),
+  prenom: Joi.string().required(),
+  email: Joi.string().email().lowercase().required(),
+  password: Joi.string().min(2).required(),
+
+  groupes: Joi.array().optional(),
 
 })
 
@@ -16,13 +26,13 @@ const familleSchema = Joi.object({
   nomFamille: Joi.string().min(5).required(),
   personnesId: Joi.array().required(),
   composition: Joi.string().required(),
-  
+
   commentaire: Joi.string().optional(),
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 const personneSchema = Joi.object({
@@ -30,7 +40,7 @@ const personneSchema = Joi.object({
   type: Joi.number().required(),
   nom: Joi.string().required(),
   prenom: Joi.string().required(),
-  
+
   nationalite: Joi.string().optional(),
   ddn: Joi.date().optional(),
   situation: Joi.string().optional(),
@@ -40,8 +50,8 @@ const personneSchema = Joi.object({
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 const chatSchema = Joi.object({
@@ -53,8 +63,8 @@ const chatSchema = Joi.object({
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 const messageSchema = Joi.object({
@@ -65,8 +75,8 @@ const messageSchema = Joi.object({
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 const groupeSchema = Joi.object({
@@ -76,8 +86,8 @@ const groupeSchema = Joi.object({
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 
@@ -88,8 +98,8 @@ const personneTypeSchema = Joi.object({
 
   creePar: Joi.string().optional(),
   dateCreation: Joi.string().optional(),
-  dateModification : Joi.string().optional(),
-  modifiePar : Joi.string().optional()
+  dateModification: Joi.string().optional(),
+  modifiePar: Joi.string().optional()
 })
 
 

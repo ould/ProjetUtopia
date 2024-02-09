@@ -14,11 +14,11 @@ const PersonneTypeSchema = new Schema({
   },
   creePar: {
     type: String,
-    required: false,
+    required: true,
   },
   dateCreation: {
     type: Date,
-    required: false,
+    required: true,
   },
   dateModification : {
     type: Date,

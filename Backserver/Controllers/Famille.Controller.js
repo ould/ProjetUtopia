@@ -1,18 +1,18 @@
 const createError = require('http-errors')
 const Famille = require('../Models/Famille.model')
 const { familleSchema } = require('../helpers/validation_schema')
-const client = require('../helpers/init_redis')
 
 module.exports = {
   save: async (req, res, next) => {
     try {
 
-      const result = await familleSchema.validateAsync(req.body)
-      result.creePar = req.payload.userId
+      const result = await familleSchema.validateAsync(req.body);
+      result.creePar = req.payload.userId;
 
-      const famille = new Famille(result)
-      const savedFamille = await famille.save()
-      const savedFamilleId = savedFamille._id
+      const famille = new Famille(result);
+      const savedFamille = await famille.save();
+      const savedFamilleId = savedFamille._id;
+      //TODO : type = famille 
 
       res.send({ savedFamilleId })
     } catch (error) {

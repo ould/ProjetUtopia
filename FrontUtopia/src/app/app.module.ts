@@ -25,8 +25,6 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
 import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
-import { GroupeComponent } from './groupe/groupe.component';
-import { ManageGroupeComponent } from './admin/manage-groupe/manage-groupe.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +42,7 @@ import { ManageGroupeComponent } from './admin/manage-groupe/manage-groupe.compo
     ChatDetailComponent,
     ReportingComponent,
     RequeteDetailComponent,
-    PopupComponent,
-    GroupeComponent,
-    ManageGroupeComponent
+    PopupComponent
   ],
   imports: [
     BrowserModule,

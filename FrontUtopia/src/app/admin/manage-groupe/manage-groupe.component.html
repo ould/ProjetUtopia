@@ -1,7 +1,7 @@
 <div class="utopia-container">
     <h1>Gestion des Rôles/Groupes</h1>
     <input type="text" #newGroupe>
-    <button (click)="openPopup(newGroupe.value)">Ajouter un nouveau rôle/groupe</button>
+    <button (click)="openPopupCreation(newGroupe.value)">Ajouter un nouveau rôle/groupe</button>
   
     <table>
       <thead>
@@ -14,8 +14,8 @@
         <tr *ngFor="let groupe of groupes">
           <td>{{ groupe.nom }}</td>
           <td>
-            <button (click)="modifierRole(groupe._id)">Modifier</button>
-            <button (click)="supprimerRole(groupe._id)">Supprimer</button>
+            <button (click)="openPopupModifier(groupe.nom)">Modifier</button>
+            <button (click)="openPopupSuppression(groupe.nom)">Supprimer</button>
           </td>
         </tr>
       </tbody>

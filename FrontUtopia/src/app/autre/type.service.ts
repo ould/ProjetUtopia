@@ -3,44 +3,46 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Groupe } from '../interfaces/groupe';
+import { Type } from '../interfaces/type';
+
 @Injectable({
   providedIn: 'root'
 })
-export class GroupeService {
+export class TypeService {
 
-  
-  private groupeUrl = environment.apiUrl + 'groupe';
+   
+  private TypeUrl = environment.apiUrl + 'Type';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
 
-
-  isAdmin(): Observable<Boolean>{
-    return this.http.post<Boolean>(this.groupeUrl + "/isadmin","", this.httpOptions).pipe(
-    )
+  getPersonneType(): Observable<Type>{
+    return this.http.post<Type>(this.TypeUrl + "/getpersonnetype","", this.httpOptions).pipe()
   }
 
-  getUserGroupe(): Observable<Groupe>{
-    return this.http.post<Groupe>(this.groupeUrl + "/getuserrole","", this.httpOptions).pipe()
+  getAllType(): Observable<any>{
+    return this.http.post<Type[]>(this.TypeUrl + "/getalltype","", this.httpOptions)
   }
 
-  getAllGroupes(): Observable<any>{
-    return this.http.post<Groupe[]>(this.groupeUrl + "/getallrole","", this.httpOptions)
-  }
-
-  addGroupe(nomGroupe: string): Observable<Groupe> {
-    const nomGroupeVar = {nom : nomGroupe}
-    return this.http.post<Groupe>(this.groupeUrl, nomGroupeVar, this.httpOptions).pipe(
-      catchError(this.handleError<any>('addRole'))
+  addType(nomType: string): Observable<Type> {
+    const nomTypeVar = {nom : nomType}
+    return this.http.post<Type>(this.TypeUrl, nomTypeVar, this.httpOptions).pipe(
+      catchError(this.handleError<any>('addType'))
     );
   }
 
-  updateGroupe(groupe: Groupe): Observable<Groupe> {
-    return this.http.put<Groupe>(this.groupeUrl, groupe, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateRole'))
+  updateType(Type: Type): Observable<Type> {
+    return this.http.put<Type>(this.TypeUrl, Type, this.httpOptions).pipe(
+      catchError(this.handleError<any>('updateType'))
+    );
+  }
+
+  deleteType(id: string): Observable<Type> {
+    const url = `${this.TypeUrl}/${id}`;
+    return this.http.delete<Type>(url, this.httpOptions).pipe(
+      catchError(this.handleError<any>('deleteType'))
     );
   }
 

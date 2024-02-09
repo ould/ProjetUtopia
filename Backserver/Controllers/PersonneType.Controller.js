@@ -51,7 +51,22 @@ module.exports = {
       const doesExist = await PersonneType.findOne({ _id: id })
       if (!doesExist)
         throw createError.NotFound(`${id} not found`);
-      doesExist._id = ""
+      res.send(doesExist)
+
+    } catch (error) {
+      if (error.isJoi === true) error.status = 422
+      next(error)
+    }
+  },
+
+  getFromName: async (req, res, next) => {
+    try {
+
+      const nom = req.params.nom
+
+      const doesExist = await PersonneType.findOne({ nom: nom })
+      if (!doesExist)
+        throw createError.NotFound(`${nom} not found`);
       res.send(doesExist)
 
     } catch (error) {
@@ -85,7 +100,6 @@ module.exports = {
       if (error.isJoi === true) error.status = 422
       next(error)
     }
-  }
-
+  },
 
 }

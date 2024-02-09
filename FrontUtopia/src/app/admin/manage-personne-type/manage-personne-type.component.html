@@ -1,0 +1,22 @@
+<div class="utopia-container">
+    <h1>Gestion des Types de personne</h1>
+    <input type="text" #newType>
+    <button (click)="openPopupCreation(newType.value)">Ajouter un nouveau type</button>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of types">
+          <td>{{ type.nom }}</td>
+          <td>
+            <button (click)="modifierRole(type._id)">Modifier</button>
+            <button (click)="openPopupSuppression(type.nom , type._id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>

@@ -1,7 +1,6 @@
 const createError = require('http-errors')
 const { groupeSchema } = require('../helpers/validation_schema')
 const Groupe = require('../Models/Groupe.model')
-const { not } = require('@hapi/joi')
 
 module.exports = {
   save: async (req, res, next) => {
@@ -29,7 +28,7 @@ module.exports = {
 
       const doesExist = await Groupe.findOne({ nom: result.nom })
       if (!doesExist)
-        throw createError.NotFound(`${result.id} not found`);
+        throw createError.NotFound(`${result.nom} not found`);
 
       result.modifiePar = req.payload.userId
 
@@ -109,11 +108,9 @@ module.exports = {
 
   delete: async (req, res, next) => {
     try {
-      const id = req.params.nom
+      const id = req.params.id
 
-      //TODO : delete all personnes 
-
-      const doesExist = await Groupe.findOneAndDelete({ nom: nom })
+      const doesExist = await Groupe.findOneAndDelete({ _id: id })
       res.send(doesExist.nom)
 
     } catch (error) {
