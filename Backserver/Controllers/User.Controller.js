@@ -3,6 +3,19 @@ const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema')
 
 module.exports = {
+
+
+    getAllUsers: async (req, res, next) => {
+        try {
+            const users = await User.find();
+            res.send(users)
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+
     save: async (req, res, next) => {
         try {
             const result = await userSchema.validateAsync(req.body)

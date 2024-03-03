@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TypeService } from 'src/app/autre/type.service';
+import { TypePersonneService } from 'src/app/autre/typePersonne/type.service';
 import { PopupComponent } from 'src/app/popup/popup.component';
 import { Type } from 'src/app/interfaces/type';
 
@@ -14,7 +14,7 @@ export class ManagePersonneTypeComponent  implements OnInit  {
   
   ngOnInit(): void {
 
-    this.typeService.getAllType().subscribe(
+    this.TypePersonneService.getAllType().subscribe(
       data => {
         this.types = data
       }
@@ -22,18 +22,6 @@ export class ManagePersonneTypeComponent  implements OnInit  {
   }
 
   types?: Type[];
-  typeEnCours: any = {};
-
-  saveType() {
-    // Logique pour enregistrer le type (ajout ou modification)
-    if (this.typeEnCours.id) {
-      // Modification d'un type existant
-      // TODO : Ajoutez la logique nécessaire ici
-    } else {
-      // Ajout d'un nouveau rôle
-      this.typeService.addType(this.typeEnCours.nom)
-    }
-  }
 
   modifierRole(typeId?: string) {
   }
@@ -53,7 +41,7 @@ export class ManagePersonneTypeComponent  implements OnInit  {
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
           // Action lorsque le bouton "Oui" est cliqué
-          this.typeService.addType(term).subscribe()
+          this.TypePersonneService.addType(term).subscribe()
         } else if (result === false) {
           // Action lorsque le bouton "Non" est cliqué
           console.log('Bouton Non cliqué');
@@ -81,7 +69,7 @@ export class ManagePersonneTypeComponent  implements OnInit  {
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
           // Action lorsque le bouton "Oui" est cliqué
-          this.typeService.deleteType(id).subscribe()
+          this.TypePersonneService.deleteType(id).subscribe()
         } else if (result === false) {
           // Action lorsque le bouton "Non" est cliqué
           console.log('Bouton Non cliqué');
@@ -95,6 +83,6 @@ export class ManagePersonneTypeComponent  implements OnInit  {
 
 
   constructor(
-    private typeService: TypeService ,
+    private TypePersonneService: TypePersonneService ,
     private dialog: MatDialog) { }
 }

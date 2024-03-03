@@ -38,7 +38,7 @@ export class RegisterComponent {
   register() {
     const val: User = this.form.value;
     if (val.nom && val.prenom && val.email && val.password && this.passwordMatchValidator()) {
-      val.droits = ["0"]
+      val.groupes = ["0"]
       this.authService.register(val)
         .subscribe(
           result => {

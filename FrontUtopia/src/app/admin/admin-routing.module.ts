@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
 import { ManageGroupeComponent } from './manage-groupe/manage-groupe.component';
 import { ManagePersonneTypeComponent } from './manage-personne-type/manage-personne-type.component';
+import { CompteDetailComponent } from './manage-comptes/compte-detail/compte-detail.component';
 
 const adminRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ const adminRoutes: Routes = [
         path: '',
         children: [
           { path: 'comptes', component: ManageComptesComponent },
+          { path: 'modifierUtilisateur/:id', component: CompteDetailComponent },
           { path: 'groupes', component: ManageGroupeComponent },
           { path: 'types', component: ManagePersonneTypeComponent },
           { path: '', component: AdminDashboardComponent },

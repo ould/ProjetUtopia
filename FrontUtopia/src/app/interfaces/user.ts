@@ -1,12 +1,12 @@
 export interface User {
-    id?:string;
+    _id?:string;
     email:string;
     
     nom?:string;
     prenom?:string;
     password?:string;
 
-    droits?: string[];
+    groupes?: string[];
     token?:string;
 
 }

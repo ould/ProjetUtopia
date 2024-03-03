@@ -33,7 +33,8 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/api/auth', AuthRoute)
-app.use('/api/groupe', verifyAccessToken, haveAdminRole, userRouter)
+app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
+app.use('/api/user', verifyAccessToken, haveAdminRole, userRouter)
 app.use('/api/famille', verifyAccessToken, haveRoleFamille, familleRouter)
 app.use('/api/chat', verifyAccessToken, chatRouter)
 app.use('/api/personne', verifyAccessToken, personneRouter)

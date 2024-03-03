@@ -3,12 +3,12 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Type } from '../interfaces/type';
+import { Type } from '../../interfaces/type';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TypeService {
+export class TypePersonneService {
 
    
   private TypeUrl = environment.apiUrl + 'Type';

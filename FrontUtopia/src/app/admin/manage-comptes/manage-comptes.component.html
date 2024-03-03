@@ -1,11 +1,23 @@
-<div class="admin-comptes-container">
-    <h2>Gestion des Comptes</h2>
-    <p>Administrez les comptes des utilisateurs de l'application.</p>
-  
-    <!-- Ajoutez des éléments spécifiques à la gestion des comptes ici -->
-  
-    <div class="admin-actions">
-      <button class="btn btn-primary" (click)="ajouterCompte()">Ajouter un Compte</button>
-      <button class="btn btn-danger" (click)="supprimerCompte()">Supprimer un Compte</button>
-    </div>
-  </div>
+<h1>Gestion des utilisateurs</h1>
+
+<!-- Formulaire d'ajout d'utilisateur TODO : le faire sortir dans un compo séparé --> 
+<h2>Ajouter un utilisateur</h2>
+<form (ngSubmit)="ajouterUtilisateur()">
+  <label for="nom-utilisateur">Nom d'utilisateur:</label>
+  <input type="text" id="nom-utilisateur" name="nom" ngModel required>
+  <label for="nom-utilisateur">Prénom de l'utilisateur:</label>
+  <input type="text" id="nom-utilisateur" name="prenom" ngModel required>
+  <label for="role-utilisateur">Email:</label>
+  <input type="text" id="role-utilisateur" name="email" ngModel required>
+  <button type="submit">Ajouter</button>
+</form>
+
+<h2>Liste des utilisateurs</h2>
+<ul>
+    <li *ngFor="let utilisateur of utilisateurs">
+        {{ utilisateur.nom }} {{ utilisateur.prenom }}- {{ utilisateur.email }}
+        <button routerLink="/admin/modifierUtilisateur/{{utilisateur._id}}">Modifier</button>
+        <button (click)="openPopupSupprimer(utilisateur)">Supprimer</button>
+        <button (click)="reinitialiseMotDePasse(utilisateur)">Reinitialise mdp</button>
+    </li>
+</ul>

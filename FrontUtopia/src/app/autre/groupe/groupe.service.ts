@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Groupe } from '../interfaces/groupe';
+import { Groupe } from '../../interfaces/groupe';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,29 +19,29 @@ export class GroupeService {
 
 
   isAdmin(): Observable<Boolean>{
-    return this.http.post<Boolean>(this.groupeUrl + "/isadmin","", this.httpOptions).pipe(
+    return this.http.post<Boolean>(this.groupeUrl + "/isAdmin","", this.httpOptions).pipe(
     )
   }
 
   getUserGroupe(): Observable<Groupe>{
-    return this.http.post<Groupe>(this.groupeUrl + "/getuserrole","", this.httpOptions).pipe()
+    return this.http.post<Groupe>(this.groupeUrl + "/getUserGroupe","", this.httpOptions).pipe()
   }
 
   getAllGroupes(): Observable<any>{
-    return this.http.post<Groupe[]>(this.groupeUrl + "/getallrole","", this.httpOptions)
+    return this.http.post<Groupe[]>(this.groupeUrl + "/getAllGroupes","", this.httpOptions)
   }
 
   addGroupe(nomGroupe: string): Observable<Groupe> {
     const nomGroupeVar = {nom : nomGroupe}
     return this.http.post<Groupe>(this.groupeUrl, nomGroupeVar, this.httpOptions).pipe(
-      catchError(this.handleError<any>('addRole'))
+      catchError(this.handleError<any>('addGroupe'))
     );
   }
 
   updateGroupe(oldNomGroupe: string, newNomGroupe: string): Observable<Groupe> {
     const objetModification = {oldNomGroupe, newNomGroupe}
     return this.http.put<Groupe>(this.groupeUrl, objetModification, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateRole'))
+      catchError(this.handleError<any>('updateGroupe'))
     );
   }
 

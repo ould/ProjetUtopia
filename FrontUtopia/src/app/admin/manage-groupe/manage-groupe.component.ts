@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupeService } from 'src/app/autre/groupe.service';
+import { GroupeService } from 'src/app/autre/groupe/groupe.service';
 import { Groupe } from 'src/app/interfaces/groupe';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from 'src/app/popup/popup.component';
