@@ -34,13 +34,17 @@ const PersonneSchema = new Schema({
     type: String,
     required: false,
   },
+  antenne: {
+    type: String,
+    required: true,
+  },
   creePar: {
     type: String,
     required: true,
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
   dateModification: {
     type: Date,

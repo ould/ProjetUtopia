@@ -12,7 +12,7 @@ import { PopupComponent } from 'src/app/popup/popup.component';
 export class ManageComptesComponent implements OnInit {
 
   utilisateurs: User[] = [];
-  nouvelUtilisateur: User = { email: "" }; // Initialisez un objet pour le nouvel utilisateur
+  nouvelUtilisateur: User = { email: "", nom : "", prenom: "", password:"", groupes: ["Basique"], antenne:"" }; // Initialisez un objet pour le nouvel utilisateur
 
   ngOnInit(): void {
 
@@ -28,7 +28,7 @@ export class ManageComptesComponent implements OnInit {
     // Ajoutez ici la logique pour ajouter un utilisateur à la liste
     if (this.nouvelUtilisateur && this.nouvelUtilisateur.email != "") {
       this.utilisateurs.push(this.nouvelUtilisateur);
-      this.nouvelUtilisateur = { email: "" }; // Réinitialisez l'objet nouvelUtilisateur après l'ajout
+      this.nouvelUtilisateur = { email: "", nom : "", prenom: "", password:"", groupes: ["Basique"], antenne:""  }; // Réinitialisez l'objet nouvelUtilisateur après l'ajout
     }
   }
 

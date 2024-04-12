@@ -75,14 +75,12 @@ module.exports = {
     }
   },
 
-
-  getAllTypes: async (req, res, next) => {
+  getAll: async (req, res, next) => {
     try {
-
-      const user = req.payload
+      const user = req
       //TODO verifier admin 
       const types = await PersonneType.find();
-      res.send(types )
+      res.send(types)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

@@ -43,8 +43,7 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);
     this.groupeService.isAdmin().subscribe(
-      _ => {console.log(_ + "eee");
-       localStorage.setItem("isAdmin", _+"");}
+      _data => {localStorage.setItem("isAdmin", _data+"");}
     )
   }
 

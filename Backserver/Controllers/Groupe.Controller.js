@@ -90,7 +90,7 @@ module.exports = {
   },
 
 
-  getAllRoles: async (req, res, next) => {
+  getAll: async (req, res, next) => {
     try {
 
       const userGroupes = req.payload.groupes

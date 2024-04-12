@@ -5,7 +5,10 @@ const User = require('../Models/User.model')
 
 const nomGroupeAdmin = "Admin"
 const nomGroupeFamille = "Famille"
+const nomGroupeMineur = "Mineur"
 const nomGroupeHebergement = "Hebergement"
+const nomGroupeBenevole = "Benevole"
+const nomGroupeAdherent = "Adherent"
 
 module.exports = {
   haveAdminRole: async (req, res, next) => {
@@ -18,6 +21,18 @@ module.exports = {
 
   haveRoleHebergement: async (req, res, next) => {
     haveRole(req, res, next, nomGroupeHebergement, "Not Hebergement group")
+  },
+
+  haveRoleBenevole: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeBenevole, "Not Benevole group")
+  },
+
+  haveRoleAdherent: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeAdherent, "Not Adherent group")
+  },
+
+  haveRoleMineur: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeMineur, "Not Mineur group")
   },
 }
 

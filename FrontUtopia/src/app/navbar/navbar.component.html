@@ -24,7 +24,8 @@
           </ul>
             <button  *ngIf="AuthService.isLoggedIn()" routerLink="/logout">Logout</button>
             <button  *ngIf="!AuthService.isLoggedIn()" routerLink="/login">Login</button>
-            <button  *ngIf="!AuthService.isLoggedIn()" routerLink="/register">S'enregistrer</button>     
+            <button  *ngIf="!AuthService.isLoggedIn()" routerLink="/register">S'enregistrer</button>
+            <button  *ngIf="AuthService.isLoggedIn() && !this.isIntialise" (click)="initialiseDonnees()">Initialise</button>
           </div>
       </div>
     </div>

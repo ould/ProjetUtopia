@@ -5,7 +5,7 @@ const { userSchema } = require('../helpers/validation_schema')
 module.exports = {
 
 
-    getAllUsers: async (req, res, next) => {
+    getAll: async (req, res, next) => {
         try {
             const users = await User.find();
             res.send(users)
@@ -14,7 +14,6 @@ module.exports = {
             next(error)
         }
     },
-
 
     save: async (req, res, next) => {
         try {

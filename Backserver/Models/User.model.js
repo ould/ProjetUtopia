@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     required: true,
   },
   groupes:{
-    type: Array,
+    type: [String],
     required: true,
   },
   nom:{
@@ -25,13 +25,17 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  antenne: {
+    type: String,
+    required: true,
+  },
   creePar: {
     type: String,
     required: true,
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
   dateModification : {
     type: Date,

@@ -8,15 +8,19 @@ const ChatSchema = new Schema({
     required: true,
   },
   messagesId: {
-    type: Array,
+    type: [String],
     required: true,
   },
   droitsLecturePersonneId: {
-    type: Array,
+    type: [String],
     required: false,
   },
   droitsEcriturePersonneId: {
-    type: Array,
+    type: [String],
+    required: true,
+  },
+  antenne: {
+    type: String,
     required: true,
   },
   creePar: {
@@ -25,7 +29,7 @@ const ChatSchema = new Schema({
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
   dateModification: {
     type: Date,

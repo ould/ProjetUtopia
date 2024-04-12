@@ -11,7 +11,7 @@ const FamilleSchema = new Schema({
     required: true,
   },
   personnesId: {
-    type: Array,
+    type: [String],
     required: true,
   },
   composition: {
@@ -22,13 +22,17 @@ const FamilleSchema = new Schema({
     type: String,
     required: false,
   },
+  antenne: {
+    type: String,
+    required: true,
+  },
   creePar: {
     type: String,
     required: true,
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
   dateModification: {
     type: Date,

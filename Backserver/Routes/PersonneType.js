@@ -4,7 +4,7 @@ const PersonneTypeController = require('../Controllers/PersonneType.Controller')
 
 personneTypeRouter.get('/:id', PersonneTypeController.get)
 
-personneTypeRouter.get('/getalltypes', PersonneTypeController.getAllTypes)
+personneTypeRouter.post('/getAllTypes', PersonneTypeController.getAll)
 
 personneTypeRouter.post('/', PersonneTypeController.save)
 

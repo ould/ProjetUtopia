@@ -1,16 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const GroupeSchema = new Schema({
+const AntenneSchema = new Schema({
 
   nom: {
     type: String,
     required: true,
-    unique: true
-  },
-  commentaire: {
-    type: String,
-    required: false,
   },
   creePar: {
     type: String,
@@ -30,7 +25,7 @@ const GroupeSchema = new Schema({
   }
 })
 
-GroupeSchema.pre('save', async function (next) {
+AntenneSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
       this.dateCreation = Date.now()
@@ -41,8 +36,7 @@ GroupeSchema.pre('save', async function (next) {
   }
 })
 
-
-GroupeSchema.pre('updateOne', async function (next) {
+AntenneSchema.pre('updateOne', async function (next) {
   try {
     this.dateModification = Date.now()
     next()
@@ -51,8 +45,5 @@ GroupeSchema.pre('updateOne', async function (next) {
   }
 })
 
-
-
-
-const Groupe = mongoose.model('groupe', GroupeSchema)
-module.exports = Groupe
+const Antenne = mongoose.model('antenne', AntenneSchema)
+module.exports = Antenne

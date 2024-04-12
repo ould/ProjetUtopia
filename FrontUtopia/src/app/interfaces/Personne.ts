@@ -8,6 +8,6 @@ export interface Personne {
     nationalite?: string;
     situation?: string;
     commentaire?: string;
-
+    antenne: string;
     
 }

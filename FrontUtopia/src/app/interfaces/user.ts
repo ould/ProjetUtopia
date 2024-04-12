@@ -2,11 +2,11 @@ export interface User {
     _id?:string;
     email:string;
     
-    nom?:string;
-    prenom?:string;
-    password?:string;
+    nom:string;
+    prenom:string;
+    password:string;
 
-    groupes?: string[];
+    antenne: string;
+    groupes: string[];
     token?:string;
-
 }

@@ -17,6 +17,8 @@ const messageRouter = require('./Routes/Message.route')
 const groupeRouter = require('./Routes/Groupe.route')
 const personneTypeRouter = require('./Routes/PersonneType')
 const userRouter = require('./Routes/User.route')
+const initialiseRouter = require('./Routes/Initialise.route')
+const antenneRouter = require('./Routes/Antenne.route')
 
 const corsOptions = {
   origin: '*',
@@ -41,6 +43,9 @@ app.use('/api/personne', verifyAccessToken, personneRouter)
 app.use('/api/personneType', verifyAccessToken, haveAdminRole, personneTypeRouter)
 app.use('/api/message', verifyAccessToken, messageRouter)
 app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
+app.use('/api/antenne', verifyAccessToken, antenneRouter)
+
+app.use('/api/initialise',verifyAccessToken, initialiseRouter)
 
 app.get('/api', async (req, res, next) => {
   res.send('Hello !!')

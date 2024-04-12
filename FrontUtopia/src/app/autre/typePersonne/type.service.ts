@@ -11,7 +11,7 @@ import { Type } from '../../interfaces/type';
 export class TypePersonneService {
 
    
-  private TypeUrl = environment.apiUrl + 'Type';
+  private TypeUrl = environment.apiUrl + 'personneType';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -23,7 +23,7 @@ export class TypePersonneService {
   }
 
   getAllType(): Observable<any>{
-    return this.http.post<Type[]>(this.TypeUrl + "/getalltype","", this.httpOptions)
+    return this.http.post<Type[]>(this.TypeUrl + "/getAllTypes","", this.httpOptions)
   }
 
   addType(nomType: string): Observable<Type> {

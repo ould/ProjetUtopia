@@ -18,7 +18,7 @@ const PersonneTypeSchema = new Schema({
   },
   dateCreation: {
     type: Date,
-    required: true,
+    required: false,
   },
   dateModification : {
     type: Date,

@@ -7,19 +7,19 @@ const { addDateHours } = require('../helpers/date')
 module.exports = {
   register: async (req, res, next) => {
     try {
-      const result = await authSchema.validateAsync(req.body)
+      const result = await authSchema.validateAsync(req.body);
 
-      const doesExist = await User.findOne({ email: result.email })
+      const doesExist = await User.findOne({ email: result.email });
       if (doesExist)
-        throw createError.Conflict(`${result.email} is already been registered`)
+        throw createError.Conflict(`${result.email} is already been registered`);
 
-      result.groupes = ["Lecteur"]
-      result.creePar = "0" //Créé par lui meme 
+      result.groupes = ["Lecteur"];
+      result.creePar = "0"; //Créé par lui meme 
 
-      const user = new User(result)
-      const savedUser = await user.save()
-      console.log(savedUser.groupes)
-      const accessToken = await signAccessToken(savedUser)
+      const user = new User(result);
+      const savedUser = await user.save();
+      console.log(savedUser.groupes);
+      const accessToken = await signAccessToken(savedUser);
 
       res.send({ accessToken })
     } catch (error) {

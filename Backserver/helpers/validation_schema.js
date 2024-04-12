@@ -93,7 +93,7 @@ const groupeSchema = Joi.object({
 
 const personneTypeSchema = Joi.object({
   id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
+  nom: Joi.string().optional(),
   commentaire: Joi.string().optional(),
 
   creePar: Joi.string().optional(),

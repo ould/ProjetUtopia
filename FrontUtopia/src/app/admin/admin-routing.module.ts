@@ -20,7 +20,7 @@ const adminRoutes: Routes = [
           { path: 'comptes', component: ManageComptesComponent },
           { path: 'modifierUtilisateur/:id', component: CompteDetailComponent },
           { path: 'groupes', component: ManageGroupeComponent },
-          { path: 'types', component: ManagePersonneTypeComponent },
+          { path: 'personneType', component: ManagePersonneTypeComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }

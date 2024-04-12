@@ -8,7 +8,7 @@ groupeRouter.post('/isAdmin', GroupeController.isAdmin)
 
 groupeRouter.post('/getUserGroupe', GroupeController.getUserRole)
 
-groupeRouter.post('/getAllGroupes', GroupeController.getAllRoles)
+groupeRouter.post('/getAllGroupes', GroupeController.getAll)
 
 groupeRouter.post('/', GroupeController.save)
 

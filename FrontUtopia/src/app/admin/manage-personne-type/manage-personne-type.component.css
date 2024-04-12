@@ -1,0 +1,58 @@
+/* gestion-roles.component.css */
+.utopia-container {
+    max-width: 600px;
+    margin: auto;
+    color: #110b0b; /* Couleur du texte */
+  }
+  
+  h1 {
+    color: #00a59e; /* Couleur du titre */
+  }
+  
+  button {
+    background-color: #00a59e; /* Couleur du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #007d74; /* Couleur au survol du bouton */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #fff; /* Couleur de la bordure des cellules du tableau */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #00a59e; /* Couleur de fond de l'en-tête du tableau */
+  }
+  
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Couleur au survol d'une ligne du tableau */
+  }
+  
+  #formulaire {
+    margin-top: 20px;
+    display: none;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+  }
