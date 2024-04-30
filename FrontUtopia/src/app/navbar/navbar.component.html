@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
   
         <div class="navbar-nav">
-          <ul *ngIf="AuthService.isLoggedIn()" class="navbar-nav">
+          <ul *ngIf="isLoggedIn" class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" routerLink="/admin">Admin</a>
             </li>
@@ -22,10 +22,10 @@
               <a class="nav-link" routerLink="/reporting">Reporting</a>
             </li>
           </ul>
-            <button  *ngIf="AuthService.isLoggedIn()" routerLink="/logout">Logout</button>
-            <button  *ngIf="!AuthService.isLoggedIn()" routerLink="/login">Login</button>
-            <button  *ngIf="!AuthService.isLoggedIn()" routerLink="/register">S'enregistrer</button>
-            <button  *ngIf="AuthService.isLoggedIn() && !this.isIntialise" (click)="initialiseDonnees()">Initialise</button>
+            <button  *ngIf="isLoggedIn" routerLink="/logout">Logout</button>
+            <button  *ngIf="!isLoggedIn" routerLink="/login">Login</button>
+            <button  *ngIf="!isLoggedIn" routerLink="/register">S'enregistrer</button>
+            <button  *ngIf="isLoggedIn && !this.isIntialise" (click)="initialiseDonnees()">Initialise</button>
           </div>
       </div>
     </div>

@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
 import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/compte-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ManagePersonneTypeComponent } from './admin/manage-personne-type/manage-personne-type.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     RequeteDetailComponent,
     PopupComponent,
     CompteDetailComponent,
-    NavbarComponent
+    NavbarComponent,
+    ManagePersonneTypeComponent
   ],
   imports: [
     BrowserModule,

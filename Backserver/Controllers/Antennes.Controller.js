@@ -1,4 +1,5 @@
 const Antenne = require('../Models/Antenne.model');
+const createError = require('http-errors')
 
 module.exports = {
     get: async (req, res, next) => {
@@ -26,5 +27,22 @@ module.exports = {
           if (error.isJoi === true) error.status = 422
           next(error)
         }
-      }
+      },
+
+      update: async (req, res, next) => {
+
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const id = req.params.id
+
+            const doesExist = await Antenne.findOneAndDelete({ _id: id })
+            res.send(doesExist.id)
+
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    }
 }

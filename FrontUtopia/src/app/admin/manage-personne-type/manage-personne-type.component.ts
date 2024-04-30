@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TypePersonneService } from 'src/app/autre/typePersonne/type.service';
+import { TypePersonneService } from 'src/app/autres-services/typePersonne/type.service';
 import { PopupComponent } from 'src/app/popup/popup.component';
 import { Type } from 'src/app/interfaces/type';
 
@@ -13,14 +13,15 @@ export class ManagePersonneTypeComponent  implements OnInit  {
 
   
   ngOnInit(): void {
-
+    
     this.TypePersonneService.getAllType().subscribe(
       data => {
         this.types = data
+        console.log(this.types)
       }
     )
   }
-
+  
   types?: Type[];
 
   modifierRole(typeId?: string) {

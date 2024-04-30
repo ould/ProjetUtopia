@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { UtilisateurService } from 'src/app/autre/utilisateur/utilisateur.service';
+import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
+import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
+import { Antenne } from 'src/app/interfaces/antenne';
 import { User } from 'src/app/interfaces/user';
 import { PopupComponent } from 'src/app/popup/popup.component';
 
@@ -12,7 +15,9 @@ import { PopupComponent } from 'src/app/popup/popup.component';
 export class ManageComptesComponent implements OnInit {
 
   utilisateurs: User[] = [];
-  nouvelUtilisateur: User = { email: "", nom : "", prenom: "", password:"", groupes: ["Basique"], antenne:"" }; // Initialisez un objet pour le nouvel utilisateur
+  nouvelUtilisateur?:User
+  Antennes: Antenne[] = []
+
 
   ngOnInit(): void {
 
@@ -21,18 +26,32 @@ export class ManageComptesComponent implements OnInit {
         this.utilisateurs = data
       }
     )
+
+    this.antenneService.getAllAntennes().subscribe(
+      data => {
+        this.Antennes = data
+      }
+    )
   }
 
+
+  registrationForm = this.fb.group({
+    email: ['', [Validators.required]],
+    nom: ['', [Validators.required]],
+    prenom: ['', [Validators.required]],
+    antenne: ['', [Validators.required]]
+  })
 
   ajouterUtilisateur() {
     // Ajoutez ici la logique pour ajouter un utilisateur à la liste
-    if (this.nouvelUtilisateur && this.nouvelUtilisateur.email != "") {
-      this.utilisateurs.push(this.nouvelUtilisateur);
-      this.nouvelUtilisateur = { email: "", nom : "", prenom: "", password:"", groupes: ["Basique"], antenne:""  }; // Réinitialisez l'objet nouvelUtilisateur après l'ajout
-    }
+    this.nouvelUtilisateur = { email: "", nom: "", prenom: "", password: "", groupes: ["0"], antenne: ["0"] }; // Réinitialisez l'objet nouvelUtilisateur après l'ajout
+      
+
+    //this.utilisateurs.push(this.nouvelUtilisateur);
+
   }
 
-  
+
   reinitialiseMotDePasse(utilisateur: User): void {
   }
 
@@ -71,5 +90,7 @@ export class ManageComptesComponent implements OnInit {
 
   constructor(
     private utilisateurService: UtilisateurService,
-    private dialog: MatDialog) { }
+    private antenneService: AntenneService,
+    private dialog: MatDialog,
+    private fb: FormBuilder) { }
 }

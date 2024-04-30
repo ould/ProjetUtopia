@@ -2,8 +2,9 @@ const express = require('express')
 const AntennesController = require('../Controllers/Antennes.Controller')
 const antenneRouter = express.Router()
 
-antenneRouter.get('/:nom', AntennesController.get)
+antenneRouter.get('/getAll/', AntennesController.getAll) // ne pas oublier le / à la fin sinon ça ne foncitonne pas 
 
-antenneRouter.get('/getAll', AntennesController.getAll)
+antenneRouter.get('/:id', AntennesController.get)
+
 
 module.exports = antenneRouter

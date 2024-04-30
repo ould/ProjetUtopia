@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { InitialisationService } from '../autre/initialisation.service';
+import { InitialisationService } from '../autres-services/initialisation/initialisation.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +10,12 @@ import { InitialisationService } from '../autre/initialisation.service';
 export class NavbarComponent implements OnInit {
 
   public isIntialise :Boolean = true
+  public isLoggedIn :boolean = this.AuthService.isLoggedIn()
 
   initialiseDonnees() {
     this.InitialiseService.initialise().subscribe()
   }
-   
+  
   
   ngOnInit() {
     this.InitialiseService.estInitialise().subscribe(

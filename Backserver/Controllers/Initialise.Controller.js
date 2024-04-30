@@ -82,7 +82,6 @@ module.exports = {
   exist: async (req, res, next) => {
     try {
       const doesExist = await Initialise.findOne()
-      console.log(doesExist)
       if (doesExist)
         res.send(true)
       else

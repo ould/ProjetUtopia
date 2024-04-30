@@ -17,7 +17,8 @@ const userSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
 
-  groupes: Joi.array().optional(),
+  groupes: Joi.array().required(),
+  antennes: Joi.array().required()
 
 })
 

@@ -26,7 +26,7 @@ const UserSchema = new Schema({
     required: true,
   },
   antenne: {
-    type: String,
+    type: [String],
     required: true,
   },
   creePar: {

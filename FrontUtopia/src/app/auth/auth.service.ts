@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
-import { GroupeService } from '../autre/groupe/groupe.service';
+import { GroupeService } from '../autres-services/groupe/groupe.service';
 
 
 @Injectable({

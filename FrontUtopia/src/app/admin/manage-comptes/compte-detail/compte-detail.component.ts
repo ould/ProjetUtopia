@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UtilisateurService } from 'src/app/autre/utilisateur/utilisateur.service';
+import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
 import { User } from 'src/app/interfaces/user';
 import { Location } from '@angular/common';
 
@@ -31,6 +31,4 @@ export class CompteDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
-
 }

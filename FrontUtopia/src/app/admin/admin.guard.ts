@@ -2,7 +2,7 @@ import {inject} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
-import { GroupeService } from '../autre/groupe/groupe.service';
+import { GroupeService } from '../autres-services/groupe/groupe.service';
 
 export const adminGuard = () => {
   const authService = inject(AuthService);
