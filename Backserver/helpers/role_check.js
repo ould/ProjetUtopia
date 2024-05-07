@@ -9,6 +9,11 @@ const nomGroupeMineur = "Mineur"
 const nomGroupeHebergement = "Hebergement"
 const nomGroupeBenevole = "Benevole"
 const nomGroupeAdherent = "Adherent"
+const nomGroupeAstreinte = "Astreinte"
+const nomGroupeHommeSeul = "HommeSeul"
+const nomGroupeRapports = "Rapports"
+const nomGroupeStock = "Stock"
+const nomGroupeChat = "Chat"
 
 module.exports = {
   haveAdminRole: async (req, res, next) => {
@@ -33,6 +38,22 @@ module.exports = {
 
   haveRoleMineur: async (req, res, next) => {
     haveRole(req, res, next, nomGroupeMineur, "Not Mineur group")
+  },
+
+  haveRoleAstreinte: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeAstreinte, "Not Astreinte group")
+  },
+  haveRoleHommeSeul: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeHommeSeul, "Not HommeSeul group")
+  },
+  haveRoleRapports: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeRapports, "Not Rapports group")
+  },
+  haveRoleStock: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeStock, "Not Stock group")
+  },
+  haveRoleChat: async (req, res, next) => {
+    haveRole(req, res, next, nomGroupeChat, "Not Chat group")
   },
 }
 

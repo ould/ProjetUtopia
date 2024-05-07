@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { InitialisationService } from '../autres-services/initialisation/initialisation.service';
+import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,23 +10,82 @@ import { InitialisationService } from '../autres-services/initialisation/initial
 })
 export class NavbarComponent implements OnInit {
 
-  public isIntialise :Boolean = true
-  public isLoggedIn :boolean = this.AuthService.isLoggedIn()
+  public isIntialise: Boolean = true
+  public isLoggedIn: boolean = this.AuthService.isLoggedIn()
+
+  public isGroupeAdmin: Boolean = false;
+  public isGroupeFamille: Boolean = false;
+  public isGroupeMineur: Boolean = false;
+  public isGroupeHebergeuse: Boolean = false;
+  public isGroupeAstreinte: Boolean = false;
+  public isGroupeBenevole: Boolean = false;
+  public isGroupeAdherent: Boolean = false;
+  public isGroupeHommeSeul: Boolean = false;
+  public isGroupeRapports: Boolean = false;
+  public isGroupeStock: Boolean = false;
+  public isGroupeChat: Boolean = false;
 
   initialiseDonnees() {
     this.InitialiseService.initialise().subscribe()
   }
-  
-  
+
+
   ngOnInit() {
     this.InitialiseService.estInitialise().subscribe(
       data => {
         this.isIntialise = data
       }
-    )
+    );
+    //TODO : sortir les string en const globales
+    this.utilisateurService.isGroup("Admin").subscribe(
+      data => {
+        this.isGroupeAdmin = data
+      });
+    this.utilisateurService.isGroup("Famille").subscribe(
+      data => {
+        this.isGroupeFamille = data
+      });
+    this.utilisateurService.isGroup("Mineur").subscribe(
+      data => {
+        this.isGroupeMineur = data
+      });
+    this.utilisateurService.isGroup("Hebergeuse").subscribe(
+      data => {
+        this.isGroupeHebergeuse = data
+      });
+    this.utilisateurService.isGroup("Astreinte").subscribe(
+      data => {
+        this.isGroupeAstreinte = data
+      });
+    this.utilisateurService.isGroup("Benevole").subscribe(
+      data => {
+        this.isGroupeBenevole = data
+      });
+    this.utilisateurService.isGroup("Adherent").subscribe(
+      data => {
+        this.isGroupeAdherent = data
+      });
+    this.utilisateurService.isGroup("HommeSeul").subscribe(
+      data => {
+        this.isGroupeHommeSeul = data
+      });
+    this.utilisateurService.isGroup("Rapports").subscribe(
+      data => {
+        this.isGroupeRapports = data
+      });
+    this.utilisateurService.isGroup("Stock").subscribe(
+      data => {
+        this.isGroupeStock = data
+      });
+    this.utilisateurService.isGroup("Chat").subscribe(
+      data => {
+        this.isGroupeChat = data
+      });
+
   }
 
 
   constructor(public AuthService: AuthService,
-              public InitialiseService : InitialisationService) {}
+    public InitialiseService: InitialisationService,
+    public utilisateurService: UtilisateurService) { }
 }

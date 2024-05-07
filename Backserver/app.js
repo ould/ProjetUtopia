@@ -4,7 +4,7 @@ const createError = require('http-errors')
 require('dotenv').config()
 require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
-const { haveAdminRole, haveRoleFamille } = require('./helpers/role_check')
+const { haveAdminRole, haveRoleFamille, haveRoleChat, haveRoleAstreinte, haveRoleHommeSeul, haveRoleMineur } = require('./helpers/role_check')
 //require('./helpers/init_redis')
 
 const cors = require("cors");
@@ -45,9 +45,9 @@ app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 app.use('/api/famille', verifyAccessToken, haveRoleFamille, familleRouter)
 
 //Routes communes internes
-app.use('/api/chat', verifyAccessToken, chatRouter)
-app.use('/api/personne', verifyAccessToken, personneRouter)
-app.use('/api/message', verifyAccessToken, messageRouter)
+app.use('/api/chat', verifyAccessToken, haveRoleChat, chatRouter)
+app.use('/api/personne', verifyAccessToken, haveRoleFamille || haveRoleAstreinte || haveRoleHommeSeul || haveRoleMineur, personneRouter)
+app.use('/api/message', verifyAccessToken, haveRoleChat, messageRouter)
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
 app.use('/api/initialise',verifyAccessToken, initialiseRouter)
 

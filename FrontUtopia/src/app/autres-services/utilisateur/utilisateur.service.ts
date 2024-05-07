@@ -45,6 +45,12 @@ export class UtilisateurService {
     );
   }
 
+  isGroup(nomGroupeAVerifier: string): Observable<Boolean> {
+    const url = `${this.userUrl}/isGroupe/${nomGroupeAVerifier}`;
+    return this.http.get<Boolean>(url).pipe();
+  }
+
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

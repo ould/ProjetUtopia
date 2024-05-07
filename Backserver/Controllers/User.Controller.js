@@ -1,6 +1,7 @@
 const createError = require('http-errors')
 const User = require('../Models/User.model')
-const { userSchema } = require('../helpers/validation_schema')
+const { userSchema } = require('../helpers/validation_schema');
+const Groupe = require('../Models/Groupe.model');
 
 module.exports = {
 
@@ -20,8 +21,9 @@ module.exports = {
             const result = await userSchema.validateAsync(req.body)
             result.creePar = req.payload.userId
 
-            if (result._id)
-                throw createError.Conflict(`${result._id} is already `)
+            if (result._id) {
+                throw createError.Conflict(`${result._id} is already `);
+            }
 
             const user = new User(result)
             const saveduser = await user.save()
@@ -62,14 +64,38 @@ module.exports = {
             const id = req.params.id
 
             const doesExist = await User.findOne({ _id: id })
-            if (!doesExist)
+            if (!doesExist) {
                 throw createError.NotFound(`${result} not found`);
+            }
             res.send(doesExist)
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
         }
+    },
+
+    isGroupe: async (req, res, next) => {
+        try {
+            const userId = req.payload.userId;
+            
+            const user = await User.findOne({ _id: userId });
+            //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
+            const groupeAdmin = await Groupe.findOne({ nom: "Admin" });
+            if(user.groupes.includes(groupeAdmin._id)){
+                res.send(true)
+            }
+            else{
+                const nomGroupeAVerifier = req.params.nomGroupeAVerifier
+                const groupeAChek = await Groupe.findOne({ nom: nomGroupeAVerifier });
+                const estInclus =  user.groupes.includes(groupeAChek._id);
+                
+                res.send(estInclus)
+            }
+          } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+          }
     },
 
     delete: async (req, res, next) => {
