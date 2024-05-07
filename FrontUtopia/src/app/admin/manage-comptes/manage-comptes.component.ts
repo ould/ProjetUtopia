@@ -58,14 +58,6 @@ export class ManageComptesComponent implements OnInit {
   }
 
 
-  modifierUtilisateur(utilisateur: User) {
-
-
-  }
-
-
-  
-
   openPopupSupprimer(utilisateur: User) {
     const dialogRef = this.dialog.open(PopupComponent, {
       data: {

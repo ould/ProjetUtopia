@@ -26,30 +26,31 @@ module.exports = {
             const user = new User(result)
             const saveduser = await user.save()
             const savefuserId = saveduser._id
-            
+
             res.send(savefuserId)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
         }
     },
-    
+
     update: async (req, res, next) => {
         try {
-            const result = await userSchema.validateAsync(req.body)
-            
-            //TODO ; check pour que seul admin peut creer un admin  (sauf si premier admin)
-            const doesExist = await User.findOne({ _id: result.id })
-            if (!doesExist)
-                throw createError.NotFound(`${result.id} not found`);
+            const result = await userSchema.validateAsync(req.body, { allowUnknown: true })
+
+            //TODO ; check pour que seul admin peut creer/modifier un admin  (sauf si premier admin)
+            const doesExist = await User.findOne({ _id: result._id })
+            if (!doesExist) {
+                throw createError.NotFound(`${result._id} not found`);
+            }
 
             result.modifiePar = req.payload.userId
 
-            const filter = { _id: result.id };
+            const filter = { _id: result._id };
             const updateduser = await User.findOneAndUpdate(filter, result, {
                 returnOriginal: false
             });
-            res.send(updateduser.id)
+            res.send(updateduser._id)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)

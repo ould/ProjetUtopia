@@ -1,27 +1,35 @@
 <div class="container">
-    <h1>Modifier l'utilisateur</h1>
-    <form (ngSubmit)="modifierUtilisateur()">
-      <div class="form-group">
-        <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" value={{utilisateur.nom}} required>
+  <h1>Modifier l'utilisateur</h1>
+  <form [formGroup]="updateUserForm">
+    <fieldset>
+      <div class="form-field">
+        <label for="nom" class="form-label">Nom :</label>
+        <input type="text" class="form-control" id="nom" formControlName="nom">
       </div>
-      <div class="form-group">
-        <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" value={{utilisateur.prenom}} required>
+      <div class="form-field">
+        <label for="prenom" class="form-label">Prénom :</label>
+        <input type="text" class="form-control" id="prenom" formControlName="prenom">
       </div>
-      <div class="form-group">
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" value={{utilisateur.email}} required>
+      <div class="form-field">
+        <label>Email:</label>
+        <input name="email" formControlName="email">
       </div>
-      <div class="form-group">
-        <label for="groupes">Groupes :</label>
-        <select id="groupes" name="groupes" value={{utilisateur.groupes}} multiple>
-            <option *ngFor="let option of utilisateur.groupes" [value]="option">                  
-                {{option}}
-            </option>
-          </select>
+      <div class="form-field">
+        <label for="role-utilisateur">Antennes :</label>
+        <select class="custom-select" formControlName="antennes" multiple>
+          <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
+        </select>
       </div>
-      <button type="submit">Enregistrer</button>
-      <button (click)="goBack()">Annuler</button>
-    </form>
-  </div>
+      <div class="form-field">
+        <label for="role-utilisateur">Groupes :</label>
+        <select class="custom-select" formControlName="groupes" multiple>
+          <option *ngFor="let groupe of groupes" value="{{groupe._id}}">{{groupe.nom}}</option>
+        </select>
+      </div>
+    </fieldset>
+    <div class="form-buttons">
+      <button class="button button-primary" (click)="modifierUtilisateur()">Enregistrer</button>
+      <button class="button" (click)="goBack()">Annuler</button>
+    </div>
+  </form>
+</div>

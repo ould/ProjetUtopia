@@ -13,13 +13,15 @@ const authSchema = Joi.object({
 })
 
 const userSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required(),
   prenom: Joi.string().required(),
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
 
   groupes: Joi.array().required(),
-  antennes: Joi.array().required()
+  antennes: Joi.array().required(),
+
 
 })
 

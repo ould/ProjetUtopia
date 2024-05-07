@@ -11,13 +11,14 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { authGuard } from './auth/auth.guard';
+import { AccueilComponent } from './accueil/accueil.component';
 
 
 // path case sensitive
 const routes: Routes = [
   {
     path: '', canActivate: [authGuard], children: [
-      { path: 'accueil', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'famille', component: FamillesComponent },
       { path: 'detailFamille/:id', component: FamilleDetailComponent },
       { path: 'ajouterFamille', component: FamilleDetailComponent },
@@ -28,9 +29,9 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'accueil', component: AccueilComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
-  { path: '**', component: DashboardComponent }
-  //TODO faire une page accueil hors authetification
+  { path: '**', component: AccueilComponent }
 ];
 
 @NgModule({

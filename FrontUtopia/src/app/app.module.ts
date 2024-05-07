@@ -28,6 +28,7 @@ import { PopupComponent } from './popup/popup.component';
 import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/compte-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ManagePersonneTypeComponent } from './admin/manage-personne-type/manage-personne-type.component';
+import { AccueilComponent } from './accueil/accueil.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ManagePersonneTypeComponent } from './admin/manage-personne-type/manage
     PopupComponent,
     CompteDetailComponent,
     NavbarComponent,
-    ManagePersonneTypeComponent
+    ManagePersonneTypeComponent,
+    AccueilComponent
   ],
   imports: [
     BrowserModule,
