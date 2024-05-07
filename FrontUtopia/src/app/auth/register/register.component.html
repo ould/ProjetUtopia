@@ -1,5 +1,5 @@
 
-  <form [formGroup]="form">
+  <form [formGroup]="newUserForm">
     <fieldset>
         <legend>Nouveau utilisateur</legend>
         <div class="form-field">
@@ -24,6 +24,12 @@
           <input name="passwordConfirm" formControlName="passwordConfirm" 
                  type="password">
       </div>
+      <div class="form-field">
+        <label for="role-utilisateur">Antenne principale :</label>
+      <select class="custom-select" formControlName="antennes">
+      <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
+    </select>
+    </div>
     </fieldset>
     <div class="form-buttons">
         <button class="button button-primary" 

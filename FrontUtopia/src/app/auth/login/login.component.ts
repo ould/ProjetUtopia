@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/interfaces/user';
@@ -15,7 +15,6 @@ export class LoginComponent {
 
   constructor(private fb:FormBuilder, 
                private authService: AuthService, 
-               private router: Router,
                private route: ActivatedRoute) {
 
       this.form = this.fb.group({
@@ -29,7 +28,7 @@ export class LoginComponent {
 
       if (val.email && val.password) {
         let originUrl:string = this.route.snapshot.queryParams['originUrl']
-        if (originUrl.length < 1) {
+        if (originUrl?.length < 1) {
             originUrl = "accueil"
         }
           this.authService.login(val)

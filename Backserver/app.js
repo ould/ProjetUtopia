@@ -19,6 +19,7 @@ const personneTypeRouter = require('./Routes/PersonneType')
 const userRouter = require('./Routes/User.route')
 const initialiseRouter = require('./Routes/Initialise.route')
 const antenneRouter = require('./Routes/Antenne.route')
+const antennePublicRouter = require('./Routes/Antenne.route')
 
 const corsOptions = {
   origin: '*',
@@ -33,19 +34,26 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
+//Routes Admin
 app.use('/api/auth', AuthRoute)
 app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 app.use('/api/user', verifyAccessToken, haveAdminRole, userRouter)
+app.use('/api/personneType', verifyAccessToken, haveAdminRole, personneTypeRouter)
+app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
+
+//Routes famille
 app.use('/api/famille', verifyAccessToken, haveRoleFamille, familleRouter)
+
+//Routes communes internes
 app.use('/api/chat', verifyAccessToken, chatRouter)
 app.use('/api/personne', verifyAccessToken, personneRouter)
-app.use('/api/personneType', verifyAccessToken, haveAdminRole, personneTypeRouter)
 app.use('/api/message', verifyAccessToken, messageRouter)
-app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
-
 app.use('/api/initialise',verifyAccessToken, initialiseRouter)
+
+//Routes publiques
+app.use('/api/public/antenne', antennePublicRouter)
+
 
 app.get('/api', async (req, res, next) => {
   res.send('Hello !!')

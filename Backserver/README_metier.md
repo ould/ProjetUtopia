@@ -11,3 +11,12 @@ Les types de personnes
 
 
 Les antennes
+
+
+
+Nouvel utilisateur 
+    Via volet admin
+
+    Via la page d'enregistement
+
+    Cas du premier utilisateur

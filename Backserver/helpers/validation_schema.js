@@ -8,6 +8,7 @@ const authSchema = Joi.object({
   groupes: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
+  antennes: Joi.array().optional()
 
 })
 

@@ -9,7 +9,8 @@ import { Antenne } from 'src/app/interfaces/antenne';
 })
 export class AntenneService {
 
-  private userUrl = environment.apiUrl + 'antenne';
+  private antenneUrl = environment.apiUrl + 'antenne';
+  private publicAntenneUrl = environment.apiUrl + 'public/antenne';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -18,27 +19,31 @@ export class AntenneService {
 
 
   getAntenne(id: string): Observable<Antenne>{
-    return this.http.get<Antenne>(this.userUrl + "/" +id ).pipe()
+    return this.http.get<Antenne>(this.antenneUrl + "/" +id ).pipe()
   }
 
   getAllAntennes(): Observable<Antenne[]>{
-    return this.http.get<Antenne[]>(this.userUrl + "/getAll")
+    return this.http.get<Antenne[]>(this.antenneUrl + "/getAll")
+  }
+
+  getAllAntennesPublic(): Observable<Antenne[]>{
+    return this.http.get<Antenne[]>(this.publicAntenneUrl + "/getAll")
   }
 
   addAntenne(user: Antenne): Observable<Antenne> {
-    return this.http.post<Antenne>(this.userUrl, user, this.httpOptions).pipe(
+    return this.http.post<Antenne>(this.antenneUrl, user, this.httpOptions).pipe(
       catchError(this.handleError<any>('addUser'))
     );
   }
 
   updateAntenne(user:Antenne): Observable<Antenne> {
-    return this.http.put<Antenne>(this.userUrl, user, this.httpOptions).pipe(
+    return this.http.put<Antenne>(this.antenneUrl, user, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateAntenne'))
     );
   }
 
   deleteAntenne(id: string): Observable<Antenne> {
-    const url = `${this.userUrl}/${id}`;
+    const url = `${this.antenneUrl}/${id}`;
     return this.http.delete<Antenne>(url, this.httpOptions).pipe(
       catchError(this.handleError<any>('deleteAntenne'))
     );

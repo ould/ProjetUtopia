@@ -13,15 +13,13 @@ module.exports = {
       if (doesExist)
         throw createError.Conflict(`${result.email} is already been registered`);
 
-      result.groupes = ["Lecteur"];
-      result.creePar = "0"; //Créé par lui meme 
+      result.groupes = ["0"];
+      result.creePar = "self"; //Créé par lui meme 
 
       const user = new User(result);
-      const savedUser = await user.save();
-      console.log(savedUser.groupes);
-      const accessToken = await signAccessToken(savedUser);
+      await user.save();
 
-      res.send({ accessToken })
+      res.send(true)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -32,11 +30,11 @@ module.exports = {
     try {
       const result = await authSchema.validateAsync(req.body)
       const user = await User.findOne({ email: result.email })
-      if (!user) throw createError.NotFound('User not registered')
+      if (!user) throw createError.Unauthorized('Email ou mot de passe invalide')
 
       const isMatch = await user.isValidPassword(result.password)
       if (!isMatch)
-        throw createError.Unauthorized('Username/password not valid')
+        throw createError.Unauthorized('Email ou mot de passe invalide')
 
       const accessToken = await signAccessToken(user)
       const expiresAt = addDateHours(20);
@@ -44,7 +42,7 @@ module.exports = {
       res.send({ accessToken, user, expiresAt })
     } catch (error) {
       if (error.isJoi === true)
-        return next(createError.BadRequest('Invalid Username/Password'))
+        return next(createError.BadRequest('Invalid'))
       next(error)
     }
   },

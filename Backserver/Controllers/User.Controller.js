@@ -23,22 +23,22 @@ module.exports = {
             if (result._id)
                 throw createError.Conflict(`${result._id} is already `)
 
-                //TODO ; check pour que seul admin peut creer un admin  (sauf si premier admin)
             const user = new User(result)
             const saveduser = await user.save()
             const savefuserId = saveduser._id
-
+            
             res.send(savefuserId)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
         }
     },
-
+    
     update: async (req, res, next) => {
         try {
             const result = await userSchema.validateAsync(req.body)
-
+            
+            //TODO ; check pour que seul admin peut creer un admin  (sauf si premier admin)
             const doesExist = await User.findOne({ _id: result.id })
             if (!doesExist)
                 throw createError.NotFound(`${result.id} not found`);
