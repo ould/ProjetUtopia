@@ -23,6 +23,7 @@ module.exports = {
             if (result._id)
                 throw createError.Conflict(`${result._id} is already `)
 
+                //TODO ; check pour que seul admin peut creer un admin  (sauf si premier admin)
             const user = new User(result)
             const saveduser = await user.save()
             const savefuserId = saveduser._id

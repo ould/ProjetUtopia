@@ -2,7 +2,7 @@
 
 <!-- Formulaire d'ajout d'utilisateur TODO : le faire sortir dans un compo séparé --> 
 <h2>Ajouter un utilisateur</h2>
-<form (ngSubmit)="ajouterUtilisateur()">
+<form [formGroup]="newUserForm" (ngSubmit)="ajouterUtilisateur()">
   <label for="nom-utilisateur">Nom d'utilisateur :</label>
   <input type="text" id="nom-utilisateur" name="nom" formControlName="nom"  ngModel required>
   <label for="nom-utilisateur">Prénom de l'utilisateur :</label>
@@ -12,17 +12,12 @@
   <label for="role-utilisateur">Mot de passe provisoire :</label>
   <input type="text" id="role-utilisateur" name="password" formControlName="password" ngModel required>
   <div class="mb-3">
-    <select class="custom-select" formControlName="antenne">
-      <option value="">Antenne principale : </option>
+    <label for="role-utilisateur">Antenne principale :</label>
+    <select class="custom-select" formControlName="antennes">
       <option *ngFor="let antenne of Antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
     </select>
-
-    <!-- error block -->
-    <!-- <div class="invalid-feedback" *ngIf="isSubmitted && cityName.errors?.required">
-      <sup>*</sup>Veuillez selectionner une antenne
-    </div> -->
   </div>  
-  <button type="submit">Ajouter</button>
+  <button class="button" type="submit" [disabled]="newUserForm.invalid">Ajouter</button>
 </form>
 
 <h2>Liste des utilisateurs</h2>

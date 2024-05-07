@@ -23,8 +23,11 @@ label {
   margin-bottom: 5px;
 }
 
+
+
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+select {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
@@ -44,6 +47,10 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #007d74; /* Couleur au survol du bouton d'ajout */
+}
+
+button[type="submit"]:disabled {
+  background-color: #e1f3f2; /* Couleur au survol du bouton d'ajout */
 }
 
 /* Liste des utilisateurs */

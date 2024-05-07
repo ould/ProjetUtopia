@@ -1,5 +1,5 @@
 import {inject} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 
 import {AuthService} from './auth.service';
 
@@ -10,7 +10,9 @@ export const authGuard = () => {
   if (authService.isLoggedIn()) {
     return true;
   }
-
+  var baseUrl = window.location.href.split('/')[3];
   // Redirect to the login page
-  return router.parseUrl('/login');
+  return router.parseUrl('/login?originUrl='+baseUrl);
+
+  
 };

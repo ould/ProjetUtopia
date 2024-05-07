@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: '**', component: DashboardComponent }
-
+  //TODO faire une page accueil hors authetification
 ];
 
 @NgModule({

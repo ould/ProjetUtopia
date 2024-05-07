@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  antenne: {
+  antennes: {
     type: [String],
     required: true,
   },

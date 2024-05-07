@@ -108,6 +108,7 @@ module.exports = {
   authSchema,
   personneSchema,
   familleSchema,
+  userSchema,
   chatSchema,
   messageSchema,
   groupeSchema,

@@ -22,10 +22,9 @@ export class LogoutComponent {
   }
   
   logout() {
-    const redirectUrl = '/login';
     this.authService.logout();
     this.message = this.getMessage();
-    this.router.navigate([redirectUrl])
+    window.location.reload()
   }
 
   goBack(): void {

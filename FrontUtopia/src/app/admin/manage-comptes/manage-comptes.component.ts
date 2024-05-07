@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
 import { Antenne } from 'src/app/interfaces/antenne';
 import { User } from 'src/app/interfaces/user';
 import { PopupComponent } from 'src/app/popup/popup.component';
+import { } from '@angular/forms'
 
 @Component({
   selector: 'app-manage-comptes',
@@ -17,7 +18,6 @@ export class ManageComptesComponent implements OnInit {
   utilisateurs: User[] = [];
   nouvelUtilisateur?:User
   Antennes: Antenne[] = []
-
 
   ngOnInit(): void {
 
@@ -34,21 +34,23 @@ export class ManageComptesComponent implements OnInit {
     )
   }
 
-
-  registrationForm = this.fb.group({
-    email: ['', [Validators.required]],
+  newUserForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
     nom: ['', [Validators.required]],
     prenom: ['', [Validators.required]],
-    antenne: ['', [Validators.required]]
+    antennes: ['', [Validators.required]],
+    password:['', [Validators.required, Validators.minLength(5)]]
   })
 
   ajouterUtilisateur() {
     // Ajoutez ici la logique pour ajouter un utilisateur à la liste
-    this.nouvelUtilisateur = { email: "", nom: "", prenom: "", password: "", groupes: ["0"], antenne: ["0"] }; // Réinitialisez l'objet nouvelUtilisateur après l'ajout
-      
-
-    //this.utilisateurs.push(this.nouvelUtilisateur);
-
+    if (this.newUserForm.valid) {
+      const newUser: User = this.newUserForm.value;
+      newUser.groupes = ["0"];
+      newUser.antennes = [this.newUserForm.get('antennes')?.value]
+      this.utilisateurService.addUser(newUser).subscribe()
+      this.utilisateurs.push(newUser);
+      }
   }
 
 
@@ -60,6 +62,9 @@ export class ManageComptesComponent implements OnInit {
 
 
   }
+
+
+  
 
   openPopupSupprimer(utilisateur: User) {
     const dialogRef = this.dialog.open(PopupComponent, {

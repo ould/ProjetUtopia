@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/interfaces/user';
@@ -15,7 +15,8 @@ export class LoginComponent {
 
   constructor(private fb:FormBuilder, 
                private authService: AuthService, 
-               private router: Router) {
+               private router: Router,
+               private route: ActivatedRoute) {
 
       this.form = this.fb.group({
           email: ['',Validators.required],
@@ -27,11 +28,15 @@ export class LoginComponent {
       const val :User = this.form.value;
 
       if (val.email && val.password) {
+        let originUrl:string = this.route.snapshot.queryParams['originUrl']
+        if (originUrl.length < 1) {
+            originUrl = "accueil"
+        }
           this.authService.login(val)
               .subscribe(
                   result => {
                       console.log(result + " is logged in");
-                      this.router.navigateByUrl('/accueil');
+                      window.location.href = '/'+originUrl
                   }
               );
       }
