@@ -17,10 +17,11 @@ import { PopupComponent } from '../popup/popup.component';
 })
 export class ChatsComponent {
 
-  constructor(private ChatService: ChatService, private dialog: MatDialog) { }
+  constructor(private chatService: ChatService, private dialog: MatDialog) { }
 
   private searchTerms = new Subject<string>();
   private searchTermTemp = "";
+  newChat: Chat = { _id: '', nom: '', antenne:'', messages: [] };
 
   search(term: string): void {
     this.searchTerms.next(term);
@@ -38,7 +39,7 @@ export class ChatsComponent {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.ChatService.searchChats(term)),
+      switchMap((term: string) => this.chatService.searchChats(term)),
     );
   }
 
@@ -57,9 +58,7 @@ export class ChatsComponent {
       if (result === true && this.searchTermTemp) {
         // Action lorsque le bouton "Oui" est cliqué
         
-        this.ChatService.addChat(this.searchTermTemp).subscribe(
-
-        )
+       
       } else if (result === false) {
         // Action lorsque le bouton "Non" est cliqué
         console.log('Bouton Non cliqué');
@@ -72,11 +71,18 @@ export class ChatsComponent {
 
   selectChat(indexChat?: string): void {
     if(indexChat)
-    this.ChatService.getChat(indexChat).subscribe((response: Chat) => {
+    this.chatService.getChat(indexChat).subscribe((response: Chat) => {
       this.selectedChat = response;
     });;
   }
 
-
+  creerChat(): void {
+    if (this.newChat.nom) {
+      this.chatService.addChat(this.newChat).subscribe(chat => {
+        //Sthis.newChat = { _id: '', nom: '', messages: [] };
+        this.ngOnInit();
+      });
+    }
+  }
 
 }

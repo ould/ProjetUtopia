@@ -9,8 +9,9 @@ import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.s
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  public isIntialise: Boolean = true
+  
+  public activeTab: String = ''
+  public isInitialise: Boolean = true
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
 
   public isGroupeAdmin: Boolean = false;
@@ -29,11 +30,24 @@ export class NavbarComponent implements OnInit {
     this.InitialiseService.initialise().subscribe()
   }
 
+  collapseNavbar() {
+    const navbar = document.getElementById('navbarNavDropdown');
+    if (navbar && navbar.classList.contains('show')) {
+      navbar.classList.remove('show');
+    }
+  }
+
+  switchActive(term : String) {
+    this.activeTab = term
+    this.collapseNavbar();
+  }
+
+
 
   ngOnInit() {
     this.InitialiseService.estInitialise().subscribe(
       data => {
-        this.isIntialise = data
+        this.isInitialise = data
       }
     );
     //TODO : sortir les string en const globales

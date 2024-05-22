@@ -1,13 +1,28 @@
-<div class="container text-center">
+<div class="container">
   <div class="row">
-    <div class="col borderU">
-      <div>
-        <form class="d-flex" role="search">
-          <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control me-2" type="search"
-            placeholder="Search" aria-label="Search">
-            <button type="button" class="btn btn-primary ms-2" id="popupButton" (click)="openPopup(searchBox.value)">Nouveau chat</button>
-        </form>
-      </div>
+    <!-- Section Création de Chat -->
+    <div class="col-12 mb-4">
+      <h2>Créer un Nouveau Chat</h2>
+      <form (ngSubmit)="creerChat()">
+        <div class="mb-3">
+          <label for="nom-chat" class="form-label">Nom du Chat:</label>
+          <input type="text" id="nom-chat" name="nom" class="form-control" [(ngModel)]="newChat.nom" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Créer</button>
+      </form>
+    </div>
+    <!-- Section Recherche de Chat -->
+    <div class="col-12 mb-4">
+      <h2>Rechercher un Chat</h2>
+      <form class="d-flex" role="search">
+        <input #searchBox id="search-box" (input)="search(searchBox.value)" class="form-control me-2" type="search"
+          placeholder="Rechercher" aria-label="Search">
+        <button type="button" class="btn btn-primary ms-2" (click)="openPopup(searchBox.value)">Nouveau Chat</button>
+      </form>
+    </div>
+    <!-- Section Liste des Chats -->
+    <div class="col-12 col-md-4">
+      <h2>Chats Existants</h2>
       <ol class="list-group list-group-numbered">
         <li *ngFor="let ChatIndex of chats$ | async" (click)="selectChat(ChatIndex._id)"
           class="list-group-item d-flex justify-content-between align-items-start">
@@ -17,9 +32,9 @@
         </li>
       </ol>
     </div>
-    <div class="col" *ngIf="selectedChat">
-      <app-chat-detail [ChatInput]="selectedChat">
-      </app-chat-detail>
+    <!-- Section Détails du Chat -->
+    <div class="col-12 col-md-8" *ngIf="selectedChat">
+      <app-chat-detail [ChatInput]="selectedChat"></app-chat-detail>
     </div>
   </div>
 </div>

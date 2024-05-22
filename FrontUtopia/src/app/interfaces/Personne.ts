@@ -7,6 +7,7 @@ export interface Personne {
     ddn?: string;
     nationalite?: string;
     situation?: string;
+    procedure?: string;
     commentaire?: string;
     antenne: string;
     

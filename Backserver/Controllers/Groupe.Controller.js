@@ -58,7 +58,6 @@ module.exports = {
     }
   },
 
-
   getUserRole: async (req, res, next) => {
     try {
 
@@ -89,7 +88,6 @@ module.exports = {
     }
   },
 
-
   getAll: async (req, res, next) => {
     try {
 
@@ -118,6 +116,4 @@ module.exports = {
       next(error)
     }
   }
-
-
 }

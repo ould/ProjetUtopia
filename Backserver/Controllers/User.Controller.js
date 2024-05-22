@@ -75,6 +75,7 @@ module.exports = {
         }
     },
 
+    //Permet de visualiser sur l'appli front les entités selon son groupe
     isGroupe: async (req, res, next) => {
         try {
             const userId = req.payload.userId;

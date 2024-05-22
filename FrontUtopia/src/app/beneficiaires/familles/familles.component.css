@@ -1,48 +1,75 @@
-/* Style pour la section Familles */
-h2 {
-    color: var(--utopia-primary-color);
-    margin-bottom: 20px;
-  }
-  
-  /* Style pour le formulaire de recherche et la liste de familles */
-  form {
-    margin-bottom: 20px;
-  }
-  
-  #search-box {
-    width: 70%;
-  }
-  
-  .btn-success {
-    color: var(--utopia-background-color);
-    background-color: var(--utopia-primary-color);
-    border: none;
-    border-radius: 4px;
-    padding: 8px 15px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-success:hover {
-    background-color: darken(var(--utopia-primary-color), 10%);
-  }
-  
-  /* Style pour la liste de familles */
-  .list-group {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .list-group-item {
-    border: 1px solid var(--utopia-primary-color);
-    border-radius: 4px;
-    margin-bottom: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .list-group-item:hover {
-    background-color: var(--utopia-primary-color);
-    color: var(--utopia-background-color);
-  }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: var(--utopia-primary-color);
+}
+
+.btn-primary {
+  background-color: var(--utopia-primary-color);
+  color: var(--utopia-background-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--utopia-primary-dark-color);
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.families-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.family {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.family:hover {
+  transform: translateY(-5px);
+}
+
+.family-info {
+  text-align: center;
+}
+
+.family-info h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.family-info p {
+  font-size: 14px;
+  color: #666;
+}

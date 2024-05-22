@@ -30,8 +30,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'accueil', component: AccueilComponent },
+  { path: '**', component: AccueilComponent },
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
-  { path: '**', component: AccueilComponent }
 ];
 
 @NgModule({

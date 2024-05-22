@@ -35,23 +35,22 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //Routes Admin
-app.use('/api/auth', AuthRoute)
 app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 app.use('/api/user', verifyAccessToken, haveAdminRole, userRouter)
 app.use('/api/personneType', verifyAccessToken, haveAdminRole, personneTypeRouter)
-app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 
 //Routes famille
 app.use('/api/famille', verifyAccessToken, haveRoleFamille, familleRouter)
 
 //Routes communes internes
-app.use('/api/chat', verifyAccessToken, haveRoleChat, chatRouter)
 app.use('/api/personne', verifyAccessToken, haveRoleFamille || haveRoleAstreinte || haveRoleHommeSeul || haveRoleMineur, personneRouter)
+app.use('/api/chat', verifyAccessToken, haveRoleChat, chatRouter)
 app.use('/api/message', verifyAccessToken, haveRoleChat, messageRouter)
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
 app.use('/api/initialise',verifyAccessToken, initialiseRouter)
 
 //Routes publiques
+app.use('/api/auth', AuthRoute)
 app.use('/api/public/antenne', antennePublicRouter)
 
 

@@ -1,43 +1,52 @@
-<div class="">
-  <button class="btnCarrousel prevBtn" type="button" data-bs-target="#carouselIdentite" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="btnCarrousel nextBtn" type="button" data-bs-target="#carouselIdentite" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
 
-<div class="row">
-  <span id="carouselIdentite" class="carousel slide ">
-    <div class="carousel-inner">
-      
-      <div *ngFor="let personneIndex of personnesInput" class="carousel-item" [ngClass]="{'active': personneIndex == personnesInput[0]}">
-        <div class="row">
-          <div class="form-group col-md-3">
-            <label for="famille-nom" class="form-label">Nom : </label>
-            <input id="famille-nom" class="form-control" [(ngModel)]="personneIndex.nom" placeholder="Nom"
-              disabled="{{lectureSeuleInput}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="famille-Prenom" class="form-label">Prenom : </label>
-            <input id="famille-Prenom" class="form-control" [(ngModel)]="personneIndex.prenom" placeholder="Prenom"
-              disabled="{{lectureSeuleInput}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="famille-DDN" class="form-label">Date de naissance : </label>
-            <input id="famille-DDN" class="form-control" [(ngModel)]="personneIndex.ddn" placeholder="Date de naissance"
-              disabled="{{lectureSeuleInput}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="famille-situation" class="form-label">Situation : </label>
-            <input id="famille-situation" class="form-control" [(ngModel)]="personneIndex.situation" placeholder="Situation"
-              disabled="{{lectureSeuleInput}}">
+<div class="container">
+    <div class="text-end mb-3">
+      <button class="btn btn-primary me-2" type="button" (click)="ajouterPersonne()">Ajouter personne à la famille</button>
+    </div>
+    <!-- Formulaire pour les détails de la famille -->
+    <fieldset>
+      <legend>Personnes de la famille</legend>
+      <div class="famille-detail">
+        <div class="personne-details">
+          <div *ngFor="let personne of personnesInput; let i = index" [ngClass]="{ 'active': i === currentPersonneIndex }">
+            <h3>{{ personne.nom }} {{ personne.prenom }}</h3>
+            <div class="form-group">
+              <label for="nom">Nom :</label>
+              <input id="nom" class="form-control" [(ngModel)]="personne.nom" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="prenom">Prénom :</label>
+              <input id="prenom" class="form-control" [(ngModel)]="personne.prenom" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="ddn">Date de naissance :</label>
+              <input id="ddn" class="form-control" [(ngModel)]="personne.ddn" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="situation">Situation :</label>
+              <input id="situation" class="form-control" [(ngModel)]="personne.situation" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="procedure">Procédure :</label>
+              <input id="procedure" class="form-control" [(ngModel)]="personne.procedure" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="telephone">Téléphone :</label>
+              <input id="telephone" class="form-control" [(ngModel)]="personne.telephone" [readonly]="lectureSeuleInput">
+            </div>
+            <div class="form-group">
+              <label for="nationalite">Nationalité :</label>
+              <input id="nationalite" class="form-control" [(ngModel)]="personne.nationalite" [readonly]="lectureSeuleInput">
+            </div>
           </div>
         </div>
       </div>
-
+      
+    </fieldset>
+    <!-- Boutons pour la navigation entre les personnes -->
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary me-2" type="button" (click)="prevPersonne()">Précédent</button>
+      <button class="btn btn-secondary me-2" type="button" (click)="nextPersonne()">Suivant</button>
     </div>
-  </span>
 </div>
+

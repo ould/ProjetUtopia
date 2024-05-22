@@ -1,9 +1,27 @@
-<h2>Admin</h2>
-<nav>
-  <a routerLink="./" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Dashboard</a>
-  <a routerLink="./comptes" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Comptes</a>
-  <a routerLink="./groupes" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Groupes</a>
-  <a routerLink="./personneType" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Type de personne</a>
+<nav class="navbar navbar-expand-lg bg-utopia-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/admin">Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"
+      aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/comptes" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Comptes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/groupes" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Groupes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/personneType" routerLinkActive="active" ariaCurrentWhenActive="page">Manage Type de personne</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>

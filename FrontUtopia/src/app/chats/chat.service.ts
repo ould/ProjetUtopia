@@ -45,9 +45,8 @@ export class ChatService {
     return this.http.get<Chat>(url).pipe();
   }
 
-  addChat(nomChat: string): Observable<Chat> {
-    const body = { nomChat: nomChat };
-    return this.http.post<Chat>(this.chatUrl, body, this.httpOptions).pipe(
+  addChat(newChat: Chat): Observable<Chat> {
+    return this.http.post<Chat>(this.chatUrl, newChat, this.httpOptions).pipe(
       catchError(this.handleError<Chat>('addChat'))
     );
   }
