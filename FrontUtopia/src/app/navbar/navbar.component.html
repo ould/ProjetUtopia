@@ -25,6 +25,9 @@
         <button *ngIf="!isLoggedIn" class="btn btn-utopia-secondary me-2" routerLink="/register" (click)="collapseNavbar()">S'enregistrer</button>
         <button *ngIf="isLoggedIn" class="btn btn-utopia-secondary me-2" routerLink="/logout" (click)="collapseNavbar()">Logout</button>
         <button *ngIf="isLoggedIn && !this.isInitialise" class="btn btn-utopia-secondary" (click)="initialiseDonnees()">Initialise</button>
+        <select *ngIf="isLoggedIn && this.userMultipleAntennes" class="custom-select"  formControlName="antennes">
+          <option *ngFor="let antenne of antennesUser" value="{{antenne}}">{{antenne}}</option>
+        </select>
       </div>
     </div>
   </div>

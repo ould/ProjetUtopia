@@ -2,6 +2,7 @@ const createError = require('http-errors')
 const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema');
 const Groupe = require('../Models/Groupe.model');
+const Antenne = require('../Models/Antenne.model');
 
 module.exports = {
 
@@ -105,6 +106,75 @@ module.exports = {
 
             const doesExist = await User.findOneAndDelete({ _id: id })
             res.send(doesExist.id)
+
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    getAntennesUser: async (req, res, next) => {
+        try {
+            const idUser = req.payload.userId
+
+            const doesExist = await User.findOne({ _id: idUser })
+            if (!doesExist) {
+                throw createError.NotFound(`${idUser} not found`);
+            }
+
+            let listeAntennes = []
+            for (const antenne of doesExist.antennes) {
+                const result = await Antenne.findOne({ _id: antenne });
+                listeAntennes.push(result)
+              }
+
+            res.send(listeAntennes)
+
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    getAntennesDefautUser: async (req, res, next) => {
+        try {
+            const idUser = req.payload.userId
+
+            const doesExist = await User.findOne({ _id: idUser })
+            if (!doesExist) {
+                throw createError.NotFound(`${idUser} not found`);
+            }
+
+            const result = await Antenne.findOne({ _id: doesExist.antenneDefaut });
+            res.send(result)
+
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    changeAntennesUser: async (req, res, next) => {
+        try {
+            const idUser = req.payload.userId
+            const nomAntenne = req.params.nomAntenne
+
+            const doesExist = await User.findOne({ _id: idUser })
+            if (!doesExist) {
+                throw createError.NotFound(`${idUser} not found`);
+            }
+            //Cherche l'id de l'antenne avec le nom spécifié et modifie l'utilisateur
+            const resultAntenne = await Antenne.findOne({ nom: nomAntenne });
+            doesExist.antenneDefaut = resultAntenne._id
+            doesExist.modifiePar = req.payload.userId
+
+            //MAJ de l'utilisateur
+            const filter = { _id: doesExist._id };
+            const updateduser = await User.findOneAndUpdate(filter, doesExist, {
+                returnOriginal: false
+            });
+            res.send(updateduser._id)
+
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422

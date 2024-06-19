@@ -29,6 +29,10 @@ const UserSchema = new Schema({
     type: [String],
     required: true,
   },
+  antenneDefaut: {
+    type: [String],
+    required: true,
+  },
   creePar: {
     type: String,
     required: true,
@@ -58,6 +62,7 @@ UserSchema.pre('save', async function (next) {
       this.password = hashedPassword
       this.groupes = []
       this.dateCreation = Date.now()
+      this.antenneDefaut = antennes[0]
     }
     next()
   } catch (error) {

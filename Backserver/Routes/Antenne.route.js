@@ -10,5 +10,4 @@ antennePublicRouter.get('/getAll/', AntennesController.getAll)
 antenneRouter.get('/:id', AntennesController.get)
 
 
-module.exports = antenneRouter
-module.exports = antennePublicRouter
+module.exports = antenneRouter, antennePublicRouter

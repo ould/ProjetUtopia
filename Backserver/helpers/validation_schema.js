@@ -18,10 +18,17 @@ const userSchema = Joi.object({
   prenom: Joi.string().required(),
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
-
+  
   groupes: Joi.array().required(),
   antennes: Joi.array().required(),
+  antenneDefaut: Joi.string().optional()
+})
 
+const logSchema = Joi.object({
+  message: Joi.string().required(),
+  importance: Joi.string().optional(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional()
 
 })
 
@@ -115,5 +122,6 @@ module.exports = {
   chatSchema,
   messageSchema,
   groupeSchema,
-  personneTypeSchema
+  personneTypeSchema,
+  logSchema
 }

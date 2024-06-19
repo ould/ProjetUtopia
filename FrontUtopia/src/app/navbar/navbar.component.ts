@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { InitialisationService } from '../autres-services/initialisation/initialisation.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
+import { Antenne } from '../interfaces/antenne';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,8 @@ export class NavbarComponent implements OnInit {
   public activeTab: String = ''
   public isInitialise: Boolean = true
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
+  public userMultipleAntennes: Boolean = false
+  public antennesUser: Antenne[] = []
 
   public isGroupeAdmin: Boolean = false;
   public isGroupeFamille: Boolean = false;
@@ -28,6 +31,15 @@ export class NavbarComponent implements OnInit {
 
   initialiseDonnees() {
     this.InitialiseService.initialise().subscribe()
+  }
+
+  getUserAntennes() {
+    this.utilisateurService.getAntennes().subscribe(
+      data => {
+        //this.antennesUser = data
+        //this.userMultipleAntennes = this.antennesUser.length > 1;
+      }
+    );
   }
 
   collapseNavbar() {
@@ -95,7 +107,8 @@ export class NavbarComponent implements OnInit {
       data => {
         this.isGroupeChat = data
       });
-
+      this.getUserAntennes();
+    
   }
 
 

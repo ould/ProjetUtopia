@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
+import { Antenne } from 'src/app/interfaces/antenne';
 import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +12,7 @@ export class UtilisateurService {
 
 
   private userUrl = environment.apiUrl + 'user';
+  private selfUserUrl = environment.apiUrl + 'selfUser';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -49,6 +51,23 @@ export class UtilisateurService {
     const url = `${this.userUrl}/isGroupe/${nomGroupeAVerifier}`;
     return this.http.get<Boolean>(url).pipe();
   }
+
+  getAntennes(): Observable<Antenne[]> {
+    const url = `${this.selfUserUrl}/antennes/`;
+    return this.http.get<Antenne[]>(url).pipe();
+  }
+
+  getAntenneDefaut(): Observable<Antenne> {
+    const url = `${this.selfUserUrl}/antenneDefaut/`;
+    return this.http.get<Antenne>(url).pipe();
+  }
+
+  changeAntenneDefaut(nouvelleAntenne:Antenne): Observable<Antenne> {
+    return this.http.post<Antenne>(`${this.selfUserUrl}/antenneDefaut/`, nouvelleAntenne, this.httpOptions).pipe(
+      catchError(this.handleError<any>('changeAntenneDefaut'))
+    );
+  }
+  
 
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -6,7 +6,10 @@ export interface User {
     prenom:string;
     password:string;
 
+    indiceAntenneActuelle:string;
+
     antennes: string[];
     groupes: string[];
     token?:string;
+
 }

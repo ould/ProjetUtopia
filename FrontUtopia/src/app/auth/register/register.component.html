@@ -12,21 +12,21 @@
         </div>
         <div class="form-field">
             <label>Email:</label>
-            <input name="email" formControlName="email">
+            <input name="email" class="form-control" formControlName="email">
         </div>
         <div class="form-field">
             <label>Mot de passe:</label>
-            <input name="password" formControlName="password" 
+            <input name="password" class="form-control" formControlName="password" 
                    type="password">
         </div>
         <div class="form-field">
           <label>Confirmez votre mot de passe:</label>
-          <input name="passwordConfirm" formControlName="passwordConfirm" 
+          <input name="passwordConfirm" class="form-control" formControlName="passwordConfirm" 
                  type="password">
       </div>
       <div class="form-field">
         <label for="role-utilisateur">Antenne principale :</label>
-      <select class="custom-select" formControlName="antennes">
+      <select class="custom-select"  formControlName="antennes">
       <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
     </select>
     </div>
