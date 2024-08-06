@@ -37,6 +37,14 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// TODO : A voir pour lectures seules
+// app.use(function(req, res, next) {
+//   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
+//       if () return res.status(401).send();
+//       next();
+//   }
+// });
+
 //Routes Admin
 app.use('/api/groupe', verifyAccessToken, haveAdminRole, groupeRouter)
 app.use('/api/user', verifyAccessToken, haveAdminRole, userRouter)
