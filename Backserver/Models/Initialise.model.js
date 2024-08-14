@@ -4,10 +4,9 @@ const Schema = mongoose.Schema
 const InitialiseSchema = new Schema({
 
   lancePar: {
-    type: String,
-    required: true,
+    type: String
   },
-  date: {
+  dateCreation: {
     type: Date
   }
 })

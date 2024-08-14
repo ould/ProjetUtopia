@@ -50,7 +50,7 @@ module.exports = {
       const userGroupes = req.payload.groupes
       const groupeAdminId = await Groupe.findOne({ nom: "Admin" })
       const isAdmin = userGroupes.includes(groupeAdminId._id);
-      
+      // TODO : a enlever d'ici
       res.send(isAdmin)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -63,7 +63,7 @@ module.exports = {
 
       const userGroupes = req.payload.groupes
       const isAdmin = userGroupes.includes(groupeAdminId._id);
-      //TODO
+      //TODO : a enlever d'ici 
       res.send(isAdmin )
     } catch (error) {
       if (error.isJoi === true) error.status = 422

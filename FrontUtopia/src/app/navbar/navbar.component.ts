@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { InitialisationService } from '../autres-services/initialisation/initialisation.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 import { Antenne } from '../interfaces/antenne';
 
@@ -12,7 +11,6 @@ import { Antenne } from '../interfaces/antenne';
 export class NavbarComponent implements OnInit {
   
   public activeTab: String = ''
-  public isInitialise: Boolean = true
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
   public userMultipleAntennes: Boolean = false
   public antennesUser: Antenne[] = []
@@ -29,9 +27,6 @@ export class NavbarComponent implements OnInit {
   public isGroupeStock: Boolean = false;
   public isGroupeChat: Boolean = false;
 
-  initialiseDonnees() {
-    this.InitialiseService.initialise().subscribe()
-  }
 
   getUserAntennes() {
     this.utilisateurService.getAntennes().subscribe(
@@ -57,11 +52,6 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.InitialiseService.estInitialise().subscribe(
-      data => {
-        this.isInitialise = data
-      }
-    );
     //TODO : sortir les string en const globales
     this.utilisateurService.isGroup("Admin").subscribe(
       data => {
@@ -113,6 +103,5 @@ export class NavbarComponent implements OnInit {
 
 
   constructor(public AuthService: AuthService,
-    public InitialiseService: InitialisationService,
     public utilisateurService: UtilisateurService) { }
 }

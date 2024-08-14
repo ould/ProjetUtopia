@@ -19,8 +19,9 @@ const userSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
   
-  groupes: Joi.array().required(),
-  antennes: Joi.array().required(),
+  antennes: Joi.array().optional(),
+  groupes: Joi.array().optional(),
+  droits: Joi.array().optional(),
   antenneDefaut: Joi.string().optional()
 })
 
@@ -101,6 +102,15 @@ const groupeSchema = Joi.object({
   modifiePar: Joi.string().optional()
 })
 
+const droitSchema = Joi.object({
+  id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  commentaire: Joi.string().optional(),
+
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.string().optional()
+})
+
 
 const personneTypeSchema = Joi.object({
   id: Joi.string().hex().length(24).optional(),
@@ -122,6 +132,7 @@ module.exports = {
   chatSchema,
   messageSchema,
   groupeSchema,
+  droitSchema,
   personneTypeSchema,
   logSchema
 }

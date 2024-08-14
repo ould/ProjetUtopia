@@ -4,8 +4,6 @@ const initialiseRouter = express.Router()
 
 initialiseRouter.get('/initialiseTout', InitialiseController.launch)
 
-initialiseRouter.get('/exist', InitialiseController.exist)
-
 
 
 module.exports = initialiseRouter

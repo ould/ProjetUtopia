@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     type: [String],
     required: true,
   },
+  droits:{
+    type: [String],
+    required: true,
+  },
   nom:{
     type: String,
     required: true,
@@ -30,7 +34,7 @@ const UserSchema = new Schema({
     required: true,
   },
   antenneDefaut: {
-    type: [String],
+    type: String,
     required: true,
   },
   creePar: {
@@ -61,8 +65,9 @@ UserSchema.pre('save', async function (next) {
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
       this.groupes = []
+      this.droits = []
       this.dateCreation = Date.now()
-      this.antenneDefaut = antennes[0]
+      this.antenneDefaut = this.antennes[0]
     }
     next()
   } catch (error) {

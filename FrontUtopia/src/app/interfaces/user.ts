@@ -10,6 +10,7 @@ export interface User {
 
     antennes: string[];
     groupes: string[];
+    droits: string[];
     token?:string;
 
 }

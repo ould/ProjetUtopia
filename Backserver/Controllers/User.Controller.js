@@ -3,6 +3,7 @@ const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema');
 const Groupe = require('../Models/Groupe.model');
 const Antenne = require('../Models/Antenne.model');
+const Droit = require('../Models/Droit.model');
 
 module.exports = {
 
@@ -80,25 +81,62 @@ module.exports = {
     isGroupe: async (req, res, next) => {
         try {
             const userId = req.payload.userId;
-            
+
             const user = await User.findOne({ _id: userId });
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
             const groupeAdmin = await Groupe.findOne({ nom: "Admin" });
-            if(user.groupes.includes(groupeAdmin._id)){
+            if (user.groupes.includes(groupeAdmin._id)) {
                 res.send(true)
             }
-            else{
+            else {
                 const nomGroupeAVerifier = req.params.nomGroupeAVerifier
                 const groupeAChek = await Groupe.findOne({ nom: nomGroupeAVerifier });
-                const estInclus =  user.groupes.includes(groupeAChek._id);
-                
+                const estInclus = user.groupes.includes(groupeAChek._id);
+
                 res.send(estInclus)
             }
-          } catch (error) {
+        } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
-          }
+        }
     },
+
+    //Permet de visualiser sur l'appli front les entités selon ses droits
+    isDroit: async (req, res, next) => {
+        try {
+            const userId = req.payload.userId;
+
+            const user = await User.findOne({ _id: userId });
+            //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc) a remplacer peut etre par un droit admin aussi 
+            const groupeAdmin = await Groupe.findOne({ nom: "Admin" });
+            if (user.groupes.includes(groupeAdmin._id)) {
+                res.send(true)
+            }
+            else {
+                const nomGDroitAVerifier = req.params.nomDroitAVerifier
+                const droitAChek = await Droit.findOne({ nom: nomGDroitAVerifier });
+                const estInclus = user.droits.includes(droitAChek._id);
+
+                res.send(estInclus)
+            }
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    getUserDroits: async (req, res, next) => {
+        try {
+
+            //TODO : A faire
+            const userDroits = req.payload.droits
+            res.send(isAdmin)
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
 
     delete: async (req, res, next) => {
         try {
@@ -126,7 +164,7 @@ module.exports = {
             for (const antenne of doesExist.antennes) {
                 const result = await Antenne.findOne({ _id: antenne });
                 listeAntennes.push(result)
-              }
+            }
 
             res.send(listeAntennes)
 

@@ -2,6 +2,7 @@ const JWT = require('jsonwebtoken')
 const createError = require('http-errors')
 const Groupe = require('../Models/Groupe.model')
 const User = require('../Models/User.model')
+const Droit = require('../Models/Droit.model')
 
 const nomGroupeAdmin = "Admin"
 const nomGroupeFamille = "Famille"
@@ -15,55 +16,75 @@ const nomGroupeRapports = "Rapports"
 const nomGroupeStock = "Stock"
 const nomGroupeChat = "Chat"
 
+const nomDroitAdmin = "Admin"
+const nomDroitLecture = "Lecture"
+const nomDroitAjout = "Ajout"
+const nomDroitModification = "Modification"
+const nomDroitSuppression = "Suppression"
+
 module.exports = {
-  haveAdminRole: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeAdmin, "Not Admin")
+  haveAdminGroupe: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeAdmin, "Not Admin")
   },
 
-  haveRoleFamille: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeFamille, "Not Famile group")
+  haveGroupeFamille: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeFamille, "Not Famile group")
   },
 
-  haveRoleHebergement: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeHebergement, "Not Hebergement group")
+  haveGroupeHebergement: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeHebergement, "Not Hebergement group")
   },
 
-  haveRoleBenevole: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeBenevole, "Not Benevole group")
+  haveGroupeBenevole: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeBenevole, "Not Benevole group")
   },
 
-  haveRoleAdherent: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeAdherent, "Not Adherent group")
+  haveGroupeAdherent: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeAdherent, "Not Adherent group")
   },
 
-  haveRoleMineur: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeMineur, "Not Mineur group")
+  haveGroupeMineur: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeMineur, "Not Mineur group")
   },
 
-  haveRoleAstreinte: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeAstreinte, "Not Astreinte group")
+  haveGroupeAstreinte: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeAstreinte, "Not Astreinte group")
   },
-  haveRoleHommeSeul: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeHommeSeul, "Not HommeSeul group")
+  haveGroupeHommeSeul: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeHommeSeul, "Not HommeSeul group")
   },
-  haveRoleRapports: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeRapports, "Not Rapports group")
+  haveGroupeRapports: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeRapports, "Not Rapports group")
   },
-  haveRoleStock: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeStock, "Not Stock group")
+  haveGroupeStock: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeStock, "Not Stock group")
   },
-  haveRoleChat: async (req, res, next) => {
-    haveRole(req, res, next, nomGroupeChat, "Not Chat group")
+  haveGroupeChat: async (req, res, next) => {
+    haveGroupe(req, res, next, nomGroupeChat, "Not Chat group")
+  },
+  //Droits
+  haveDroits: async (req, res, next) => {
+    verifieDroitSelonRequete(req, res, next)
+  },
+  haveDroitAdmin: async (req, res, next) => {
+    haveDroit(req, res, next, nomDroitAdmin, "Not droit Admin")
+  },
+  haveDroitLecture: async (req, res, next) => {
+    haveDroit(req, res, next, nomDroitLecture, "Not droit Lecture")
+  },
+  haveDroitModification: async (req, res, next) => {
+
   },
 }
 
-async function haveRole(req, res, next, role, message) {
+
+async function haveGroupe(req, res, next, groupe, message) {
   try {
     const userId = req.payload.userId;
-    const groupeAChek = await Groupe.findOne({ nom: role });
+    const groupeAChek = await Groupe.findOne({ nom: groupe });
     const user = await User.findOne({ _id: userId });
-    const isRole = user.groupes.includes(groupeAChek._id);
-    if (isRole)
+    const isGroupe = user.groupes.includes(groupeAChek._id);
+    if (isGroupe)
       return next()
     else {
       return next(createError.Unauthorized(message))
@@ -73,3 +94,47 @@ async function haveRole(req, res, next, role, message) {
     next(error)
   }
 }
+
+async function verifieDroitSelonRequete(req, res, next) {
+  try {
+      if (req.method === 'GET') {
+        haveDroit(req, res, next, nomDroitLecture, "Not droit Lecture")
+      }
+      if (req.method === 'POST') {
+        haveDroit(req, res, next, nomDroitAjout, "Not droit Ajout")
+      }
+      if (req.method === 'PUT') {
+        haveDroit(req, res, next, nomDroitModification, "Not droit Modification")
+      }
+      if (req.method === 'DELETE') {
+        haveDroit(req, res, next, nomDroitSuppression, "Not droit Suppression")
+      }
+  } catch (error) {
+    if (error.isJoi === true) error.status = 422
+    next(error)
+  }
+}
+
+async function haveDroit(req, res, next, nomDroit, message) {
+  try {
+    const userId = req.payload.userId;
+    const droitAdmin = await Droit.findOne({ nom: nomDroitAdmin });
+    const user = await User.findOne({ _id: userId });
+    const haveDroitAdmin = user.droits.includes(droitAdmin._id);
+    // Si droit admin alors OK pour tout 
+    if(haveDroitAdmin) return next()
+      
+      // Si pas admin, on teste les droits selon la requete 
+    const droitAChek = await Droit.findOne({ nom: nomDroit });
+    const haveDroit = user.droits.includes(droitAChek._id);
+    if (haveDroit)
+      return next()
+    else {
+      return next(createError.Unauthorized(message))
+    }
+  } catch (error) {
+    if (error.isJoi === true) error.status = 422
+    next(error)
+  }
+}
+
