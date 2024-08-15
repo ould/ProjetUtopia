@@ -4,7 +4,7 @@ const DroitController = require('../Controllers/Droit.Controller')
 
 droitRouter.get('/:id', DroitController.get)
 
-droitRouter.post('/getAllDroits', DroitController.getAll)
+droitRouter.post('/getAll', DroitController.getAll)
 
 droitRouter.post('/', DroitController.save)
 

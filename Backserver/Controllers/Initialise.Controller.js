@@ -57,6 +57,7 @@ module.exports = {
         await creationAntenne("Dijon", userId);
         await creationAntenne("Lorient", userId);
         await creationAntenne("Autre", userId);
+        await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes
 
 
         // Fait de l'utilisteur un user admin
@@ -193,7 +194,7 @@ async function createFirstAdmin() {
     console.log("Creation admin.. ");
     let doesExist = await User.findOne({ email: "adminUtopia@test.fr" });
     if (!doesExist){
-      const user = new User({email : "adminUtopia@test.fr", password : "123456789", nom: "admin", prenom: "utopia", antennes:[idAntennePrincipale], antenneDefaut: idAntennePrincipale, creePar:"Initialisation" })
+      const user = new User({email : "adminUtopia@test.fr", password : "123456789", nom: "admin", prenom: "utopia", antennes:[idAntennePrincipale], antenneDefaut: idAntennePrincipale, creePar:"Initialisation", derniereConnexion:null, derniereModificationMdp:null  })
       const saveduser = await user.save()   
       doesExist = await User.findOne({ email: "adminUtopia@test.fr" });
       if (!doesExist)

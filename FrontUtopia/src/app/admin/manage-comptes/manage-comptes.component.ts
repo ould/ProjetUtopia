@@ -47,7 +47,9 @@ export class ManageComptesComponent implements OnInit {
     if (this.newUserForm.valid) {
       const newUser: User = this.newUserForm.value;
       newUser.groupes = ["0"];
+      newUser.droits = ["0"];
       newUser.antennes = [this.newUserForm.get('antennes')?.value]
+      newUser.antenneDefaut = newUser.antennes[0]
       this.utilisateurService.addUser(newUser).subscribe()
       this.utilisateurs.push(newUser);
       }

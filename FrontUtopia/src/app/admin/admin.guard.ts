@@ -8,8 +8,6 @@ export const adminGuard = () => {
   const authService = inject(AuthService);
   const groupeService = inject(GroupeService)
   const router = inject(Router);
-  
-console.log()
 
   if (authService.isLoggedIn()) {
     

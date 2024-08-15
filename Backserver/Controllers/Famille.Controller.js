@@ -1,14 +1,37 @@
 const createError = require('http-errors')
 const Famille = require('../Models/Famille.model')
-const { familleSchema } = require('../helpers/validation_schema')
+const { familleSchema } = require('../helpers/validation_schema');
+const User = require('../Models/User.model');
+
+async function getUserRequete(req, res, next){
+  try {
+    const userId = req.payload.userId;
+    console.log("user "+ userId)
+    const userReferent = await User.findOne({ _id: userId })
+    if (!userReferent) {
+      throw createError.NotFound(`getUserRequete user not found`);
+    }
+
+    return userReferent
+
+  } catch (error) {
+    return next(createError.InternalServerError("Famille getUserRequete"))
+  }
+}
 
 module.exports = {
   save: async (req, res, next) => {
     try {
 
       const result = await familleSchema.validateAsync(req.body);
-      result.creePar = req.payload.userId;
+      const userId = req.payload.userId;
 
+      const userReferent = await module.exports.getUserRequete(req, res, next)
+      console.log("referent ")
+      console.log(userReferent)
+
+      result.antenne = userReferent.antenneDefaut;
+      result.creePar = userId;
       const famille = new Famille(result);
       const savedFamille = await famille.save();
       const savedFamilleId = savedFamille._id;
@@ -24,8 +47,9 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const result = await familleSchema.validateAsync(req.body)
+      const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Famille.findOne({ _id: result._id })
+      const doesExist = await Famille.findOne({ _id: result._id, antenne:userReferent.antenneDefaut })
       if (!doesExist)
         throw createError.NotFound(`${result.id} not found`);
 
@@ -46,8 +70,9 @@ module.exports = {
   get: async (req, res, next) => {
     try {
       const id = req.params.id
+      const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Famille.findOne({ _id: id })
+      const doesExist = await Famille.findOne({ _id: id , antenne:userReferent.antenneDefaut})
       if (!doesExist)
         throw createError.NotFound(`${id} not found`);
       doesExist.id = doesExist._id;
@@ -63,7 +88,9 @@ module.exports = {
     try {
       const nom = req.params.nomFamille
 
-      const doesExist = await Famille.find({ "nomFamille": { $regex: nom } })
+      const userReferent = await module.exports.getUserRequete(req, res, next) //TODO voir pour mettre la variante avec filtre sur toutes les antennes 
+
+      const doesExist = await Famille.find({ "nomFamille": { $regex: nom }, "antenne": userReferent.antenneDefaut})
       if (!doesExist)
         throw createError.NotFound(`${nom} not found`);
       doesExist.id = doesExist._id;
@@ -78,16 +105,17 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const id = req.params.id
-
+      const userReferent = await module.exports.getUserRequete(req, res, next)
       //TODO : delete all personnes 
 
-      const doesExist = await Famille.findOneAndDelete({ _id: id })
+      const doesExist = await Famille.findOneAndDelete({ _id: id , antenne:userReferent.antenneDefaut})
       res.send(doesExist._id)
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
     }
-  }
-
+  },
+  getUserRequete
 }
+

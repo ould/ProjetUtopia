@@ -1,5 +1,7 @@
 const Joi = require('@hapi/joi')
 
+//Validations entre API et Front (different de la validation en base de données => models)
+
 const authSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
@@ -9,7 +11,6 @@ const authSchema = Joi.object({
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
   antennes: Joi.array().optional()
-
 })
 
 const userSchema = Joi.object({
@@ -22,15 +23,17 @@ const userSchema = Joi.object({
   antennes: Joi.array().optional(),
   groupes: Joi.array().optional(),
   droits: Joi.array().optional(),
-  antenneDefaut: Joi.string().optional()
+  antenneDefaut: Joi.string().optional(),
+  derniereModificationMdp: Joi.date().optional(),
+  derniereConnexion: Joi.date().optional()
 })
 
 const logSchema = Joi.object({
   message: Joi.string().required(),
+  type: Joi.string().required(),
   importance: Joi.string().optional(),
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional()
-
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional()
 })
 
 const familleSchema = Joi.object({
@@ -39,12 +42,13 @@ const familleSchema = Joi.object({
   personnesId: Joi.array().required(),
   composition: Joi.string().required(),
 
+  antenne:Joi.string().optional(),
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 const personneSchema = Joi.object({
@@ -56,14 +60,16 @@ const personneSchema = Joi.object({
   nationalite: Joi.string().optional(),
   ddn: Joi.date().optional(),
   situation: Joi.string().optional(),
+  procedure: Joi.string().optional(),
   email: Joi.string().email().lowercase().optional(),
   telephone: Joi.string().optional(),
   commentaire: Joi.string().optional(),
+  antenne:Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 const chatSchema = Joi.object({
@@ -72,11 +78,12 @@ const chatSchema = Joi.object({
   messagesId: Joi.array().required(),
   droitsLecturePersonneId: Joi.array().required(),
   droitsEcriturePersonneId: Joi.array().required(),
+  antenne:Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 const messageSchema = Joi.object({
@@ -84,11 +91,12 @@ const messageSchema = Joi.object({
   idPersonne: Joi.string().required(),
   message: Joi.string().required(),
   date: Joi.date().required(),
+  antenne:Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 const groupeSchema = Joi.object({
@@ -96,10 +104,10 @@ const groupeSchema = Joi.object({
   nom: Joi.string().required(),
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 const droitSchema = Joi.object({
@@ -107,8 +115,8 @@ const droitSchema = Joi.object({
   nom: Joi.string().required(),
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional()
 })
 
 
@@ -117,10 +125,10 @@ const personneTypeSchema = Joi.object({
   nom: Joi.string().optional(),
   commentaire: Joi.string().optional(),
 
-  creePar: Joi.string().optional(),
-  dateCreation: Joi.string().optional(),
-  dateModification: Joi.string().optional(),
-  modifiePar: Joi.string().optional()
+  creePar: Joi.date().optional(),
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.date().optional()
 })
 
 

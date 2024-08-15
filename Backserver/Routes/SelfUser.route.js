@@ -6,7 +6,7 @@ selfUserRouter.get('/antennes/', userController.getAntennesUser)
 
 selfUserRouter.get('/antenneDefaut/', userController.getAntennesDefautUser)
 
-selfUserRouter.post('/antenneDefaut/', userController.changeAntennesUser)
+selfUserRouter.post('/antenneDefaut', userController.changeAntennesUser)
 
 
 module.exports = selfUserRouter

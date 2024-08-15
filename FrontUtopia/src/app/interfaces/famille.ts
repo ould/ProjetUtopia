@@ -6,7 +6,7 @@ export interface Famille {
     personnesId: string[];
     composition?: string;
     commentaire?: string;
-    antenne: string;
+    antenne?: string;
 }
 
 

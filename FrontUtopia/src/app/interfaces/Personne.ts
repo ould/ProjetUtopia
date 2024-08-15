@@ -9,6 +9,6 @@ export interface Personne {
     situation?: string;
     procedure?: string;
     commentaire?: string;
-    antenne: string;
+    antenne?: string;
     
 }

@@ -6,7 +6,7 @@ export interface User {
     prenom:string;
     password:string;
 
-    indiceAntenneActuelle:string;
+    antenneDefaut:string;
 
     antennes: string[];
     groupes: string[];

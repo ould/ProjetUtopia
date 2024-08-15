@@ -7,7 +7,6 @@ const Droit = require('../Models/Droit.model');
 
 module.exports = {
 
-
     getAll: async (req, res, next) => {
         try {
             const users = await User.find();
@@ -22,11 +21,11 @@ module.exports = {
         try {
             const result = await userSchema.validateAsync(req.body)
             result.creePar = req.payload.userId
-
+            
             if (result._id) {
                 throw createError.Conflict(`${result._id} is already `);
             }
-
+            
             const user = new User(result)
             const saveduser = await user.save()
             const savefuserId = saveduser._id
@@ -192,17 +191,20 @@ module.exports = {
         }
     },
 
+    
     changeAntennesUser: async (req, res, next) => {
         try {
             const idUser = req.payload.userId
-            const nomAntenne = req.params.nomAntenne
-
+            const nomAntenne = req.body.nouvelleAntenneId //Post => body
             const doesExist = await User.findOne({ _id: idUser })
             if (!doesExist) {
                 throw createError.NotFound(`${idUser} not found`);
             }
             //Cherche l'id de l'antenne avec le nom spécifié et modifie l'utilisateur
-            const resultAntenne = await Antenne.findOne({ nom: nomAntenne });
+            const resultAntenne = await Antenne.findOne({ _id: nomAntenne });
+            if (!resultAntenne) {
+                throw createError.NotFound(`${nomAntenne} not found`);
+            }
             doesExist.antenneDefaut = resultAntenne._id
             doesExist.modifiePar = req.payload.userId
 
@@ -211,7 +213,8 @@ module.exports = {
             const updateduser = await User.findOneAndUpdate(filter, doesExist, {
                 returnOriginal: false
             });
-            res.send(updateduser._id)
+            //Renvoie la nouvelle antenne 
+            res.send(resultAntenne)
 
 
         } catch (error) {

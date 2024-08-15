@@ -23,6 +23,7 @@ const antenneRouter = require('./Routes/Antenne.route')
 const logRouter = require('./Routes/Log.route')
 const logPublicRouter = require('./Routes/Log.route')
 const publicRouter = require('./Routes/Public.route')
+const droitRouter = require('./Routes/Droit.route')
 
 const corsOptions = {
   origin: '*',
@@ -41,6 +42,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //Routes Admin
 app.use('/api/groupe', verifyAccessToken, haveAdminGroupe, haveDroits, groupeRouter)
+app.use('/api/droit', verifyAccessToken, haveAdminGroupe, haveDroits, droitRouter)
 app.use('/api/user', verifyAccessToken, haveAdminGroupe,haveDroits, userRouter)
 app.use('/api/personneType', verifyAccessToken, haveAdminGroupe,haveDroits, personneTypeRouter)
 app.use('/api/Log', verifyAccessToken, haveAdminGroupe, haveDroits, logRouter)
@@ -59,6 +61,7 @@ app.use('/api/selfUser', verifyAccessToken, selfUserRouter)
 app.use('/api/auth', AuthRoute)
 app.use('/api/public', publicRouter)
 app.use('/api/initialise', initialiseRouter)
+app.use('/api/log', logRouter)
 
 
 app.get('/api', async (req, res, next) => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 import { Antenne } from '../interfaces/antenne';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,8 @@ import { Antenne } from '../interfaces/antenne';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  
+
+   antenneDefautForm: FormGroup;
   public activeTab: String = ''
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
   public userMultipleAntennes: Boolean = false
@@ -27,15 +29,8 @@ export class NavbarComponent implements OnInit {
   public isGroupeStock: Boolean = false;
   public isGroupeChat: Boolean = false;
 
+  public antenneActuelle = ""
 
-  getUserAntennes() {
-    this.utilisateurService.getAntennes().subscribe(
-      data => {
-        //this.antennesUser = data
-        //this.userMultipleAntennes = this.antennesUser.length > 1;
-      }
-    );
-  }
 
   collapseNavbar() {
     const navbar = document.getElementById('navbarNavDropdown');
@@ -44,64 +39,94 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  switchActive(term : String) {
+  switchActive(term: String) {
     this.activeTab = term
     this.collapseNavbar();
   }
 
+  changeAntenneDefaut(idNouvelleAntenne: any) {
+    if(idNouvelleAntenne)  this.utilisateurService.changeAntenneDefaut(idNouvelleAntenne).subscribe(
+      data => {
+        this.antenneActuelle = data.nom
+      });
+  }
 
 
   ngOnInit() {
-    //TODO : sortir les string en const globales
-    this.utilisateurService.isGroup("Admin").subscribe(
-      data => {
-        this.isGroupeAdmin = data
-      });
-    this.utilisateurService.isGroup("Famille").subscribe(
-      data => {
-        this.isGroupeFamille = data
-      });
-    this.utilisateurService.isGroup("Mineur").subscribe(
-      data => {
-        this.isGroupeMineur = data
-      });
-    this.utilisateurService.isGroup("Hebergeuse").subscribe(
-      data => {
-        this.isGroupeHebergeuse = data
-      });
-    this.utilisateurService.isGroup("Astreinte").subscribe(
-      data => {
-        this.isGroupeAstreinte = data
-      });
-    this.utilisateurService.isGroup("Benevole").subscribe(
-      data => {
-        this.isGroupeBenevole = data
-      });
-    this.utilisateurService.isGroup("Adherent").subscribe(
-      data => {
-        this.isGroupeAdherent = data
-      });
-    this.utilisateurService.isGroup("HommeSeul").subscribe(
-      data => {
-        this.isGroupeHommeSeul = data
-      });
-    this.utilisateurService.isGroup("Rapports").subscribe(
-      data => {
-        this.isGroupeRapports = data
-      });
-    this.utilisateurService.isGroup("Stock").subscribe(
-      data => {
-        this.isGroupeStock = data
-      });
-    this.utilisateurService.isGroup("Chat").subscribe(
-      data => {
-        this.isGroupeChat = data
-      });
-      this.getUserAntennes();
-    
+    if (this.isLoggedIn) {
+
+      //TODO : sortir les string en const globales
+      this.utilisateurService.isGroup("Admin").subscribe(
+        data => {
+          this.isGroupeAdmin = data
+        });
+      this.utilisateurService.isGroup("Famille").subscribe(
+        data => {
+          this.isGroupeFamille = data
+        });
+      this.utilisateurService.isGroup("Mineur").subscribe(
+        data => {
+          this.isGroupeMineur = data
+        });
+      this.utilisateurService.isGroup("Hebergeuse").subscribe(
+        data => {
+          this.isGroupeHebergeuse = data
+        });
+      this.utilisateurService.isGroup("Astreinte").subscribe(
+        data => {
+          this.isGroupeAstreinte = data
+        });
+      this.utilisateurService.isGroup("Benevole").subscribe(
+        data => {
+          this.isGroupeBenevole = data
+        });
+      this.utilisateurService.isGroup("Adherent").subscribe(
+        data => {
+          this.isGroupeAdherent = data
+        });
+      this.utilisateurService.isGroup("HommeSeul").subscribe(
+        data => {
+          this.isGroupeHommeSeul = data
+        });
+      this.utilisateurService.isGroup("Rapports").subscribe(
+        data => {
+          this.isGroupeRapports = data
+        });
+      this.utilisateurService.isGroup("Stock").subscribe(
+        data => {
+          this.isGroupeStock = data
+        });
+      this.utilisateurService.isGroup("Chat").subscribe(
+        data => {
+          this.isGroupeChat = data
+        });
+      this.utilisateurService.getAntennes().subscribe(
+        data => {
+          this.antennesUser = data;
+          this.userMultipleAntennes = this.antennesUser.length > 1;
+          this.utilisateurService.getAntenneDefaut().subscribe(
+            data => {
+              this.antenneDefautForm.setValue({
+                antenneDefaut: data._id
+              })
+              this.antenneActuelle = data.nom
+            }
+          );
+        }
+      );
+      
+    }
   }
 
 
   constructor(public AuthService: AuthService,
-    public utilisateurService: UtilisateurService) { }
+    public utilisateurService: UtilisateurService,
+    private fb: FormBuilder) { 
+
+      this.antenneDefautForm = this.fb.group({
+        antenneDefaut: ['', Validators.required]
+      });
+
+
+    }
 }

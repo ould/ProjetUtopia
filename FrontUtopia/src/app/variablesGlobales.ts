@@ -14,7 +14,6 @@ export class VariablesGlobales implements OnInit {
         this.utilisateurService.getAntenneDefaut().subscribe(
             data => {
                 this.antenneActuelle = data
-                console.log(this.antenneActuelle)
               }
         )
     }

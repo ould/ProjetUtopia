@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { GroupeService } from 'src/app/autres-services/groupe/groupe.service';
 import { Groupe } from 'src/app/interfaces/groupe';
+import { Droit } from 'src/app/interfaces/droit';
+import { DroitService } from 'src/app/autres-services/droits/droit.service';
 
 @Component({
   selector: 'app-compte-detail',
@@ -20,11 +22,13 @@ export class CompteDetailComponent implements OnInit {
   updateUserForm: FormGroup;
   antennes: Antenne[] = []
   groupes: Groupe[] = []
+  droits: Droit[] = []
 
   constructor(private fb: FormBuilder,
     private utilisateurService: UtilisateurService,
     private antenneService: AntenneService,
     private groupService: GroupeService,
+    private droitService: DroitService,
     private route: ActivatedRoute,
     private location: Location) {
 
@@ -33,7 +37,8 @@ export class CompteDetailComponent implements OnInit {
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       antennes: ['', [Validators.required]],
-      groupes: ['', [Validators.required]]
+      groupes: ['', [Validators.required]],
+      droits: ['', [Validators.required]]
     });
 
   }
@@ -49,6 +54,11 @@ export class CompteDetailComponent implements OnInit {
         this.groupes = data
       }
     );
+    this.droitService.getAllDroits().subscribe(
+      data => {
+        this.droits = data
+      }
+    );
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.utilisateurService.getUser(id)
       .subscribe(user => {
@@ -61,6 +71,7 @@ export class CompteDetailComponent implements OnInit {
   modifierUtilisateur(): void {
     if (this.updateUserForm.valid) {
       this.utilisateur.groupes = this.updateUserForm.get('groupes')?.value;
+      this.utilisateur.droits = this.updateUserForm.get('droits')?.value;
       this.utilisateur.antennes = this.updateUserForm.get('antennes')?.value;
       this.utilisateur.nom = this.updateUserForm.get('nom')?.value;
       this.utilisateur.prenom = this.updateUserForm.get('prenom')?.value;
@@ -79,6 +90,7 @@ export class CompteDetailComponent implements OnInit {
       email: this.utilisateur.email,
       antennes: this.utilisateur.antennes,
       groupes: this.utilisateur.groupes,
+      droits: this.utilisateur.droits,
     })
   }
 

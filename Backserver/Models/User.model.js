@@ -37,6 +37,14 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  derniereConnexion: { //TODO a mettre en place 
+    type: Date,
+    required: false,
+  },
+  derniereModificationMdp: {
+    type: Date,
+    required: false,
+  },
   creePar: {
     type: String,
     required: true,
@@ -68,6 +76,8 @@ UserSchema.pre('save', async function (next) {
       this.droits = []
       this.dateCreation = Date.now()
       this.antenneDefaut = this.antennes[0]
+      this.derniereModificationMdp = null
+      this.derniereConnexion = null
     }
     next()
   } catch (error) {

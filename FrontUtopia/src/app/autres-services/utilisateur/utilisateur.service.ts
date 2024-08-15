@@ -12,7 +12,7 @@ export class UtilisateurService {
 
 
   private userUrl = environment.apiUrl + 'user';
-  private selfUserUrl = environment.apiUrl + 'selfUser';
+  private selfUserUrl = environment.apiUrl + 'selfUser'; //Revoir quand c'est self
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -62,10 +62,8 @@ export class UtilisateurService {
     return this.http.get<Antenne>(url).pipe();
   }
 
-  changeAntenneDefaut(nouvelleAntenne:Antenne): Observable<Antenne> {
-    return this.http.post<Antenne>(`${this.selfUserUrl}/antenneDefaut/`, nouvelleAntenne, this.httpOptions).pipe(
-      catchError(this.handleError<any>('changeAntenneDefaut'))
-    );
+  changeAntenneDefaut(nouvelleAntenneId:string): Observable<Antenne> {
+    return this.http.post<Antenne>(`${this.selfUserUrl}/antenneDefaut`, {nouvelleAntenneId} , this.httpOptions).pipe(); //Mettre crochet sur la variable car attends un json
   }
   
 

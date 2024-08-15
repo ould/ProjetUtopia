@@ -27,8 +27,8 @@ export class FamilleDetailComponent {
       this.getFamille();
     }
     else {
-      this.familleInput = { nomFamille: "Nouvelle Famille", personnesId: [], antenne:"" }
-      this.personnes.push({ nom: "", type: "2", antenne:""  })
+      this.familleInput = { nomFamille: "Nouvelle Famille", personnesId: [] }
+      this.personnes.push({ nom: "", type: "2" })
       this.lectureSeule = false
     }
   }
