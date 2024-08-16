@@ -129,7 +129,7 @@ module.exports = {
 
             //TODO : A faire
             const userDroits = req.payload.droits
-            res.send(isAdmin)
+            res.send(userDroits)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -221,5 +221,17 @@ module.exports = {
             if (error.isJoi === true) error.status = 422
             next(error)
         }
-    }
+    },  
+    
+    isAdmin: async (req, res, next) => {
+        try {    
+          const userGroupes = req.payload.groupes
+          const groupeAdminId = await Groupe.findOne({ nom: "Admin" })
+          const isAdmin = userGroupes.includes(groupeAdminId._id);
+          res.send(isAdmin)
+        } catch (error) {
+          if (error.isJoi === true) error.status = 422
+          next(error)
+        }
+      }
 }

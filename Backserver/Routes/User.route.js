@@ -1,9 +1,7 @@
 const userRouter = (require('express')).Router()
 const userController = require('../Controllers/User.Controller')
 
-userRouter.get('/getAllUsers/', userController.getAll)
-
-userRouter.get('/isGroupe/:nomGroupeAVerifier', userController.isGroupe)
+userRouter.get('/getAll/', userController.getAll)
 
 userRouter.get('/:id', userController.get)
 

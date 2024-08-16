@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }))
 // TODO : A voir pour les droits  req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE'
 
 //Routes Admin
-app.use('/api/groupe', verifyAccessToken, haveAdminGroupe, haveDroits, groupeRouter)
+app.use('/api/'+ process.env.route_groupe, verifyAccessToken, haveAdminGroupe, haveDroits, groupeRouter)
 app.use('/api/droit', verifyAccessToken, haveAdminGroupe, haveDroits, droitRouter)
 app.use('/api/user', verifyAccessToken, haveAdminGroupe,haveDroits, userRouter)
 app.use('/api/personneType', verifyAccessToken, haveAdminGroupe,haveDroits, personneTypeRouter)

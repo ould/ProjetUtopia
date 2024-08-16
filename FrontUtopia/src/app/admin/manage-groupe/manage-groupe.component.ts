@@ -15,7 +15,7 @@ export class ManageGroupeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.groupeService.getAllGroupes().subscribe(
+    this.groupeService.getAll().subscribe(
       data => {
         this.groupes = data
       }

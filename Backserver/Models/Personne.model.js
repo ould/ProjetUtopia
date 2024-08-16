@@ -30,6 +30,10 @@ const PersonneSchema = new Schema({
     type: String,
     required: false,
   },
+  procedure: {
+    type: String,
+    required: false,
+  },
   commentaire: {
     type: String,
     required: false,

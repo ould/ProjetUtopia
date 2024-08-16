@@ -16,19 +16,8 @@ export class GroupeService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
-
-
-  isAdmin(): Observable<Boolean>{
-    return this.http.post<Boolean>(this.groupeUrl + "/isAdmin","", this.httpOptions).pipe(
-    )
-  }
-
-  getUserGroupe(): Observable<Groupe>{
-    return this.http.post<Groupe>(this.groupeUrl + "/getUserGroupe","", this.httpOptions).pipe()
-  }
-
-  getAllGroupes(): Observable<any>{
-    return this.http.post<Groupe[]>(this.groupeUrl + "/getAllGroupes","", this.httpOptions)
+  getAll(): Observable<any>{
+    return this.http.post<Groupe[]>(this.groupeUrl + "/getAll","", this.httpOptions)
   }
 
   addGroupe(nomGroupe: string): Observable<Groupe> {

@@ -24,8 +24,8 @@ export class UtilisateurService {
     return this.http.get<User>(this.userUrl + "/" +id ).pipe()
   }
 
-  getAllUsers(): Observable<User[]>{
-    return this.http.get<User[]>(this.userUrl + "/getAllUsers")
+  getAll(): Observable<User[]>{
+    return this.http.get<User[]>(this.userUrl + "/getAll")
   }
 
   addUser(user: User): Observable<User> {
@@ -48,7 +48,7 @@ export class UtilisateurService {
   }
 
   isGroup(nomGroupeAVerifier: string): Observable<Boolean> {
-    const url = `${this.userUrl}/isGroupe/${nomGroupeAVerifier}`;
+    const url = `${this.selfUserUrl}/isGroupe/${nomGroupeAVerifier}`;
     return this.http.get<Boolean>(url).pipe();
   }
 
@@ -66,6 +66,10 @@ export class UtilisateurService {
     return this.http.post<Antenne>(`${this.selfUserUrl}/antenneDefaut`, {nouvelleAntenneId} , this.httpOptions).pipe(); //Mettre crochet sur la variable car attends un json
   }
   
+  isAdmin(): Observable<Boolean>{
+    return this.http.post<Boolean>(this.selfUserUrl + "/isAdmin","", this.httpOptions).pipe(
+    )
+  }
 
 
   private handleError<T>(operation = 'operation', result?: T) {

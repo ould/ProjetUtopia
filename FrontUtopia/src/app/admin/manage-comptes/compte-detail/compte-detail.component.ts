@@ -44,17 +44,17 @@ export class CompteDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.antenneService.getAllAntennes().subscribe(
+    this.antenneService.getAll().subscribe(
       data => {
         this.antennes = data
       }
     );
-    this.groupService.getAllGroupes().subscribe(
+    this.groupService.getAll().subscribe(
       data => {
         this.groupes = data
       }
     );
-    this.droitService.getAllDroits().subscribe(
+    this.droitService.getAll().subscribe(
       data => {
         this.droits = data
       }

@@ -22,11 +22,11 @@ export class AntenneService {
     return this.http.get<Antenne>(this.antenneUrl + "/" +id ).pipe()
   }
 
-  getAllAntennes(): Observable<Antenne[]>{
+  getAll(): Observable<Antenne[]>{
     return this.http.get<Antenne[]>(this.antenneUrl + "/getAll")
   }
 
-  getAllAntennesPublic(): Observable<Antenne[]>{
+  getAllPublic(): Observable<Antenne[]>{
     return this.http.get<Antenne[]>(this.publicAntenneUrl + "/getAll")
   }
 

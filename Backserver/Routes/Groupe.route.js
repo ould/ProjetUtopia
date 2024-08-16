@@ -4,11 +4,7 @@ const GroupeController = require('../Controllers/Groupe.Controller')
 
 groupeRouter.get('/:id', GroupeController.get)
 
-groupeRouter.post('/isAdmin', GroupeController.isAdmin)
-
-groupeRouter.post('/getUserGroupe', GroupeController.getUserRole)
-
-groupeRouter.post('/getAllGroupes', GroupeController.getAll)
+groupeRouter.post('/getAll', GroupeController.getAll)
 
 groupeRouter.post('/', GroupeController.save)
 

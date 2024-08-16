@@ -21,13 +21,13 @@ export class ManageComptesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.utilisateurService.getAllUsers().subscribe(
+    this.utilisateurService.getAll().subscribe(
       data => {
         this.utilisateurs = data
       }
     )
 
-    this.antenneService.getAllAntennes().subscribe(
+    this.antenneService.getAll().subscribe(
       data => {
         this.Antennes = data
       }

@@ -24,7 +24,7 @@ export class DroitService {
     )
   }
 
-  getAllDroits(): Observable<any>{
+  getAll(): Observable<any>{
     return this.http.post<Droit[]>(this.droitUrl + "/getAll","", this.httpOptions).pipe(
       catchError(this.handleError<any>('getAllDroits'))
     )

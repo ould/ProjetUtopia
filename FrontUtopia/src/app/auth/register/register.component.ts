@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.antenneService.getAllAntennesPublic().subscribe(
+    this.antenneService.getAllPublic().subscribe(
       data => {
         this.antennes = data
       }

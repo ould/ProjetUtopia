@@ -6,6 +6,7 @@ import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
 import { GroupeService } from '../autres-services/groupe/groupe.service';
+import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 
 
 @Injectable({
@@ -42,7 +43,7 @@ export class AuthService {
     localStorage.setItem('user_name', authResult.user.nom);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);
-    this.groupeService.isAdmin().subscribe(
+    this.UtilisateurService.isAdmin().subscribe(
       _data => {localStorage.setItem("isAdmin", _data+"");}
     )
   }
@@ -69,5 +70,5 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private groupeService: GroupeService) { }
+    private UtilisateurService: UtilisateurService) { }
 }

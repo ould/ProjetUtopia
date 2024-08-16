@@ -96,6 +96,8 @@ async function haveGroupe(req, res, next, groupe, message) {
 }
 
 async function verifieDroitSelonRequete(req, res, next) {
+  
+  const route = req.baseUrl.split('/')[2] // TODO : verifier les acces du profil selon la route et pas seuelement le type de requete 
   try {
       if (req.method === 'GET') {
         haveDroit(req, res, next, nomDroitLecture, "Not droit Lecture")
