@@ -30,7 +30,7 @@ module.exports = {
       console.log("referent ")
       console.log(userReferent)
 
-      result.antenne = userReferent.antenneDefaut;
+      result.antenne = userReferent.antenneDefautId;
       result.creePar = userId;
       const famille = new Famille(result);
       const savedFamille = await famille.save();
@@ -49,7 +49,7 @@ module.exports = {
       const result = await familleSchema.validateAsync(req.body)
       const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Famille.findOne({ _id: result._id, antenne:userReferent.antenneDefaut })
+      const doesExist = await Famille.findOne({ _id: result._id, antenne:userReferent.antenneDefautId })
       if (!doesExist)
         throw createError.NotFound(`${result.id} not found`);
 
@@ -72,10 +72,11 @@ module.exports = {
       const id = req.params.id
       const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Famille.findOne({ _id: id , antenne:userReferent.antenneDefaut})
+      const doesExist = await Famille.findOne({ _id: id , antenne:userReferent.antenneDefautId})
       if (!doesExist)
         throw createError.NotFound(`${id} not found`);
       doesExist.id = doesExist._id;
+      doesExist.test = ""
       res.send(doesExist)
 
     } catch (error) {
@@ -90,7 +91,7 @@ module.exports = {
 
       const userReferent = await module.exports.getUserRequete(req, res, next) //TODO voir pour mettre la variante avec filtre sur toutes les antennes 
 
-      const doesExist = await Famille.find({ "nomFamille": { $regex: nom }, "antenne": userReferent.antenneDefaut})
+      const doesExist = await Famille.find({ "nomFamille": { $regex: nom }, "antenne": userReferent.antenneDefautId})
       if (!doesExist)
         throw createError.NotFound(`${nom} not found`);
       doesExist.id = doesExist._id;
@@ -108,7 +109,7 @@ module.exports = {
       const userReferent = await module.exports.getUserRequete(req, res, next)
       //TODO : delete all personnes 
 
-      const doesExist = await Famille.findOneAndDelete({ _id: id , antenne:userReferent.antenneDefaut})
+      const doesExist = await Famille.findOneAndDelete({ _id: id , antenne:userReferent.antenneDefautId})
       res.send(doesExist._id)
 
     } catch (error) {

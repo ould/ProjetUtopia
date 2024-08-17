@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {  tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
-import { GroupeService } from '../autres-services/groupe/groupe.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 
 
@@ -40,15 +39,14 @@ export class AuthService {
   }
 
   private setSession(authResult: any) {
-    localStorage.setItem('user_name', authResult.user.nom);
+    console.log(authResult)
+    localStorage.setItem('user_name', authResult.utilisateur.nom);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);
-    this.UtilisateurService.isAdmin().subscribe(
-      _data => {localStorage.setItem("isAdmin", _data+"");}
-    )
   }
 
   public isLoggedIn() {
+    console.log(Date.now() <  this.getExpiration())
     return Date.now() <  this.getExpiration() ;
   }
 

@@ -27,7 +27,7 @@ module.exports = {
         throw createError.Conflict(`${result._id} have already id`)
       
       const userReferent = await module.exports.getUserRequete(req, res, next)
-      result.antenne = userReferent.antenneDefaut;
+      result.antenne = userReferent.antenneDefautId;
       result.creePar = req.payload.userId
 
       const personne = new Personne(result)
@@ -47,7 +47,7 @@ module.exports = {
       const userReferent = await module.exports.getUserRequete(req, res, next)
 
 
-      const doesExist = await Personne.findOne({ _id: result.id, antenne:userReferent.antenneDefaut })
+      const doesExist = await Personne.findOne({ _id: result.id, antenne:userReferent.antenneDefautId })
       if (!doesExist)
         throw createError.NotFound(`${result.id} not found`);
 
@@ -69,7 +69,7 @@ module.exports = {
       const id = req.params.id
       const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Personne.findOne({ _id: id, antenne: userReferent.antenneDefaut })
+      const doesExist = await Personne.findOne({ _id: id, antenne: userReferent.antenneDefautId })
       if (!doesExist)
         throw createError.NotFound(`${result} not found`);
       res.send(doesExist)
@@ -85,7 +85,7 @@ module.exports = {
       const id = req.params.id
       const userReferent = await module.exports.getUserRequete(req, res, next)
 
-      const doesExist = await Personne.findOneAndDelete({ _id: id, antenne:userReferent.antenneDefaut })
+      const doesExist = await Personne.findOneAndDelete({ _id: id, antenne:userReferent.antenneDefautId })
       res.send(doesExist.id)
 
     } catch (error) {

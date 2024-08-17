@@ -20,18 +20,6 @@
           <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="groupes" class="form-label">Groupes :</label>
-        <select class="form-control custom-select" id="groupes" formControlName="groupes" multiple>
-          <option *ngFor="let groupe of groupes" value="{{groupe._id}}">{{groupe.nom}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="droits" class="form-label">Droits :</label>
-        <select class="form-control custom-select" id="droits" formControlName="droits" multiple>
-          <option *ngFor="let droit of droits" value="{{droit._id}}">{{droit.nom}}</option>
-        </select>
-      </div>
     </fieldset>
     <div class="form-buttons">
       <button type="button" class="btn btn-utopia-primary" (click)="modifierUtilisateur()">Enregistrer</button>

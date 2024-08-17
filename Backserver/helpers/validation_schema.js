@@ -7,7 +7,7 @@ const authSchema = Joi.object({
   password: Joi.string().min(2).required(),
 
   passwordConfirm: Joi.string().optional(),
-  groupes: Joi.array().optional(),
+  profilId: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
   antennes: Joi.array().optional()
@@ -20,12 +20,28 @@ const userSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
   
+  profilId: Joi.string().optional(),
   antennes: Joi.array().optional(),
-  groupes: Joi.array().optional(),
-  droits: Joi.array().optional(),
-  antenneDefaut: Joi.string().optional(),
+  antenneDefautId: Joi.string().optional(),
   derniereModificationMdp: Joi.date().optional(),
   derniereConnexion: Joi.date().optional()
+})
+
+const profilSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  tableauDroits: Joi.array().items(
+    Joi.object({
+      section: Joi.string().required(),
+      drtois: Joi.string().required()
+    })
+  ).required(),
+
+  commentaire: Joi.string().optional(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.date().optional(),
+  modifiePar: Joi.string().optional(),
+  dateModification: Joi.date().optional()
 })
 
 const logSchema = Joi.object({
@@ -99,27 +115,6 @@ const messageSchema = Joi.object({
   modifiePar: Joi.date().optional()
 })
 
-const groupeSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
-})
-
-const droitSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional()
-})
-
-
 const personneTypeSchema = Joi.object({
   id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().optional(),
@@ -139,8 +134,7 @@ module.exports = {
   userSchema,
   chatSchema,
   messageSchema,
-  groupeSchema,
-  droitSchema,
+  profilSchema,
   personneTypeSchema,
   logSchema
 }

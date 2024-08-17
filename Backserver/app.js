@@ -4,7 +4,7 @@ const createError = require('http-errors')
 require('dotenv').config()
 require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
-const { haveAdminGroupe, haveGroupeFamille, haveGroupeChat, haveGroupeAstreinte, haveGroupeHommeSeul, haveGroupeMineur, haveDroits} = require('./helpers/role_check')
+const { haveDroits} = require('./helpers/role_check')
 //require('./helpers/init_redis')
 
 const cors = require("cors");
@@ -14,7 +14,6 @@ const personneRouter = require('./Routes/personne.route')
 const familleRouter = require('./Routes/Famille.route')
 const chatRouter = require('./Routes/Chat.route')
 const messageRouter = require('./Routes/Message.route')
-const groupeRouter = require('./Routes/Groupe.route')
 const personneTypeRouter = require('./Routes/PersonneType')
 const userRouter = require('./Routes/User.route')
 const selfUserRouter = require('./Routes/SelfUser.route')
@@ -23,7 +22,6 @@ const antenneRouter = require('./Routes/Antenne.route')
 const logRouter = require('./Routes/Log.route')
 const logPublicRouter = require('./Routes/Log.route')
 const publicRouter = require('./Routes/Public.route')
-const droitRouter = require('./Routes/Droit.route')
 
 const corsOptions = {
   origin: '*',
@@ -41,19 +39,20 @@ app.use(express.urlencoded({ extended: true }))
 // TODO : A voir pour les droits  req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE'
 
 //Routes Admin
-app.use('/api/'+ process.env.route_groupe, verifyAccessToken, haveAdminGroupe, haveDroits, groupeRouter)
-app.use('/api/droit', verifyAccessToken, haveAdminGroupe, haveDroits, droitRouter)
-app.use('/api/user', verifyAccessToken, haveAdminGroupe,haveDroits, userRouter)
-app.use('/api/personneType', verifyAccessToken, haveAdminGroupe,haveDroits, personneTypeRouter)
-app.use('/api/Log', verifyAccessToken, haveAdminGroupe, haveDroits, logRouter)
+app.use('/api/profil', verifyAccessToken, haveDroits, )
+app.use('/api/user', verifyAccessToken,haveDroits, userRouter)
+app.use('/api/personneType', verifyAccessToken,haveDroits, personneTypeRouter)
+app.use('/api/Log', verifyAccessToken, haveDroits, logRouter)
+app.use('/api/personne', verifyAccessToken, haveDroits, personneRouter) // TODO : faire passer les demandes de personne par les route selon le type (famille, mineur etc)
 
-//Routes famille
-app.use('/api/famille', verifyAccessToken, haveGroupeFamille || haveGroupeAstreinte , haveDroits, familleRouter)
+//Routes beneficiaire
+app.use('/api/'+ process.env.contexte_famille, verifyAccessToken, haveDroits, familleRouter)
 
-//Routes communes internes
-app.use('/api/personne', verifyAccessToken, haveGroupeFamille || haveGroupeAstreinte || haveGroupeHommeSeul || haveGroupeMineur, haveDroits, personneRouter)
-app.use('/api/chat', verifyAccessToken, haveGroupeChat, chatRouter)
-app.use('/api/message', verifyAccessToken, haveGroupeChat, messageRouter)
+//Routes communes internes restreintes
+app.use('/api/'+process.env.contexte_chat, verifyAccessToken, haveDroits, chatRouter) 
+app.use('/api/message', verifyAccessToken, haveDroits, messageRouter) //TODO faire passer message par al route chat 
+
+//Routes communes internes libres
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
 app.use('/api/selfUser', verifyAccessToken, selfUserRouter)
 

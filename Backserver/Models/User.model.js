@@ -13,13 +13,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  groupes:{
-    type: [String],
-    required: true,
-  },
-  droits:{
-    type: [String],
-    required: true,
+  profilId:{
+    type: String,
+    required: false,
   },
   nom:{
     type: String,
@@ -33,7 +29,7 @@ const UserSchema = new Schema({
     type: [String],
     required: true,
   },
-  antenneDefaut: {
+  antenneDefautId: {
     type: String,
     required: true,
   },
@@ -72,10 +68,9 @@ UserSchema.pre('save', async function (next) {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
-      this.groupes = []
-      this.droits = []
+      this.profilId = "0" // empeche la creation d'un utilisateur avec profil prerempli => assignation profil manuelle 
       this.dateCreation = Date.now()
-      this.antenneDefaut = this.antennes[0]
+      this.antenneDefautId = this.antennes[0]
       this.derniereModificationMdp = null
       this.derniereConnexion = null
     }

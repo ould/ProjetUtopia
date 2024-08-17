@@ -1,10 +1,9 @@
 const createError = require('http-errors');
 const Initialise = require('../Models/Initialise.model');
 const PersonneType = require('../Models/PersonneType.model');
-const Groupe = require('../Models/Groupe.model');
 const Antenne = require('../Models/Antenne.model');
 const User = require('../Models/User.model');
-const Droit = require('../Models/Droit.model');
+const Profil = require('../Models/Profil.model');
 
 module.exports = {
 
@@ -15,35 +14,25 @@ module.exports = {
       if (!doesExist) { //TODO : sortir ce codes et voir ce qui peut etre async
         console.log("Initialisation..")
 
-        const initialiseObjet = new Initialise({lancePar : "Initialisation"});
+        const initialiseObjet = new Initialise({ lancePar: "Initialisation" });
         const userId = "Initialisation"
         // Efface les tables de parametrage
         PersonneType.collection.drop();
-        Groupe.collection.drop();
         Antenne.collection.drop();
+        Profil.collection.drop();
 
-        // Ajoute les groupes (qui a droit à acceder à quoi) : souvent le champ d'application d'un pole
-        console.log("Groupe..")
-        await creationGroupe("Admin", userId);
-        await creationGroupe("Famille", userId);
-        await creationGroupe("Hebergeuse", userId);
-        await creationGroupe("Astreinte", userId);
-        await creationGroupe("Benevole", userId);
-        await creationGroupe("Adherent", userId);
-        await creationGroupe("Mineur", userId);
-        await creationGroupe("HommeSeul", userId);
-        await creationGroupe("Rapports", userId);
-        await creationGroupe("Stock", userId);
-        await creationGroupe("Chat", userId);
-
-        //Groupes spécifiques pour la gestion des données
-        console.log("Droits..")
-        await creationDroit("Lecture", userId);
-        await creationDroit("Modification", userId);
-        await creationDroit("Ajout", userId); //Décorrellé de la lecture car peut etre bénévole temporaire qui doit ajouter sans voir ce qui l'est deja 
-        await creationDroit("Suppression", userId);
-        await creationDroit("Admin", userId);
-
+        //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
+        //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat
+        const accesTotal = "carwd"
+        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd");
+        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd");
+        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd");
+        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd");
+        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd");
 
         //Ajoute les Antennes
         console.log("Antenne..")
@@ -57,7 +46,7 @@ module.exports = {
         await creationAntenne("Dijon", userId);
         await creationAntenne("Lorient", userId);
         await creationAntenne("Autre", userId);
-        await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes
+        await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
 
 
         // Fait de l'utilisteur un user admin
@@ -67,11 +56,11 @@ module.exports = {
 
         // Ajoute les types de personne : personne pouvant avoir une fiche détaillée dans l'application
         console.log("Type..")
-        await creationType("Famille", userId);
-        await creationType("Mineur", userId);
-        await creationType("Hebegeuse", userId);
-        await creationType("Benevole", userId);
-        await creationType("Adherent", userId);
+        await creationType(process.env.contexte_famille, userId);
+        await creationType(process.env.contexte_mineur, userId);
+        await creationType(process.env.contexte_hebergeuse, userId);
+        await creationType(process.env.contexte_benevole, userId);
+        await creationType(process.env.contexte_adherente, userId);
 
 
         // Ajoute une ligne dans initialisation
@@ -99,40 +88,30 @@ module.exports = {
         res.send(false)
 
     } catch (error) {
-      if (error.isJoi === true) error.status = 422
       next(error)
     }
   },
 }
 
-
-async function creationGroupe(nom, userId) {
+async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat) {
   try {
-    const groupeAChek = await Groupe.findOne({ nom: nom });
-
-    if (!groupeAChek) {
-      const groupe = new Groupe({ nom: nom, creePar: userId })
-      const savedGroupe = await groupe.save()
-      console.log("groupe crée :" + savedGroupe.nom)
-    }
+    const nouveauProfil = new Profil({
+      nom: nom, creePar: userId, commentaire: commentaire,
+      tableauDroits: [{ section: process.env.contexte_admin, droits: admin },
+      { section: process.env.contexte_famille, droits: famille },
+      { section: process.env.contexte_hebergeuse, droits: hebergeuse },
+      { section: process.env.contexte_benevole, droits: benevole },
+      { section: process.env.contexte_adherente, droits: adherente },
+      { section: process.env.contexte_mineur, droits: mineur },
+      { section: process.env.contexte_hommeSeul, droits: hommeSeul },
+      { section: process.env.contexte_rapports, droits: rapports },
+      { section: process.env.contexte_stock, droits: stock },
+      { section: process.env.contexte_chat, droits: chat }]
+    })
+    const savedProfil = await nouveauProfil.save()
+    console.log("Profil crée :" + savedProfil.nom)
   } catch (error) {
-    if (error.isJoi === true) error.status = 422
-    throw createError[500](`Groupe error` + error);
-  }
-}
-
-async function creationDroit(nom, userId) {
-  try {
-    const droitExiste = await Droit.findOne({ nom: nom });
-
-    if (!droitExiste) {
-      const droit = new Droit({ nom: nom, creePar: userId })
-      const savedDroit = await droit.save()
-      console.log("Droit crée :" + savedDroit.nom)
-    }
-  } catch (error) {
-    if (error.isJoi === true) error.status = 422
-    throw createError[500](`Droit error` + error);
+    throw createError[500](`Profile error` + error);
   }
 }
 
@@ -148,7 +127,6 @@ async function creationAntenne(nom, userId) {
     }
 
   } catch (error) {
-    if (error.isJoi === true) error.status = 422
     throw createError[500](`Antenne error` + error);
   }
 }
@@ -164,7 +142,6 @@ async function creationType(nom, userId) {
 
     }
   } catch (error) {
-    if (error.isJoi === true) error.status = 422
     throw createError[500](`Type error` + error);
   }
 }
@@ -172,17 +149,11 @@ async function creationType(nom, userId) {
 
 async function createFirstAdmin() {
   try {
-    //Verifie s'il y'a un groupe admin
-    const groupeAdmin = await Groupe.findOne({ nom: "Admin" });
-    if (!groupeAdmin)
+    //Verifie s'il y'a un profil admin
+    const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
+    if (!profilAdmin)
       throw createError.NotFound(`Admin not found`);
-    const idGroupeAdmin = groupeAdmin._id + "";
-
-    //Verifie s'il y'a un droit admin
-    const droitAdmin = await Droit.findOne({ nom: "Admin" });
-    if (!droitAdmin)
-      throw createError.NotFound(`droit admin not found`);
-    const idDroitAdmin = droitAdmin._id + "";
+    const profilAdminId = profilAdmin._id + "";
 
     //Met paris comme antenne par defaut
     const antennePrincipale = await Antenne.findOne({ nom: "Paris" });
@@ -192,27 +163,23 @@ async function createFirstAdmin() {
 
     //Creation utilisateur
     console.log("Creation admin.. ");
-    let doesExist = await User.findOne({ email: "adminUtopia@test.fr" });
-    if (!doesExist){
-      const user = new User({email : "adminUtopia@test.fr", password : "123456789", nom: "admin", prenom: "utopia", antennes:[idAntennePrincipale], antenneDefaut: idAntennePrincipale, creePar:"Initialisation", derniereConnexion:null, derniereModificationMdp:null  })
-      const saveduser = await user.save()   
-      doesExist = await User.findOne({ email: "adminUtopia@test.fr" });
-      if (!doesExist)
+    let utilisateurExistant = await User.findOne({ email: "adminUtopia@test.fr" });
+    if (!utilisateurExistant) {
+      const user = new User({ email: "adminUtopia@test.fr", password: "123456789", nom: "admin", prenom: "utopia", antennes: [idAntennePrincipale], antenneDefautId: idAntennePrincipale, creePar: "Initialisation", derniereConnexion: null, derniereModificationMdp: null })
+      const utilisateurExistant = await user.save() 
+      if (!utilisateurExistant)
         throw createError.NotFound(`user not found`);
     }
-    console.log("Assignation droit et groupe admin.. ");
-    //Ajoute les droits et groupes
-    doesExist.groupes = [idGroupeAdmin];
-    doesExist.droits = [idDroitAdmin];
+    console.log("Assignation droit admin.. ");
+    utilisateurExistant.profilId = profilAdminId;
 
-    const filter = { _id: doesExist._id };
-    const updateduser = await User.findOneAndUpdate(filter, doesExist, {
+    const filter = { _id: utilisateurExistant._id };
+    const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
       returnOriginal: false
     });
 
     console.log("Creation admin adminUtopia@test.fr 123456789 "); //TODO: mdp aléatoire
   } catch (error) {
-    if (error.isJoi === true) error.status = 422
     throw createError[500](`Admin error` + error);
   }
 }

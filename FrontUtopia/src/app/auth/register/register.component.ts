@@ -50,7 +50,6 @@ export class RegisterComponent implements OnInit{
   register() {
     if (this.newUserForm.valid && this.passwordMatchValidator()) {
       const newUser: User = this.newUserForm.value;
-      newUser.groupes = ["0"];
       newUser.antennes = [this.newUserForm.get('antennes')?.value];
       this.authService.register(newUser)
         .subscribe(

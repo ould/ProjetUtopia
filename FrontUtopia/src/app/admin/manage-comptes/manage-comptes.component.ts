@@ -6,7 +6,6 @@ import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisat
 import { Antenne } from 'src/app/interfaces/antenne';
 import { User } from 'src/app/interfaces/user';
 import { PopupComponent } from 'src/app/popup/popup.component';
-import { } from '@angular/forms'
 
 @Component({
   selector: 'app-manage-comptes',
@@ -46,10 +45,8 @@ export class ManageComptesComponent implements OnInit {
     // Ajoutez ici la logique pour ajouter un utilisateur à la liste
     if (this.newUserForm.valid) {
       const newUser: User = this.newUserForm.value;
-      newUser.groupes = ["0"];
-      newUser.droits = ["0"];
       newUser.antennes = [this.newUserForm.get('antennes')?.value]
-      newUser.antenneDefaut = newUser.antennes[0]
+      newUser.antenneDefautId = newUser.antennes[0]
       this.utilisateurService.addUser(newUser).subscribe()
       this.utilisateurs.push(newUser);
       }

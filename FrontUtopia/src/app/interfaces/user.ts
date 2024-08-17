@@ -5,12 +5,11 @@ export interface User {
     nom:string;
     prenom:string;
     password:string;
-
-    antenneDefaut:string;
-
+    
+    profilId?: string;
+    
+    antenneDefautId:string;
     antennes: string[];
-    groupes: string[];
-    droits: string[];
     token?:string;
 
 }

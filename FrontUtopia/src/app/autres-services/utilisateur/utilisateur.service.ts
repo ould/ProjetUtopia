@@ -47,8 +47,8 @@ export class UtilisateurService {
     );
   }
 
-  isGroup(nomGroupeAVerifier: string): Observable<Boolean> {
-    const url = `${this.selfUserUrl}/isGroupe/${nomGroupeAVerifier}`;
+  accesSection(nomSectionAVerifier: string): Observable<Boolean> {
+    const url = `${this.selfUserUrl}/accesSection/${nomSectionAVerifier}`;
     return this.http.get<Boolean>(url).pipe();
   }
 
