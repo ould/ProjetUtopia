@@ -1,20 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { Personne } from '../interfaces/Personne';
-
+import { Membre } from '../models/membre';
 @Component({
-  selector: 'app-personne',
-  templateUrl: './personne.component.html',
-  styleUrls: ['./personne.component.css']
+  selector: 'app-membre',
+  templateUrl: './membre.component.html',
+  styleUrls: ['./membre.component.css']
 })
-export class PersonneComponent {
-
-  @Input() personnesInput!: Personne[];
+export class MembreComponent {
+  @Input() membresInput!: Membre[];
   @Input() lectureSeuleInput!: boolean;
   @Input() ActiveInput!: Boolean;
   currentPersonneIndex: number = 0; // Indice de la personne actuelle
 
-  get currentPersonne(): Personne {
-    return this.personnesInput[this.currentPersonneIndex];
+  get currentPersonne(): Membre {
+    return this.membresInput[this.currentPersonneIndex];
   }
 
   prevPersonne(): void {
@@ -24,7 +22,7 @@ export class PersonneComponent {
   }
 
   nextPersonne(): void {
-    if (this.currentPersonneIndex < this.personnesInput.length - 1) {
+    if (this.currentPersonneIndex < this.membresInput.length - 1) {
       this.currentPersonneIndex++;
     }
   }
@@ -34,10 +32,9 @@ export class PersonneComponent {
   }
 
   isLastPersonne(): boolean {
-    return this.currentPersonneIndex === this.personnesInput.length - 1;
+    return this.currentPersonneIndex === this.membresInput.length - 1;
   }
 
   ajouterPersonne(): void {
   }
-
 }

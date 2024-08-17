@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
+import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
 import { Antenne } from 'src/app/interfaces/antenne';
-import { User } from 'src/app/interfaces/user';
 import { PopupComponent } from 'src/app/popup/popup.component';
-import { } from '@angular/forms'
 
 @Component({
   selector: 'app-manage-comptes',
@@ -15,8 +14,8 @@ import { } from '@angular/forms'
 })
 export class ManageComptesComponent implements OnInit {
 
-  utilisateurs: User[] = [];
-  nouvelUtilisateur?:User
+  utilisateurs: Utilisateur[] = [];
+  nouvelUtilisateur?:Utilisateur
   Antennes: Antenne[] = []
 
   ngOnInit(): void {
@@ -34,7 +33,7 @@ export class ManageComptesComponent implements OnInit {
     )
   }
 
-  newUserForm: FormGroup = this.fb.group({
+  newUtilisateurForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     nom: ['', [Validators.required]],
     prenom: ['', [Validators.required]],
@@ -44,23 +43,21 @@ export class ManageComptesComponent implements OnInit {
 
   ajouterUtilisateur() {
     // Ajoutez ici la logique pour ajouter un utilisateur à la liste
-    if (this.newUserForm.valid) {
-      const newUser: User = this.newUserForm.value;
-      newUser.groupes = ["0"];
-      newUser.droits = ["0"];
-      newUser.antennes = [this.newUserForm.get('antennes')?.value]
-      newUser.antenneDefaut = newUser.antennes[0]
-      this.utilisateurService.addUser(newUser).subscribe()
-      this.utilisateurs.push(newUser);
+    if (this.newUtilisateurForm.valid) {
+      const newUtilisateur: Utilisateur = this.newUtilisateurForm.value;
+      newUtilisateur.antennes = [this.newUtilisateurForm.get('antennes')?.value]
+      newUtilisateur.antenneDefautId = newUtilisateur.antennes[0]
+      this.utilisateurService.addUtilisateur(newUtilisateur).subscribe()
+      this.utilisateurs.push(newUtilisateur);
       }
   }
 
 
-  reinitialiseMotDePasse(utilisateur: User): void {
+  reinitialiseMotDePasse(utilisateur: Utilisateur): void {
   }
 
 
-  openPopupSupprimer(utilisateur: User) {
+  openPopupSupprimer(utilisateur: Utilisateur) {
     const dialogRef = this.dialog.open(PopupComponent, {
       data: {
         title: 'Ajouter un rôle/groupe',
@@ -74,7 +71,7 @@ export class ManageComptesComponent implements OnInit {
       if (result === true) {
         // Action lorsque le bouton "Oui" est cliqué
         if (utilisateur._id)
-          this.utilisateurService.deleteUser(utilisateur._id).subscribe()
+          this.utilisateurService.deleteUtilisateur(utilisateur._id).subscribe()
         location.reload()
       } else if (result === false) {
         // Action lorsque le bouton "Non" est cliqué

@@ -1,6 +1,6 @@
 
 export interface Login {
-    id?:number;
+    _id?:number;
     statut: boolean;
    
 }

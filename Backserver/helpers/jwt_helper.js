@@ -8,7 +8,7 @@ module.exports = {
       const payload = {
         userId: user._id,
         email: user.email,
-        groupes: user.groupes,
+        profilId: user.profilId,
         nom: user.nom,
         prenom: user.prenom
       }

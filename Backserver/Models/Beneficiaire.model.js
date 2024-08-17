@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const PersonneSchema = new Schema({
+const BeneficiaireSchema = new Schema({
   type: {
     type: String,
     required: true,
@@ -60,7 +60,7 @@ const PersonneSchema = new Schema({
   }
 })
 
-PersonneSchema.pre('save', async function (next) {
+BeneficiaireSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
       this.dateCreation = Date.now()
@@ -71,7 +71,7 @@ PersonneSchema.pre('save', async function (next) {
   }
 })
 
-PersonneSchema.pre('updateOne', async function (next) {
+BeneficiaireSchema.pre('updateOne', async function (next) {
   try {
     this.dateModification = Date.now()
     next()
@@ -80,5 +80,5 @@ PersonneSchema.pre('updateOne', async function (next) {
   }
 })
 
-const Personne = mongoose.model('personne', PersonneSchema)
-module.exports = Personne
+const Beneficiaire = mongoose.model('beneficiaire', BeneficiaireSchema)
+module.exports = Beneficiaire

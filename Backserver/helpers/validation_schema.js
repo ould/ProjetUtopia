@@ -1,13 +1,14 @@
 const Joi = require('@hapi/joi')
 
 //Validations entre API et Front (different de la validation en base de données => models)
+// En resumé, ce que le back doit recevoir pour accepter l'objet 
 
 const authSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
   password: Joi.string().min(2).required(),
 
   passwordConfirm: Joi.string().optional(),
-  groupes: Joi.array().optional(),
+  profilId: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
   antennes: Joi.array().optional()
@@ -18,45 +19,48 @@ const userSchema = Joi.object({
   nom: Joi.string().required(),
   prenom: Joi.string().required(),
   email: Joi.string().email().lowercase().required(),
-  password: Joi.string().min(2).required(),
   
+  password: Joi.string().min(2).optional(),
+  profilId: Joi.string().optional(),
   antennes: Joi.array().optional(),
-  groupes: Joi.array().optional(),
-  droits: Joi.array().optional(),
-  antenneDefaut: Joi.string().optional(),
-  derniereModificationMdp: Joi.date().optional(),
-  derniereConnexion: Joi.date().optional()
+  antenneDefautId: Joi.string().optional()
+})
+
+const profilSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  tableauDroits: Joi.array().items(
+    Joi.object({
+      section: Joi.string().required(),
+      drtois: Joi.string().required()
+    })
+  ).required(),
+
+  commentaire: Joi.string().optional()
 })
 
 const logSchema = Joi.object({
   message: Joi.string().required(),
   type: Joi.string().required(),
-  importance: Joi.string().optional(),
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional()
+  importance: Joi.string().optional()
 })
 
 const familleSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
+  _id: Joi.string().hex().length(24).optional(),
   nomFamille: Joi.string().min(5).required(),
-  personnesId: Joi.array().required(),
+  beneficiaires : Joi.array().required(),
   composition: Joi.string().required(),
 
   antenne:Joi.string().optional(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
+  commentaire: Joi.string().optional()
 })
 
-const personneSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  type: Joi.number().required(),
+const beneficiaireSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required(),
   prenom: Joi.string().required(),
-
+  
+  type: Joi.string().optional(),
   nationalite: Joi.string().optional(),
   ddn: Joi.date().optional(),
   situation: Joi.string().optional(),
@@ -65,82 +69,34 @@ const personneSchema = Joi.object({
   telephone: Joi.string().optional(),
   commentaire: Joi.string().optional(),
   antenne:Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
+  
+  parentId:Joi.string().optional()
 })
 
 const chatSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
+  _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required(),
   messagesId: Joi.array().required(),
   droitsLecturePersonneId: Joi.array().required(),
   droitsEcriturePersonneId: Joi.array().required(),
-  antenne:Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
+  antenne:Joi.string().optional()
 })
 
 const messageSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
+  _id: Joi.string().hex().length(24).optional(),
   idPersonne: Joi.string().required(),
   message: Joi.string().required(),
   date: Joi.date().required(),
-  antenne:Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
+  antenne:Joi.string().optional()
 })
-
-const groupeSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
-})
-
-const droitSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional()
-})
-
-
-const personneTypeSchema = Joi.object({
-  id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().optional(),
-  commentaire: Joi.string().optional(),
-
-  creePar: Joi.date().optional(),
-  dateCreation: Joi.date().optional(),
-  dateModification: Joi.date().optional(),
-  modifiePar: Joi.date().optional()
-})
-
 
 module.exports = {
   authSchema,
-  personneSchema,
+  beneficiaireSchema,
   familleSchema,
   userSchema,
   chatSchema,
   messageSchema,
-  groupeSchema,
-  droitSchema,
-  personneTypeSchema,
+  profilSchema,
   logSchema
 }

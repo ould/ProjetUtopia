@@ -1,5 +1,5 @@
 import {inject} from '@angular/core';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 
 import {AuthService} from './auth.service';
 

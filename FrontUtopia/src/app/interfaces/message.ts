@@ -1,5 +1,5 @@
 export interface Message {
-    id?:number;
+    _id?:number;
     nomPersonne:string;
     idPersonne?:number;
     message:string;

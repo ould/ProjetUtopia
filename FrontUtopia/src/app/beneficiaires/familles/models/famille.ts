@@ -1,5 +1,3 @@
-import { Personne } from "src/app/interfaces/Personne";
-
 export interface Famille {
     _id?:string;
     nomFamille: string;
@@ -8,6 +6,3 @@ export interface Famille {
     commentaire?: string;
     antenne?: string;
 }
-
-
-

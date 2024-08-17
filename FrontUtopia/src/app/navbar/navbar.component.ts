@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 import { Antenne } from '../interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Section } from '../interfaces/section';
 
 @Component({
   selector: 'app-navbar',
@@ -14,20 +15,20 @@ export class NavbarComponent implements OnInit {
    antenneDefautForm: FormGroup;
   public activeTab: String = ''
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
-  public userMultipleAntennes: Boolean = false
-  public antennesUser: Antenne[] = []
+  public utilisateurMultipleAntennes: Boolean = false
+  public antennesUtilisateur: Antenne[] = []
 
-  public isGroupeAdmin: Boolean = false;
-  public isGroupeFamille: Boolean = false;
-  public isGroupeMineur: Boolean = false;
-  public isGroupeHebergeuse: Boolean = false;
-  public isGroupeAstreinte: Boolean = false;
-  public isGroupeBenevole: Boolean = false;
-  public isGroupeAdherent: Boolean = false;
-  public isGroupeHommeSeul: Boolean = false;
-  public isGroupeRapports: Boolean = false;
-  public isGroupeStock: Boolean = false;
-  public isGroupeChat: Boolean = false;
+  public aAccesAdmin: Boolean = false;
+  public aAccesFamille: Boolean = false;
+  public aAccesMineur: Boolean = false;
+  public aAccesHebergeuse: Boolean = false;
+  public aAccesAstreinte: Boolean = false;
+  public aAccesBenevole: Boolean = false;
+  public aAccesAdherent: Boolean = false;
+  public aAccesHommeSeul: Boolean = false;
+  public aAccesRapports: Boolean = false;
+  public aAccesStock: Boolean = false;
+  public aAccesChat: Boolean = false;
 
   public antenneActuelle = ""
 
@@ -56,54 +57,54 @@ export class NavbarComponent implements OnInit {
     if (this.isLoggedIn) {
 
       //TODO : sortir les string en const globales
-      this.utilisateurService.isGroup("Admin").subscribe(
+      this.utilisateurService.accesSection(Section.admin).subscribe(
         data => {
-          this.isGroupeAdmin = data
+          this.aAccesAdmin = data
         });
-      this.utilisateurService.isGroup("Famille").subscribe(
+      this.utilisateurService.accesSection(Section.famille).subscribe(
         data => {
-          this.isGroupeFamille = data
+          this.aAccesFamille = data
         });
-      this.utilisateurService.isGroup("Mineur").subscribe(
+      this.utilisateurService.accesSection(Section.mineur).subscribe(
         data => {
-          this.isGroupeMineur = data
+          this.aAccesMineur = data
         });
-      this.utilisateurService.isGroup("Hebergeuse").subscribe(
+      this.utilisateurService.accesSection(Section.hebergeuse).subscribe(
         data => {
-          this.isGroupeHebergeuse = data
+          this.aAccesHebergeuse = data
         });
-      this.utilisateurService.isGroup("Astreinte").subscribe(
+      this.utilisateurService.accesSection(Section.astreinte).subscribe(
         data => {
-          this.isGroupeAstreinte = data
+          this.aAccesAstreinte = data
         });
-      this.utilisateurService.isGroup("Benevole").subscribe(
+        this.utilisateurService.accesSection(Section.benevole).subscribe(
+          data => {
+            this.aAccesBenevole = data
+          });
+      this.utilisateurService.accesSection(Section.adherente).subscribe(
         data => {
-          this.isGroupeBenevole = data
+          this.aAccesAdherent = data
         });
-      this.utilisateurService.isGroup("Adherent").subscribe(
+      this.utilisateurService.accesSection(Section.hommeSeul).subscribe(
         data => {
-          this.isGroupeAdherent = data
+          this.aAccesHommeSeul = data
         });
-      this.utilisateurService.isGroup("HommeSeul").subscribe(
+      this.utilisateurService.accesSection(Section.rapports).subscribe(
         data => {
-          this.isGroupeHommeSeul = data
+          this.aAccesRapports = data
         });
-      this.utilisateurService.isGroup("Rapports").subscribe(
+      this.utilisateurService.accesSection(Section.stock).subscribe(
         data => {
-          this.isGroupeRapports = data
+          this.aAccesStock = data
         });
-      this.utilisateurService.isGroup("Stock").subscribe(
+      this.utilisateurService.accesSection(Section.chat).subscribe(
         data => {
-          this.isGroupeStock = data
-        });
-      this.utilisateurService.isGroup("Chat").subscribe(
-        data => {
-          this.isGroupeChat = data
+          this.aAccesChat = data
         });
       this.utilisateurService.getAntennes().subscribe(
         data => {
-          this.antennesUser = data;
-          this.userMultipleAntennes = this.antennesUser.length > 1;
+          this.antennesUtilisateur = data;
+          this.utilisateurMultipleAntennes = this.antennesUtilisateur.length > 1;
           this.utilisateurService.getAntenneDefaut().subscribe(
             data => {
               this.antenneDefautForm.setValue({

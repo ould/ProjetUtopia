@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Famille } from '../../interfaces/famille';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Famille } from './models/famille';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { PersonneService } from 'src/app/personne/personne.service';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Membre } from './models/Membre';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamilleService {
 
-  private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que database)
+  private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que section)
+  private membreFamilleUrl = this.familleUrl + '/membre';  // URL to web api (meme nom que section)
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*' })
@@ -91,13 +92,36 @@ export class FamilleService {
   }
 
 
+  getMembre(id: string): Observable<Membre> { //TODO : TOP 10 only, order by date desc
+    if (id === "") {
+      // if not search term, return empty array.
+      return of();
+    }
+    const url = `${this.familleUrl}/${id}`;
+    return this.http.get<Membre>(url).pipe(
+      tap(_ => this.log(`fetched famille id=${id}`)),
+      catchError(this.handleError<Membre>(`getFamille id=${id}`))
+    );
+  }
+
+  addOrUpdateAllMembres(id: Membre[]): Observable<string[]> { //TODO : TOP 10 only, order by date desc
+
+    const url = `${this.familleUrl}/${id}`;
+    return this.http.get<string[]>(url).pipe(
+      tap(_ => this.log(`fetched famille id=${id}`)),
+      catchError(this.handleError<string[]>(`getFamille id=${id}`))
+    );
+  }
+
+
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
+      // TODO: better job of transforming error for uti consumption
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
@@ -110,6 +134,5 @@ export class FamilleService {
   }
 
   constructor(
-    private http: HttpClient,
-    private personneService: PersonneService) { }
+    private http: HttpClient) { }
 }

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {  tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
-import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
-import { GroupeService } from '../autres-services/groupe/groupe.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
+import { Utilisateur } from '../autres-services/utilisateur/utilisateur';
 
 
 @Injectable({
@@ -21,13 +20,13 @@ export class AuthService {
   };
 
 
-  register(user: User): Observable<boolean> {
-    return this.http.post<boolean>(this.authUrl + "/register", user, this.httpOptions)
+  register(utilisateur: Utilisateur): Observable<boolean> {
+    return this.http.post<boolean>(this.authUrl + "/register", utilisateur, this.httpOptions)
   }
 
 
-  login(user: User): Observable<string> {
-    return this.http.post<string>(this.authUrl + "/login", user, this.httpOptions).pipe(
+  login(utilisateur: Utilisateur): Observable<string> {
+    return this.http.post<string>(this.authUrl + "/login", utilisateur, this.httpOptions).pipe(
       tap(token => this.setSession(token))
     )
   }
@@ -40,12 +39,9 @@ export class AuthService {
   }
 
   private setSession(authResult: any) {
-    localStorage.setItem('user_name', authResult.user.nom);
+    localStorage.setItem('user_name', authResult.utilisateur.nom);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);
-    this.UtilisateurService.isAdmin().subscribe(
-      _data => {localStorage.setItem("isAdmin", _data+"");}
-    )
   }
 
   public isLoggedIn() {

@@ -2,8 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { Antenne } from 'src/app/interfaces/antenne';
-import { User } from 'src/app/interfaces/user';
+import { Section } from 'src/app/interfaces/section';
 import { environment } from 'src/environments/environment';
+import { Utilisateur } from './utilisateur';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ import { environment } from 'src/environments/environment';
 export class UtilisateurService {
 
 
-  private userUrl = environment.apiUrl + 'user';
-  private selfUserUrl = environment.apiUrl + 'selfUser'; //Revoir quand c'est self
+  private utilisateurUrl = environment.apiUrl + Section.admin + '/utilisateur';
+  private selfUtilisateurUrl = environment.apiUrl + 'selfUtilisateur'; // TODO Revoir quand c'est self et quand c'est admin
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
@@ -20,54 +21,54 @@ export class UtilisateurService {
 
 
 
-  getUser(id: string): Observable<User>{
-    return this.http.get<User>(this.userUrl + "/" +id ).pipe()
+  getUtilisateur(id: string): Observable<Utilisateur>{
+    return this.http.get<Utilisateur>(this.utilisateurUrl + "/" +id ).pipe()
   }
 
-  getAll(): Observable<User[]>{
-    return this.http.get<User[]>(this.userUrl + "/getAll")
+  getAll(): Observable<Utilisateur[]>{
+    return this.http.get<Utilisateur[]>(this.utilisateurUrl + "/getAll")
   }
 
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.userUrl, user, this.httpOptions).pipe(
-      catchError(this.handleError<any>('addUser'))
+  addUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(this.utilisateurUrl, utilisateur, this.httpOptions).pipe(
+      catchError(this.handleError<any>('addUtilisateur'))
     );
   }
 
-  updateUser(user:User): Observable<User> {
-    return this.http.put<User>(this.userUrl, user, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateUser'))
+  updateUtilisateur(utilisateur:Utilisateur): Observable<Utilisateur> {
+    return this.http.put<Utilisateur>(this.utilisateurUrl, utilisateur, this.httpOptions).pipe(
+      catchError(this.handleError<any>('updateUtilisateur'))
     );
   }
 
-  deleteUser(id: string): Observable<User> {
-    const url = `${this.userUrl}/${id}`;
-    return this.http.delete<User>(url, this.httpOptions).pipe(
-      catchError(this.handleError<any>('deleteUser'))
+  deleteUtilisateur(id: string): Observable<Utilisateur> {
+    const url = `${this.utilisateurUrl}/${id}`;
+    return this.http.delete<Utilisateur>(url, this.httpOptions).pipe(
+      catchError(this.handleError<any>('deleteUtilisateur'))
     );
   }
 
-  isGroup(nomGroupeAVerifier: string): Observable<Boolean> {
-    const url = `${this.selfUserUrl}/isGroupe/${nomGroupeAVerifier}`;
+  accesSection(nomSectionDemandee: string): Observable<Boolean> {
+    const url = `${this.selfUtilisateurUrl}/accesSection/${nomSectionDemandee}`;
     return this.http.get<Boolean>(url).pipe();
   }
 
   getAntennes(): Observable<Antenne[]> {
-    const url = `${this.selfUserUrl}/antennes/`;
+    const url = `${this.selfUtilisateurUrl}/antennes/`;
     return this.http.get<Antenne[]>(url).pipe();
   }
 
   getAntenneDefaut(): Observable<Antenne> {
-    const url = `${this.selfUserUrl}/antenneDefaut/`;
+    const url = `${this.selfUtilisateurUrl}/antenneDefaut/`;
     return this.http.get<Antenne>(url).pipe();
   }
 
   changeAntenneDefaut(nouvelleAntenneId:string): Observable<Antenne> {
-    return this.http.post<Antenne>(`${this.selfUserUrl}/antenneDefaut`, {nouvelleAntenneId} , this.httpOptions).pipe(); //Mettre crochet sur la variable car attends un json
+    return this.http.post<Antenne>(`${this.selfUtilisateurUrl}/antenneDefaut`, {nouvelleAntenneId} , this.httpOptions).pipe(); //Mettre crochet sur la variable car attends un json
   }
   
   isAdmin(): Observable<Boolean>{
-    return this.http.post<Boolean>(this.selfUserUrl + "/isAdmin","", this.httpOptions).pipe(
+    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/isAdmin","", this.httpOptions).pipe(
     )
   }
 
@@ -78,7 +79,7 @@ export class UtilisateurService {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
+      // TODO: better job of transforming error for uti consumption
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.

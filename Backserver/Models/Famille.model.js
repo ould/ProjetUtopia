@@ -6,11 +6,11 @@ const FamilleSchema = new Schema({
     type: String,
     required: false,
   },
-  nomFamille: {
+  nom: {
     type: String,
     required: true,
   },
-  personnesId: {
+  beneficiairesId: {
     type: [String],
     required: true,
   },

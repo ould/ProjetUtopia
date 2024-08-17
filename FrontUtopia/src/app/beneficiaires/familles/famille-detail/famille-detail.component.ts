@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Famille } from '../../../interfaces/famille';
-import { Personne } from 'src/app/interfaces/Personne';
+import { Famille } from '../models/famille';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
-import { PersonneService } from 'src/app/personne/personne.service';
+import { Membre } from '../models/Membre';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class FamilleDetailComponent {
 
 
   @Input() familleInput!: Famille;
-  personnes: Personne[] = []
+  membresFamille: Membre[] = []
 
   lectureSeule = true;
 
@@ -28,7 +27,7 @@ export class FamilleDetailComponent {
     }
     else {
       this.familleInput = { nomFamille: "Nouvelle Famille", personnesId: [] }
-      this.personnes.push({ nom: "", type: "2" })
+      this.membresFamille.push({ nom: "", type: "2" })
       this.lectureSeule = false
     }
   }
@@ -44,9 +43,9 @@ export class FamilleDetailComponent {
   }
 
   getPersonne(personneId: string): void {
-    this.personneService.getPersonne(personneId)
-      .subscribe((personne: Personne) => {
-        this.personnes.push(personne);
+    this.familleService.getMembre(personneId)
+      .subscribe((personne: Membre) => {
+        this.membresFamille.push(personne);
       });
   }
 
@@ -58,14 +57,10 @@ export class FamilleDetailComponent {
   save(): void {
     this.lectureSeule = this.VerificationCoherence();
 
-    this.personnes.forEach(personne => {
-      personne.type = "2";
-    })
-
-    this.personneService.addOrUpdateAll(this.personnes)
+    this.familleService.addOrUpdateAllMembres(this.membresFamille)
       .subscribe(ids => {
         this.familleInput.personnesId = ids
-        this.familleInput.nomFamille = this.personnes[0].nom + ids[0].slice(0, 5);
+        this.familleInput.nomFamille = this.membresFamille[0].nom + ids[0].slice(0, 5);
         this.familleService.addOrUpdate(this.familleInput)
           .subscribe(id => this.familleInput._id = id);
       });
@@ -78,7 +73,7 @@ export class FamilleDetailComponent {
   }
 
   VerificationCoherence(): boolean {
-    if (this.personnes[0].nom == '') {
+    if (this.membresFamille[0].nom == '') {
       return false;
     }
     return true;
@@ -88,7 +83,6 @@ export class FamilleDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private familleService: FamilleService,
-    private personneService: PersonneService,
     private location: Location
   ) { }
 }

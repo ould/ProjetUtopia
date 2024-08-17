@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { User } from 'src/app/interfaces/user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Antenne } from 'src/app/interfaces/antenne';
+import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +13,7 @@ import { Antenne } from 'src/app/interfaces/antenne';
 })
 export class RegisterComponent implements OnInit{
 
-  newUserForm: FormGroup;
+  newUtilisateurForm: FormGroup;
   antennes: Antenne[] = []
 
   constructor(private fb: FormBuilder,
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit{
     private antenneService: AntenneService,
     private router: Router) {
 
-    this.newUserForm = this.fb.group({
+    this.newUtilisateurForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -41,18 +41,17 @@ export class RegisterComponent implements OnInit{
 
 
   passwordMatchValidator() {
-    const password = this.newUserForm?.value?.password;
-    const confirmPassword = this.newUserForm?.value?.passwordConfirm;
+    const password = this.newUtilisateurForm?.value?.password;
+    const confirmPassword = this.newUtilisateurForm?.value?.passwordConfirm;
     
     return password == confirmPassword;
   }
 
   register() {
-    if (this.newUserForm.valid && this.passwordMatchValidator()) {
-      const newUser: User = this.newUserForm.value;
-      newUser.groupes = ["0"];
-      newUser.antennes = [this.newUserForm.get('antennes')?.value];
-      this.authService.register(newUser)
+    if (this.newUtilisateurForm.valid && this.passwordMatchValidator()) {
+      const newUtilisateur: Utilisateur = this.newUtilisateurForm.value;
+      newUtilisateur.antennes = [this.newUtilisateurForm.get('antennes')?.value];
+      this.authService.register(newUtilisateur)
         .subscribe(
           result => {
             this.router.navigateByUrl('/accueil');

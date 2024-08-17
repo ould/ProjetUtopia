@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/interfaces/user';
+import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent {
   }
 
   login() {
-      const val :User = this.form.value;
+      const val :Utilisateur = this.form.value;
 
       if (val.email && val.password) {
         let originUrl:string = this.route.snapshot.queryParams['originUrl']

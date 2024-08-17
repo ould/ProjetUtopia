@@ -1,16 +1,34 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const GroupeSchema = new Schema({
-
+const MembreSchema = new Schema({
+  type: {
+    type: String,
+    required: true,
+  },
   nom: {
     type: String,
     required: true,
-    unique: true
+  },
+  prenom: {
+    type: String,
+    required: true,
+  },
+  telephone: {
+    type: String,
+    required: false,
+  },
+  ddn: {
+    type: String,
+    required: false,
   },
   commentaire: {
     type: String,
     required: false,
+  },
+  antenne: {
+    type: String,
+    required: true,
   },
   creePar: {
     type: String,
@@ -30,7 +48,7 @@ const GroupeSchema = new Schema({
   }
 })
 
-GroupeSchema.pre('save', async function (next) {
+MembreSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
       this.dateCreation = Date.now()
@@ -41,8 +59,7 @@ GroupeSchema.pre('save', async function (next) {
   }
 })
 
-
-GroupeSchema.pre('updateOne', async function (next) {
+MembreSchema.pre('updateOne', async function (next) {
   try {
     this.dateModification = Date.now()
     next()
@@ -51,8 +68,5 @@ GroupeSchema.pre('updateOne', async function (next) {
   }
 })
 
-
-
-
-const Groupe = mongoose.model('groupe', GroupeSchema)
-module.exports = Groupe
+const Membre = mongoose.model('membre', MembreSchema)
+module.exports = Membre

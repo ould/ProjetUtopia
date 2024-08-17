@@ -2,7 +2,7 @@
 
 <!-- Formulaire d'ajout d'utilisateur TODO : le faire sortir dans un compo séparé --> 
 <h2>Ajouter un utilisateur</h2>
-<form [formGroup]="newUserForm" (ngSubmit)="ajouterUtilisateur()">
+<form [formGroup]="newUtilisateurForm" (ngSubmit)="ajouterUtilisateur()">
   <label for="nom-utilisateur">Nom d'utilisateur :</label>
   <input type="text" id="nom-utilisateur" name="nom" formControlName="nom"  ngModel required>
   <label for="nom-utilisateur">Prénom de l'utilisateur :</label>
@@ -17,7 +17,7 @@
       <option *ngFor="let antenne of Antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
     </select>
   </div>  
-  <button class="button" type="submit" [disabled]="newUserForm.invalid">Ajouter</button>
+  <button class="button" type="submit" [disabled]="newUtilisateurForm.invalid">Ajouter</button>
 </form>
 
 <h2>Liste des utilisateurs</h2>

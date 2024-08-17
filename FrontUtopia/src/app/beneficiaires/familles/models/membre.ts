@@ -1,5 +1,5 @@
-export interface Personne {
-    id?:string;
+export interface Membre {
+    _id?:string;
     type: string;
     nom: string;
     prenom?: string;
@@ -10,5 +10,6 @@ export interface Personne {
     procedure?: string;
     commentaire?: string;
     antenne?: string;
+    parentId?:string;
     
 }

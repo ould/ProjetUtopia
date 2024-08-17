@@ -15,7 +15,6 @@ import { FamillesComponent } from './beneficiaires/familles/familles.component';
 import { MineursComponent } from './beneficiaires/mineurs/mineurs.component';
 import { FamilleDetailComponent } from './beneficiaires/familles/famille-detail/famille-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PersonneComponent } from './personne/personne.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ChatDetailComponent } from './chats/chat-detail/chat-detail.component';
@@ -27,8 +26,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
 import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/compte-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ManagePersonneTypeComponent } from './admin/manage-personne-type/manage-personne-type.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { MembreComponent } from './beneficiaires/familles/membre/membre.component';
+import { ProfilComponent } from './admin/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,6 @@ import { AccueilComponent } from './accueil/accueil.component';
     MineursComponent,
     FamilleDetailComponent,
     DashboardComponent,
-    PersonneComponent,
     LoginComponent,
     LogoutComponent,
     RegisterComponent,
@@ -49,8 +48,9 @@ import { AccueilComponent } from './accueil/accueil.component';
     PopupComponent,
     CompteDetailComponent,
     NavbarComponent,
-    ManagePersonneTypeComponent,
-    AccueilComponent
+    AccueilComponent,
+    MembreComponent,
+    ProfilComponent
   ],
   imports: [
     BrowserModule,

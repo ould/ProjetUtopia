@@ -4,7 +4,7 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Famille } from '../../interfaces/famille';
+import { Famille } from './models/famille';
 import { FamilleService } from './famille.service';
 
 
@@ -34,11 +34,11 @@ export class FamillesComponent {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.FamilleService.searchFamilles(term)),
+      switchMap((term: string) => this.familleService.searchFamilles(term)),
     );
   }
 
-  constructor(private FamilleService: FamilleService) {}
+  constructor(private familleService: FamilleService) {}
 
   
 }

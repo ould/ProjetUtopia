@@ -7,18 +7,17 @@ const { addDateHours } = require('../helpers/date')
 module.exports = {
   register: async (req, res, next) => {
     try {
-      const result = await authSchema.validateAsync(req.body);
+      const nouvelUtilisateur = await authSchema.validateAsync(req.body);
 
-      const doesExist = await User.findOne({ email: result.email });
-      if (doesExist)
-        throw createError.Conflict(`${result.email} is already been registered`);
+      const utilisateurExiste = await User.findOne({ email: nouvelUtilisateur.email });
+      if (utilisateurExiste)
+        throw createError.Conflict(`${nouvelUtilisateur.email} is already been registered`);
 
-      result.groupes = ["0"];
-      result.creePar = "self"; //Créé par lui meme 
+      nouvelUtilisateur.profilId = "" // par securité on emepche la création d'un utilisateur avec directement un profil
+      nouvelUtilisateur.creePar = "self"; //Créé par lui meme 
 
-      const user = new User(result);
+      const user = new User(nouvelUtilisateur);
       await user.save();
-
       res.send(true)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -28,21 +27,20 @@ module.exports = {
 
   login: async (req, res, next) => {
     try {
-      const result = await authSchema.validateAsync(req.body);
-      const user = await User.findOne({ email: result.email });
-      if (!user) {
+      const utilisateurRequete = await authSchema.validateAsync(req.body);
+      const utilisateur = await User.findOne({ email: utilisateurRequete.email });
+      if (!utilisateur) {
         throw createError.Unauthorized('Email ou mot de passe invalide')
       }
 
-      const isMatch = await user.isValidPassword(result.password);
+      const isMatch = await utilisateur.isValidPassword(utilisateurRequete.password);
       if (!isMatch) {
-        throw createError.Unauthorized('Email ou mot de passe invalide ');
+        throw createError.Unauthorized('Email ou mot de passe invalide');
       }
 
-      const accessToken = await signAccessToken(user);
+      const accessToken = await signAccessToken(utilisateur);
       const expiresAt = addDateHours(20);
-
-      res.send({ accessToken, user, expiresAt })
+      res.send({ accessToken, utilisateur, expiresAt })
     } catch (error) {
       if (error.isJoi === true)
         return next(createError.BadRequest('Invalid'));

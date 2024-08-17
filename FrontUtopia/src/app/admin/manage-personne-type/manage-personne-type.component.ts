@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TypePersonneService } from 'src/app/autres-services/typePersonne/type.service';
 import { PopupComponent } from 'src/app/popup/popup.component';
 import { Type } from 'src/app/interfaces/type';
 
@@ -14,12 +13,12 @@ export class ManagePersonneTypeComponent  implements OnInit  {
   
   ngOnInit(): void {
     
-    this.TypePersonneService.getAllType().subscribe(
-      data => {
-        this.types = data
-        console.log(this.types)
-      }
-    )
+    // this.TypePersonneService.getAllType().subscribe(
+    //   data => {
+    //     this.types = data
+    //     console.log(this.types)
+    //   }
+    //)
   }
   
   types?: Type[];
@@ -42,7 +41,7 @@ export class ManagePersonneTypeComponent  implements OnInit  {
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
           // Action lorsque le bouton "Oui" est cliqué
-          this.TypePersonneService.addType(term).subscribe()
+          //this.TypePersonneService.addType(term).subscribe()
         } else if (result === false) {
           // Action lorsque le bouton "Non" est cliqué
           console.log('Bouton Non cliqué');
@@ -70,7 +69,7 @@ export class ManagePersonneTypeComponent  implements OnInit  {
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
           // Action lorsque le bouton "Oui" est cliqué
-          this.TypePersonneService.deleteType(id).subscribe()
+          //this.TypePersonneService.deleteType(id).subscribe()
         } else if (result === false) {
           // Action lorsque le bouton "Non" est cliqué
           console.log('Bouton Non cliqué');
@@ -84,6 +83,6 @@ export class ManagePersonneTypeComponent  implements OnInit  {
 
 
   constructor(
-    private TypePersonneService: TypePersonneService ,
+    //private TypePersonneService: TypePersonneService ,
     private dialog: MatDialog) { }
 }

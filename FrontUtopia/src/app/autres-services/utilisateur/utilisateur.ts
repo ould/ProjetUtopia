@@ -1,16 +1,15 @@
-export interface User {
+export interface Utilisateur {
     _id?:string;
     email:string;
     
     nom:string;
     prenom:string;
     password:string;
-
-    antenneDefaut:string;
-
+    
+    profilId?: string;
+    
+    antenneDefautId:string;
     antennes: string[];
-    groupes: string[];
-    droits: string[];
     token?:string;
 
 }
