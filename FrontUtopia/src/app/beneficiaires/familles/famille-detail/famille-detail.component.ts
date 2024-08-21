@@ -3,7 +3,7 @@ import { Famille } from '../models/famille';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
-import { Membre } from '../models/Membre';
+import { Membre } from '../models/membre';
 
 
 @Component({

@@ -4,15 +4,15 @@ const ProfilController = require('../Controllers/Profil.Controller')
 const logController = require('../Controllers/Log.Controller')
 
 //Utilisateur
-adminRouter.get('/user/getAll', userController.getAll)
+adminRouter.get('/utilisateur/getAll', userController.getAll)
 
-adminRouter.get('/user/:id', userController.getById)
+adminRouter.get('/utilisateur/:id', userController.getById)
 
-adminRouter.post('/user/', userController.save)
+adminRouter.post('/utilisateur/', userController.save)
 
-adminRouter.put('/user/', userController.update)
+adminRouter.put('/utilisateur/', userController.update)
 
-adminRouter.delete('/user/:id', userController.delete)
+adminRouter.delete('/utilisateur/:id', userController.delete)
 
 //Profil
 adminRouter.post('/profil/getAll/', ProfilController.getAll)

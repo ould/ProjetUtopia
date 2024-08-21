@@ -5,6 +5,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
 import { CompteDetailComponent } from './manage-comptes/compte-detail/compte-detail.component';
+import { ProfilComponent } from './profil/profil.component';
 
 const adminRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ const adminRoutes: Routes = [
         children: [
           { path: 'comptes', component: ManageComptesComponent },
           { path: 'modifierUtilisateur/:id', component: CompteDetailComponent },
+          { path: 'profil', component: ProfilComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }

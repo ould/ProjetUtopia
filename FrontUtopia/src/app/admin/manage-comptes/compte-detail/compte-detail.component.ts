@@ -67,7 +67,6 @@ export class CompteDetailComponent implements OnInit {
       prenom: this.utilisateur.prenom,
       email: this.utilisateur.email,
       antennes: this.utilisateur.antennes
-      antennes: this.utilisateur.antennes
     })
   }
 

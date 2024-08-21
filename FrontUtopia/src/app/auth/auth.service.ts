@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {  tap } from 'rxjs/operators';
-import {  tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { environment } from 'src/environments/environment';
-import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 import { Utilisateur } from '../autres-services/utilisateur/utilisateur';
 
 
@@ -67,6 +65,5 @@ export class AuthService {
   }
 
   constructor(
-    private http: HttpClient,
-    private UtilisateurService: UtilisateurService) { }
+    private http: HttpClient) { }
 }
