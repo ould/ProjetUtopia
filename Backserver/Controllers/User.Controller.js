@@ -3,6 +3,7 @@ const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema');
 const Antenne = require('../Models/Antenne.model');
 const Profil = require('../Models/Profil.model');
+const Profil = require('../Models/Profil.model');
 
 module.exports = {
 
@@ -26,7 +27,14 @@ module.exports = {
             const nouvelUtilisateur = new User(utilisateurRequete)
             const utilisateurSauve = await nouvelUtilisateur.save()
             const utilisateurId = utilisateurSauve._id
+            if (utilisateurRequete._id) throw createError.Conflict(`${utilisateurRequete._id} is already `);
+            
+            utilisateurRequete.creePar = req.payload.userId
+            const nouvelUtilisateur = new User(utilisateurRequete)
+            const utilisateurSauve = await nouvelUtilisateur.save()
+            const utilisateurId = utilisateurSauve._id
 
+            res.send(utilisateurId)
             res.send(utilisateurId)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -37,12 +45,15 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const utilisateurRequete = await userSchema.validateAsync(req.body, { allowUnknown: true })
+            const utilisateurRequete = await userSchema.validateAsync(req.body, { allowUnknown: true })
 
             const utilisateurExistant = await User.findOne({ _id: utilisateurRequete._id })
             if (!utilisateurExistant)  throw createError.NotFound(`${utilisateurRequete._id} not found`);
             
             utilisateurRequete.modifiePar = req.payload.userId
 
+            const filter = { _id: utilisateurRequete._id };
+            const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
             const filter = { _id: utilisateurRequete._id };
             const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
                 returnOriginal: false
@@ -79,6 +90,7 @@ module.exports = {
                 throw createError.NotFound(`${id} not found`);
             }
             res.send(utilisateurExistant)
+            res.send(utilisateurExistant)
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -110,6 +122,8 @@ module.exports = {
     },
 
     isProfile: async (req, res, next) => {
+    //Permet de visualiser sur l'appli front les entités selon ses acces aux sections (contexte metier)
+    accesSection: async (req, res, next) => {
         try {
             const userId = req.payload.userId;
 
@@ -120,6 +134,33 @@ module.exports = {
                 res.send(true)
             }
             else {
+                const nomSectionDemandee = req.params.nomSectionDemandee
+                const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
+                const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).length > 0
+                res.send(accesAutorise)
+            }
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    isProfile: async (req, res, next) => {
+        try {
+            const userId = req.payload.userId;
+
+            const user = await User.findOne({ _id: userId });
+            //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
+            const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
+            if (user.profilId.includes(profilAdmin._id)) {
+            const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
+            if (user.profilId.includes(profilAdmin._id)) {
+                res.send(true)
+            }
+            else {
+                const nomProfilRequete = req.params.nomProfilAVerifier
+                const ProfilRequete = await Profil.findOne({ nom: nomProfilRequete });
+                const estInclus = user.profilId.includes(ProfilRequete._id);
                 const nomProfilRequete = req.params.nomProfilAVerifier
                 const ProfilRequete = await Profil.findOne({ nom: nomProfilRequete });
                 const estInclus = user.profilId.includes(ProfilRequete._id);
@@ -139,6 +180,7 @@ module.exports = {
 
             const user = await User.findOne({ _id: userId });
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc) a remplacer peut etre par un droit admin aussi 
+            const groupeAdmin = await Groupe.findOne({ nom: process.env.contexte_admin });
             const groupeAdmin = await Groupe.findOne({ nom: process.env.contexte_admin });
             if (user.groupes.includes(groupeAdmin._id)) {
                 res.send(true)
@@ -209,9 +251,12 @@ module.exports = {
 
             const utilisateurExistant = await User.findOne({ _id: idUser })
             if (!utilisateurExistant) {
+            const utilisateurExistant = await User.findOne({ _id: idUser })
+            if (!utilisateurExistant) {
                 throw createError.NotFound(`${idUser} not found`);
             }
 
+            const result = await Antenne.findOne({ _id: utilisateurExistant.antenneDefautId });
             const result = await Antenne.findOne({ _id: utilisateurExistant.antenneDefautId });
             res.send(result)
 
@@ -228,6 +273,8 @@ module.exports = {
             const nomAntenne = req.body.nouvelleAntenneId //Post => body
             const utilisateurExistant = await User.findOne({ _id: idUser })
             if (!utilisateurExistant) {
+            const utilisateurExistant = await User.findOne({ _id: idUser })
+            if (!utilisateurExistant) {
                 throw createError.NotFound(`${idUser} not found`);
             }
             //Cherche l'id de l'antenne avec le nom spécifié et modifie l'utilisateur
@@ -237,8 +284,12 @@ module.exports = {
             }
             utilisateurExistant.antenneDefautId = resultAntenne._id
             utilisateurExistant.modifiePar = req.payload.userId
+            utilisateurExistant.antenneDefautId = resultAntenne._id
+            utilisateurExistant.modifiePar = req.payload.userId
 
             //MAJ de l'utilisateur
+            const filter = { _id: utilisateurExistant._id };
+            const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
             const filter = { _id: utilisateurExistant._id };
             const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
                 returnOriginal: false
@@ -255,6 +306,9 @@ module.exports = {
     
     isAdmin: async (req, res, next) => {
         try {    
+          const profilUtilisateur = req.payload.profilId
+          const profilAdminId = await Profil.findOne({ nom: process.env.contexte_admin })
+          const isAdmin = profilUtilisateur.includes(profilAdminId._id);
           const profilUtilisateur = req.payload.profilId
           const profilAdminId = await Profil.findOne({ nom: process.env.contexte_admin })
           const isAdmin = profilUtilisateur.includes(profilAdminId._id);

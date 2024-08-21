@@ -3,6 +3,7 @@ const Initialise = require('../Models/Initialise.model');
 const Antenne = require('../Models/Antenne.model');
 const User = require('../Models/User.model');
 const Profil = require('../Models/Profil.model');
+const Profil = require('../Models/Profil.model');
 
 module.exports = {
 
@@ -14,9 +15,24 @@ module.exports = {
         console.log("Initialisation..")
 
         const initialiseObjet = new Initialise({ lancePar: "Initialisation" });
+        const initialiseObjet = new Initialise({ lancePar: "Initialisation" });
         const userId = "Initialisation"
         // Efface les tables de parametrage
         Antenne.collection.drop();
+        Profil.collection.drop();
+
+        //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
+        //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat
+        const accesTotal = "carwd"
+        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd");
+        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd");
+        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd");
+        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd");
+        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd");
+        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd");
         Profil.collection.drop();
 
         //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
@@ -44,6 +60,7 @@ module.exports = {
         await creationAntenne("Dijon", userId);
         await creationAntenne("Lorient", userId);
         await creationAntenne("Autre", userId);
+        await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
         await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
 
 
@@ -82,6 +99,7 @@ module.exports = {
 }
 
 async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat) {
+async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat) {
   try {
     const nouveauProfil = new Profil({
       nom: nom, creePar: userId, commentaire: commentaire,
@@ -98,7 +116,23 @@ async function creationProfil(nom, userId, commentaire, admin, famille, hebergeu
     })
     const savedProfil = await nouveauProfil.save()
     console.log("Profil crée :" + savedProfil.nom)
+    const nouveauProfil = new Profil({
+      nom: nom, creePar: userId, commentaire: commentaire,
+      tableauDroits: [{ section: process.env.contexte_admin, droits: admin },
+      { section: process.env.contexte_famille, droits: famille },
+      { section: process.env.contexte_hebergeuse, droits: hebergeuse },
+      { section: process.env.contexte_benevole, droits: benevole },
+      { section: process.env.contexte_adherente, droits: adherente },
+      { section: process.env.contexte_mineur, droits: mineur },
+      { section: process.env.contexte_hommeSeul, droits: hommeSeul },
+      { section: process.env.contexte_rapports, droits: rapports },
+      { section: process.env.contexte_stock, droits: stock },
+      { section: process.env.contexte_chat, droits: chat }]
+    })
+    const savedProfil = await nouveauProfil.save()
+    console.log("Profil crée :" + savedProfil.nom)
   } catch (error) {
+    throw createError[500](`Profile error` + error);
     throw createError[500](`Profile error` + error);
   }
 }
@@ -145,7 +179,11 @@ async function createFirstAdmin() {
     }
     console.log("Assignation droit admin.. ");
     utilisateurExistant.profilId = profilAdminId;
+    console.log("Assignation droit admin.. ");
+    utilisateurExistant.profilId = profilAdminId;
 
+    const filter = { _id: utilisateurExistant._id };
+    const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
     const filter = { _id: utilisateurExistant._id };
     const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
       returnOriginal: false

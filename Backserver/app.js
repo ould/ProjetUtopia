@@ -5,6 +5,7 @@ require('dotenv').config()
 require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
 const { haveDroits} = require('./helpers/role_check')
+const { haveDroits} = require('./helpers/role_check')
 //require('./helpers/init_redis')
 
 const cors = require("cors");

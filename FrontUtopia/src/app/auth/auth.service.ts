@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {  tap } from 'rxjs/operators';
+import {  tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../interfaces/login';
 import { environment } from 'src/environments/environment';
@@ -45,6 +46,7 @@ export class AuthService {
   }
 
   public isLoggedIn() {
+    console.log(Date.now() <  this.getExpiration())
     return Date.now() <  this.getExpiration() ;
   }
 

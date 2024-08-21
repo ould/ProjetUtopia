@@ -9,6 +9,7 @@ const authSchema = Joi.object({
 
   passwordConfirm: Joi.string().optional(),
   profilId: Joi.array().optional(),
+  profilId: Joi.array().optional(),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
   antennes: Joi.array().optional()
@@ -37,6 +38,23 @@ const profilSchema = Joi.object({
   ).required(),
 
   commentaire: Joi.string().optional()
+})
+
+const profilSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
+  nom: Joi.string().required(),
+  tableauDroits: Joi.array().items(
+    Joi.object({
+      section: Joi.string().required(),
+      drtois: Joi.string().required()
+    })
+  ).required(),
+
+  commentaire: Joi.string().optional(),
+  creePar: Joi.string().optional(),
+  dateCreation: Joi.date().optional(),
+  modifiePar: Joi.string().optional(),
+  dateModification: Joi.date().optional()
 })
 
 const logSchema = Joi.object({

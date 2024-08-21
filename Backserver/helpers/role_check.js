@@ -1,10 +1,15 @@
 const createError = require('http-errors')
 const User = require('../Models/User.model')
 const Profil = require('../Models/Profil.model')
+const Profil = require('../Models/Profil.model')
 
 module.exports = {
   haveDroits: async (req, res, next) => {
     verifieDroitSelonRequete(req, res, next)
+  }
+}
+
+//Verifier si acces à la section demandee (url) et avec le bon droit
   }
 }
 
@@ -29,6 +34,7 @@ async function verifieDroitSelonRequete(req, res, next) {
   }
 }
 
+async function haveAccesSection(req, res, next, nomDroit, message) {
 async function haveAccesSection(req, res, next, nomDroit, message) {
   try {
     const sectionDemandee = req.baseUrl.split('/')[2];
