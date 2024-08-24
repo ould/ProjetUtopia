@@ -6,13 +6,17 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AdminComponent } from './admin/admin.component';
 import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProfilComponent } from './profil/profil.component';
+import { ProfilDetailComponent } from './profil/profil-detail/profil-detail.component';
 
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     AdminComponent,
-    ManageComptesComponent
+    ManageComptesComponent,
+    ProfilComponent,
+    ProfilDetailComponent
   ],
   imports: [
     CommonModule,

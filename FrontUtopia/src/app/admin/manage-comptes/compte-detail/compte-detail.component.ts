@@ -6,6 +6,8 @@ import { Antenne } from 'src/app/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
+import { Profil } from '../../profil/profil';
+import { ProfilService } from '../../profil/profil.service';
 
 @Component({
   selector: 'app-compte-detail',
@@ -16,11 +18,13 @@ export class CompteDetailComponent implements OnInit {
 
   @Input() utilisateur!: Utilisateur;
   updateUtilisateurForm: FormGroup;
-  antennes: Antenne[] = []
+  antennes: Antenne[] = [];
+  profils: Profil[] = []
 
   constructor(private fb: FormBuilder,
     private utilisateurService: UtilisateurService,
     private antenneService: AntenneService,
+    private profilService: ProfilService,
     private route: ActivatedRoute,
     private location: Location) {
 
@@ -28,7 +32,8 @@ export class CompteDetailComponent implements OnInit {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      antennes: ['', [Validators.required]]
+      antennes: ['', [Validators.required]],
+      profil: ['', [Validators.required]]
     });
 
   }
@@ -37,6 +42,11 @@ export class CompteDetailComponent implements OnInit {
     this.antenneService.getAll().subscribe(
       data => {
         this.antennes = data
+      }
+    );
+    this.profilService.getAll().subscribe(
+      data => {
+        this.profils = data
       }
     );
     const id = String(this.route.snapshot.paramMap.get('id'));
@@ -50,10 +60,11 @@ export class CompteDetailComponent implements OnInit {
 
   modifierUtilisateur(): void {
     if (this.updateUtilisateurForm.valid) {
-      this.utilisateur.antennes = this.updateUtilisateurForm.get('antennes')?.value;
       this.utilisateur.nom = this.updateUtilisateurForm.get('nom')?.value;
       this.utilisateur.prenom = this.updateUtilisateurForm.get('prenom')?.value;
       this.utilisateur.email = this.updateUtilisateurForm.get('email')?.value;
+      this.utilisateur.antennes = this.updateUtilisateurForm.get('antennes')?.value;
+      this.utilisateur.profilId = this.updateUtilisateurForm.get('profil')?.value;
 
       this.utilisateurService.updateUtilisateur(this.utilisateur).subscribe({
         
@@ -66,7 +77,8 @@ export class CompteDetailComponent implements OnInit {
       nom: this.utilisateur.nom,
       prenom: this.utilisateur.prenom,
       email: this.utilisateur.email,
-      antennes: this.utilisateur.antennes
+      antennes: this.utilisateur.antennes,
+      profil: this.utilisateur.profilId
     })
   }
 

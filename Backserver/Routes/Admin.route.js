@@ -15,7 +15,7 @@ adminRouter.put('/utilisateur/', userController.update)
 adminRouter.delete('/utilisateur/:id', userController.delete)
 
 //Profil
-adminRouter.post('/profil/getAll/', ProfilController.getAll)
+adminRouter.get('/profil/getAll', ProfilController.getAll)
 
 adminRouter.get('/profil/:id', ProfilController.get)
 

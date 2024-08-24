@@ -33,14 +33,14 @@ async function haveAccesSection(req, res, next, nomDroit, message) {
   try {
     const sectionDemandee = req.baseUrl.split('/')[2];
     const idUtilisateur = req.payload.userId;
-
+    
     // Vérifiez si l'utilisateur a le profil admin
     const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
     const utilisateur = await User.findOne({ _id: idUtilisateur });
     const aProfilAdmin = utilisateur.profilId.includes(profilAdmin._id);
     
     if (aProfilAdmin) return next();
-
+    
     // Si l'utilisateur n'est pas admin, vérifiez les droits spécifiques
     const profilUtilisateur = await Profil.findOne({ _id: utilisateur.profilId });
     const droitSection = profilUtilisateur.tableauDroits.find(item => item.section === sectionDemandee);

@@ -1,0 +1,17 @@
+<div class="container">
+    <h1>Modifier le profil</h1>
+    <form [formGroup]="updateProfilForm">
+        <fieldset>
+            <div *ngFor="let section of enumSections | keyvalue" class="form-group">
+                <label for="{{section.key}}" class="form-label">{{section.key}}</label>
+                <select class="form-control custom-select" id="{{section.key}}" formControlName="{{section.key}}" multiple>
+                  <option *ngFor="let droit of enumDroits | keyvalue" value="{{droit.value}}">{{droit.key}}</option>
+                </select>
+            </div>
+        </fieldset>
+        <div class="form-buttons">
+            <button type="button" class="btn btn-utopia-primary" (click)="modifierProfil()">Enregistrer</button>
+            <button type="button" class="btn btn-secondary" (click)="goBack()">Annuler</button>
+        </div>
+    </form>
+</div>

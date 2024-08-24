@@ -86,35 +86,12 @@ module.exports = {
             next(error)
         }
     },
-
-    //Permet de visualiser sur l'appli front les entités selon ses acces aux sections (contexte metier)
-    accesSection: async (req, res, next) => {
-        try {
-            const userId = req.payload.userId;
-
-            const user = await User.findOne({ _id: userId });
-            //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
-            const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
-            if (user.profilId.includes(profilAdmin._id)) {
-                res.send(true)
-            }
-            else {
-                const nomSectionDemandee = req.params.nomSectionDemandee
-                const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
-                const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).length > 0
-                res.send(accesAutorise)
-            }
-        } catch (error) {
-            if (error.isJoi === true) error.status = 422
-            next(error)
-        }
-    },
     
     //Permet de visualiser sur l'appli front les entités selon ses acces aux sections (contexte metier)
     accesSection: async (req, res, next) => {
         try {
             const userId = req.payload.userId;
-
+            
             const user = await User.findOne({ _id: userId });
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
             const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
@@ -124,7 +101,8 @@ module.exports = {
             else {
                 const nomSectionDemandee = req.params.nomSectionDemandee
                 const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
-                const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).length > 0
+                const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).droits.length > 0
+                console.log(accesAutorise)
                 res.send(accesAutorise)
             }
         } catch (error) {

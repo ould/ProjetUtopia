@@ -1,1 +1,22 @@
-<p>profil works!</p>
+<div class="utopia-container">
+    <h1>Gestion des Types de personne</h1>
+    <input type="text" #newType>
+    <button (click)="ouvrirPageCreation()" >Ajouter un nouveau type</button>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let profil of profils">
+          <td>{{ profil.nom }}</td>
+          <td>
+            <button routerLink="/admin/modifierProfil/{{profil._id}}">Modifier</button>
+            <button (click)="openPopupSuppression(profil.nom , profil._id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>

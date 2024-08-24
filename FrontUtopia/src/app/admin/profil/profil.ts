@@ -13,3 +13,11 @@ export interface Droit {
     section: string;
     droits: string;
   }
+
+  export enum DroitPossible{
+    lecture = "r",
+    ajout = "w",
+    modification = "c",
+    suppression = "d",
+    admin = "a"
+  }

@@ -28,7 +28,6 @@ import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/comp
 import { NavbarComponent } from './navbar/navbar.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MembreComponent } from './beneficiaires/familles/membre/membre.component';
-import { ProfilComponent } from './admin/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +48,7 @@ import { ProfilComponent } from './admin/profil/profil.component';
     CompteDetailComponent,
     NavbarComponent,
     AccueilComponent,
-    MembreComponent,
-    ProfilComponent
+    MembreComponent
   ],
   imports: [
     BrowserModule,

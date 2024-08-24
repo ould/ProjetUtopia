@@ -20,6 +20,12 @@
           <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="antennes" class="form-label">Profil :</label>
+        <select class="form-control custom-select" id="profil" formControlName="profil">
+          <option *ngFor="let profil of profils" value="{{profil._id}}">{{profil.nom}}</option>
+        </select>
+      </div>
     </fieldset>
     <div class="form-buttons">
       <button type="button" class="btn btn-utopia-primary" (click)="modifierUtilisateur()">Enregistrer</button>

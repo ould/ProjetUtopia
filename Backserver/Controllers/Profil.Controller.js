@@ -5,7 +5,7 @@ const Profil = require('../Models/Profil.model')
 module.exports = {
     save: async (req, res, next) => {
         try {
-            const result = await profilSchema.validateAsync(req.body)
+            const result = await profilSchema.validateAsync(req.body) //TODO : verifier si une seule occurence d'un droit 
             const doesExist = await Profil.findOne({ nom: result.nom })
             if (doesExist)
                 throw createError.Conflict(`${result.nom} already exist`)
@@ -44,6 +44,7 @@ module.exports = {
 
     get: async (req, res, next) => {
         try {
+            console.log("get")
             const id = req.params.id
             const profilExistant = await Profil.findOne({ _id: id })
             if (!profilExistant)
@@ -59,6 +60,7 @@ module.exports = {
 
     getAll: async (req, res, next) => {
         try {
+            console.log("getall")
             const profils = await Profil.find();
             res.send(profils)
         } catch (error) {
