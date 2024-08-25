@@ -22,15 +22,15 @@ module.exports = {
         //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
         //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat
         const accesTotal = "carwd"
-        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd");
-        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd");
-        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd");
-        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd");
-        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd");
-        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd");
-        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd");
-        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd");
-        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd");
+        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd","carwd");
+        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd","crwd");
+        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd","");
+        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd","");
+        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd","");
+        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd","");
+        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd","");
+        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd","");
+        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd","");
         Profil.collection.drop();
 
         //Ajoute les Antennes
@@ -83,7 +83,7 @@ module.exports = {
   },
 }
 
-async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat) {
+async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat, astreinte) {
   try {
     const nouveauProfil = new Profil({
       nom: nom, creePar: userId, commentaire: commentaire,
@@ -96,7 +96,8 @@ async function creationProfil(nom, userId, commentaire, admin, famille, hebergeu
       { section: process.env.contexte_hommeSeul, droits: hommeSeul },
       { section: process.env.contexte_rapports, droits: rapports },
       { section: process.env.contexte_stock, droits: stock },
-      { section: process.env.contexte_chat, droits: chat }]
+      { section: process.env.contexte_chat, droits: chat },
+      { section: process.env.contexte_astreinte, droits: astreinte }]
     })
     const savedProfil = await nouveauProfil.save()
     console.log("Profil crée :" + savedProfil.nom)

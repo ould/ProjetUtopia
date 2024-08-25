@@ -5,16 +5,17 @@ const Profil = require('../Models/Profil.model')
 module.exports = {
     save: async (req, res, next) => {
         try {
-            const result = await profilSchema.validateAsync(req.body) //TODO : verifier si une seule occurence d'un droit 
-            const doesExist = await Profil.findOne({ nom: result.nom })
+            const nomNouveauProfil = req.body.nom;
+            const utilisateurId = req.payload.userId
+            const doesExist = await Profil.findOne({ nom: nomNouveauProfil });
             if (doesExist)
-                throw createError.Conflict(`${result.nom} already exist`)
+                throw createError.Conflict(`${result.nom} already exist`);
 
-            result.creePar = req.payload.userId
+            let nouveauProfil = {nom:nomNouveauProfil,creePar:utilisateurId,tableauDroits:[]}
 
-            const newProfil = new Profil(result)
-            const savedProfil = await newProfil.save()
-            res.send(savedProfil)
+            const newProfil = new Profil(nouveauProfil);
+            const savedProfil = await newProfil.save();
+            res.send(savedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -23,19 +24,18 @@ module.exports = {
 
     update: async (req, res, next) => {
         try {
-            const nouveauProfil = await profilSchema.validateAsync(req.body)
+            const nouveauProfil = await profilSchema.validateAsync(req.body, { allowUnknown: true }); //TODO : verifier si une seule occurence d'un droit 
 
-            const profilExistant = await Profil.findOne({ nom: nouveauProfil.nom })
+            const profilExistant = await Profil.findOne({ nom: nouveauProfil.nom });
             if (!profilExistant)
                 throw createError.NotFound(`${nouveauProfil.nom} not found`);
 
-            nouveauProfil.modifiePar = req.payload.userId
-
+            nouveauProfil.modifiePar = req.payload.userId;
             const filter = { nom: nouveauProfil.nom };
             const updatedProfil = await Profil.findOneAndUpdate(filter, nouveauProfil, {
                 returnOriginal: false
             });
-            res.send(updatedProfil)
+            res.send(updatedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -44,13 +44,12 @@ module.exports = {
 
     get: async (req, res, next) => {
         try {
-            console.log("get")
-            const id = req.params.id
-            const profilExistant = await Profil.findOne({ _id: id })
+            const id = req.params.id;
+            const profilExistant = await Profil.findOne({ _id: id });
             if (!profilExistant)
                 throw createError.NotFound(`${id} not found`);
-            profilExistant._id = ""
-            res.send(profilExistant)
+            profilExistant._id = "";
+            res.send(profilExistant);
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -60,9 +59,8 @@ module.exports = {
 
     getAll: async (req, res, next) => {
         try {
-            console.log("getall")
             const profils = await Profil.find();
-            res.send(profils)
+            res.send(profils);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -71,9 +69,9 @@ module.exports = {
 
     delete: async (req, res, next) => {
         try {
-            const id = req.params.id
-            const ancienProfil = await Groupe.findOneAndDelete({ _id: id })
-            res.send(ancienProfil.nom)
+            const id = req.params.id;
+            const ancienProfil = await Profil.findOneAndDelete({ _id: id });
+            res.send(ancienProfil.nom);
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422

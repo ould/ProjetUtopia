@@ -73,13 +73,12 @@ module.exports = {
 
     getCurrentUser: async (req, res, next) => {
         try {
-            const id = req.payload.userId; 
-
+            const id = req.payload.userId;
             const utilisateurExistant = await User.findOne({ _id: id })
             if (!utilisateurExistant) {
                 throw createError.NotFound(`${id} not found`);
             }
-            res.send(utilisateurExistant)
+            return utilisateurExistant;
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -102,7 +101,6 @@ module.exports = {
                 const nomSectionDemandee = req.params.nomSectionDemandee
                 const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
                 const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).droits.length > 0
-                console.log(accesAutorise)
                 res.send(accesAutorise)
             }
         } catch (error) {

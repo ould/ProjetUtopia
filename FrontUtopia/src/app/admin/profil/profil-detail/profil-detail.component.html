@@ -1,7 +1,11 @@
 <div class="container">
-    <h1>Modifier le profil</h1>
+    <h1 *ngIf="profil">Modifier le profil {{profil.nom}}</h1>
     <form [formGroup]="updateProfilForm">
         <fieldset>
+            <div class="form-group">
+                <label for="commentaire" class="form-label">Commentaire :</label>
+                <input type="text" class="form-control" id="commentaire" formControlName="commentaire">
+              </div>
             <div *ngFor="let section of enumSections | keyvalue" class="form-group">
                 <label for="{{section.key}}" class="form-label">{{section.key}}</label>
                 <select class="form-control custom-select" id="{{section.key}}" formControlName="{{section.key}}" multiple>

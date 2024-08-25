@@ -44,7 +44,6 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    console.log(Date.now() <  this.getExpiration())
     return Date.now() <  this.getExpiration() ;
   }
 

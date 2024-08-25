@@ -33,7 +33,7 @@ const profilSchema = Joi.object({
   tableauDroits: Joi.array().items(
     Joi.object({
       section: Joi.string().required(),
-      drtois: Joi.string().required()
+      drtois: Joi.string().optional()
     })
   ).required(),
 

@@ -12,7 +12,7 @@ import { Membre } from './models/membre';
 export class FamilleService {
 
   private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que section)
-  private membreFamilleUrl = this.familleUrl + '/membre';  // URL to web api (meme nom que section)
+  private membreFamilleUrl = this.familleUrl + '/membre';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*' })
@@ -30,7 +30,7 @@ export class FamilleService {
     );
   }
 
-  /** POST: add a new Famille to the server */
+  /** POST: add  Famille */
   addFamille(Famille: Famille): Observable<Famille> {
     return this.http.post<Famille>(this.familleUrl, Famille, this.httpOptions).pipe(
       tap((newFamille: Famille) => this.log(`added Famille w/ id=${newFamille._id}`)),
@@ -39,7 +39,7 @@ export class FamilleService {
   }
 
 
-  /** PUT: update the Famille on the server */
+  /** PUT: update Famille */
   updateFamille(Famille: Famille): Observable<any> {
     return this.http.put(this.familleUrl, Famille, this.httpOptions).pipe(
       tap(_ => this.log(`updated Famille id=${Famille._id}`)),
@@ -62,10 +62,9 @@ export class FamilleService {
       }
     }
     //TODO : faire monter l'erreur à l'utilisteur 
-
   }
 
-  /** DELETE: delete the Famille from the server */
+  /** DELETE: delete Famille*/
   deleteFamille(id: number): Observable<Famille> {
     const url = `${this.familleUrl}/${id}`;
 
@@ -86,7 +85,6 @@ export class FamilleService {
       tap(x => x.length ?
         this.log(`found famille matching "${term}"`) :
         this.log(`no famille matching "${term}"`)),
-      tap(x => this.log(` "${x[0]._id}"`)),
       catchError(this.handleError<Famille[]>('searchFamilles', []))
     );
   }

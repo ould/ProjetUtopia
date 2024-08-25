@@ -1,8 +1,7 @@
 <div class="utopia-container">
-    <h1>Gestion des Types de personne</h1>
-    <input type="text" #newType>
-    <button (click)="ouvrirPageCreation()" >Ajouter un nouveau type</button>
-  
+    <h1>Gestion des profils utilisateur</h1>
+    <input type="text" #newType placeholder="Nom du nouveau profil">
+    <button (click)="creerProfil(newType)">Ajouter un nouveau profil</button>
     <table>
       <thead>
         <tr>
@@ -20,3 +19,4 @@
         </tr>
       </tbody>
     </table>
+</div>

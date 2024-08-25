@@ -47,7 +47,7 @@ export class ProfilDetailComponent implements OnInit {
       //Pour chaque section du profil
       Object.keys(Section).forEach(section => {
 
-        const droitsFormValue = this.updateProfilForm.get(section)?.value;
+        let droitsFormValue = this.updateProfilForm.get(section)?.value.join('');
 
         // Trouvez l'objet "Droit" correspondant à la section dans `tableauDroits`
         const droitExist = this.profil.tableauDroits.find(droit => droit.section === section);
@@ -60,15 +60,14 @@ export class ProfilDetailComponent implements OnInit {
           this.profil.tableauDroits.push({ section: section, droits: droitsFormValue });
         }
       });
-
-      console.log()
-
+      this.profil.commentaire = this.updateProfilForm.get('commentaire')?.value;
+      this.profilService.update(this.profil).subscribe();
     }
   }
 
   initializeForm(): void {
     this.updateProfilForm = this.fb.group({});
-
+    this.updateProfilForm.addControl("commentaire", this.fb.control([]));
     Object.keys(Section).forEach(section => {
       const controlName = Section[section as keyof typeof Section];
       this.updateProfilForm.addControl(controlName, this.fb.control([])); // Initialise avec des valeurs vides (necessaire pour les profil avec des sections sans droits)
@@ -89,7 +88,7 @@ export class ProfilDetailComponent implements OnInit {
 
       objectValue[controlName] = droitsSection || [''];
     });
-    console.log(objectValue)
+    objectValue['commentaire'] = this.profil.commentaire
     this.updateProfilForm.setValue(objectValue);
   }
 

@@ -11,53 +11,72 @@ import { ProfilService } from './profil.service';
 })
 export class ProfilComponent implements OnInit {
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.profilService.getAll().subscribe(
       data => {
         this.profils = data
       }
     )
   }
-  
-profils?: Profil[];
 
-ModifierProfil(arg0: any) {
-throw new Error('Method not implemented.');
-}
-ouvrirPageCreation() {
-throw new Error('Method not implemented.');
-}
+  profils: Profil[];
 
-openPopupSuppression(term: string, id:string = '') {
-  if (term != "" && id != '') {
 
-    const dialogRef = this.dialog.open(PopupComponent, {
-      data: {
-        title: 'Supprimer un type',
-        message: 'Etes vous sur de vouloir supprimer le profil ' + term + ' ?',
-        buttonYes: 'Oui',
-        buttonNo: 'Non'
-      }
-    });
+  creerProfil(newType: HTMLInputElement) {
+    const newProfilName = newType.value.trim();
+    if (newProfilName) {
+      const newProfil = { nom: newProfilName };
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        // Action lorsque le bouton "Oui" est cliqué
-        //this.TypePersonneService.deleteType(id).subscribe()
-      } else if (result === false) {
-        // Action lorsque le bouton "Non" est cliqué
-        console.log('Bouton Non cliqué');
-      } else {
-        // La boîte de dialogue est fermée sans clic sur un bouton
-        console.log('Boîte de dialogue fermée');
-      }
-    });
+      this.profilService.ajouterProfil(newProfil).subscribe(
+        (response) => {
+          console.log('Profile created successfully', response);
+          this.profils.push(response); // Optionally update the list of profiles
+          newType.value = ''; // Clear the input field
+        },
+        (error) => {
+          console.error('Error creating profile', error);
+        }
+      );
+    } else {
+      console.warn('Profile name cannot be empty');
+    }
   }
-  
-}
 
-constructor(
-  private profilService:ProfilService,
-  private dialog: MatDialog) { }
+  openPopupSuppression(term: string, id: string = '') {
+    if (term != "" && id != '') {
+
+      const dialogRef = this.dialog.open(PopupComponent, {
+        data: {
+          title: 'Supprimer un profil',
+          message: 'Etes vous sur de vouloir supprimer le profil ' + term + ' ?',
+          buttonYes: 'Oui',
+          buttonNo: 'Non'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === true) {
+          // Action lorsque le bouton "Oui" est cliqué
+          this.profilService.delete(id).subscribe(
+            data => {
+              location.reload()
+            })
+         
+        } else if (result === false) {
+          // Action lorsque le bouton "Non" est cliqué
+          console.log('Bouton Non cliqué');
+        } else {
+          // La boîte de dialogue est fermée sans clic sur un bouton
+        }
+      });
+    }
+
+  }
+
+  constructor(
+    private profilService: ProfilService,
+    private dialog: MatDialog) {
+    this.profils = []
+  }
 
 }
