@@ -2,6 +2,7 @@ const adminRouter = (require('express')).Router()
 const userController = require('../Controllers/User.Controller')
 const ProfilController = require('../Controllers/Profil.Controller')
 const logController = require('../Controllers/Log.Controller')
+const HistoriqueController = require('../Controllers/Historique.Controller')
 
 //Utilisateur
 adminRouter.get('/utilisateur/getAll', userController.getAll)
@@ -34,6 +35,8 @@ adminRouter.get('/log/getByDate/', logController.getByDate)
 adminRouter.get('/log/getByUser/', logController.getByUser)
 
 adminRouter.post('/log/', logController.save)
+
+//Historique : TODO
 
 
 module.exports = adminRouter

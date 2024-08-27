@@ -19,7 +19,7 @@ const ChatSchema = new Schema({
     type: [String],
     required: true,
   },
-  antenne: {
+  antenneId: {
     type: String,
     required: true,
   },

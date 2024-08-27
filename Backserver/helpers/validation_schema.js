@@ -95,6 +95,94 @@ const messageSchema = Joi.object({
   antenne:Joi.string().optional()
 })
 
+
+const referentielSchema = Joi.object({
+  nom: Joi.string().required().messages({
+    'string.base': `"nom" doit être un type de chaîne`,
+    'string.empty': `"nom" ne peut pas être vide`,
+    'any.required': `"nom" est un champ requis`
+  }),
+  donnees: Joi.array().items(Joi.string()).optional().messages({
+    'array.base': `"donnees" doit être un tableau`,
+    'string.base': `"donnees" doit contenir des chaînes`
+  }),
+  creePar: Joi.string().required().messages({
+    'string.base': `"creePar" doit être un type de chaîne`,
+    'string.empty': `"creePar" ne peut pas être vide`,
+    'any.required': `"creePar" est un champ requis`
+  }),
+  dateCreation: Joi.date().optional().messages({
+    'date.base': `"dateCreation" doit être une date valide`
+  }),
+  dateModification: Joi.date().optional().messages({
+    'date.base': `"dateModification" doit être une date valide`
+  }),
+  modifiePar: Joi.string().optional().messages({
+    'string.base': `"modifiePar" doit être un type de chaîne`
+  })
+});
+
+const historiqueSchema = Joi.object({
+  entitee: Joi.string().required().messages({
+      'string.base': `"entitee" doit être un type de chaîne`,
+      'string.empty': `"entitee" ne peut pas être vide`,
+      'any.required': `"entitee" est un champ requis`
+  }),
+  entiteeId: Joi.string().required().messages({
+      'string.base': `"entiteeId" doit être un type de chaîne`,
+      'string.empty': `"entiteeId" ne peut pas être vide`,
+      'any.required': `"entiteeId" est un champ requis`
+  }),
+  action: Joi.string().required().messages({
+      'string.base': `"action" doit être un type de chaîne`,
+      'string.empty': `"action" ne peut pas être vide`,
+      'any.required': `"action" est un champ requis`
+  }),
+  detail: Joi.string().optional().messages({
+      'string.base': `"detail" doit être un type de chaîne`
+  }),
+  creePar: Joi.string().required().messages({
+      'string.base': `"creePar" doit être un type de chaîne`,
+      'string.empty': `"creePar" ne peut pas être vide`,
+      'any.required': `"creePar" est un champ requis`
+  }),
+  dateCreation: Joi.date().optional().messages({
+      'date.base': `"dateCreation" doit être une date valide`
+  })
+});
+
+const evenementSchema = Joi.object({
+  entitee: Joi.string().required().messages({
+      'string.base': `"entitee" doit être un type de chaîne`,
+      'string.empty': `"entitee" ne peut pas être vide`,
+      'any.required': `"entitee" est un champ requis`
+  }),
+  entiteeId: Joi.string().required().messages({
+      'string.base': `"entiteeId" doit être un type de chaîne`,
+      'string.empty': `"entiteeId" ne peut pas être vide`,
+      'any.required': `"entiteeId" est un champ requis`
+  }),
+  nom: Joi.string().required().messages({
+      'string.base': `"nom" doit être un type de chaîne`,
+      'string.empty': `"nom" ne peut pas être vide`,
+      'any.required': `"nom" est un champ requis`
+  }),
+  date: Joi.string().optional().messages({
+      'string.base': `"date" doit être un type de chaîne`
+  }),
+  commentaire: Joi.string().optional().messages({
+      'string.base': `"commentaire" doit être un type de chaîne`
+  }),
+  creePar: Joi.string().required().messages({
+      'string.base': `"creePar" doit être un type de chaîne`,
+      'string.empty': `"creePar" ne peut pas être vide`,
+      'any.required': `"creePar" est un champ requis`
+  }),
+  dateCreation: Joi.date().optional().messages({
+      'date.base': `"dateCreation" doit être une date valide`
+  })
+});
+
 module.exports = {
   authSchema,
   beneficiaireSchema,
@@ -103,5 +191,8 @@ module.exports = {
   chatSchema,
   messageSchema,
   profilSchema,
-  logSchema
+  logSchema,
+  referentielSchema,
+  historiqueSchema,
+  evenementSchema
 }

@@ -26,7 +26,7 @@ const MembreSchema = new Schema({
     type: String,
     required: false,
   },
-  antenne: {
+  antenneId: {
     type: String,
     required: true,
   },
