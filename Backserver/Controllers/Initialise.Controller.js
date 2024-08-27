@@ -31,7 +31,6 @@ module.exports = {
         await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd","");
         await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd","");
         await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd","");
-        Profil.collection.drop();
 
         //Ajoute les Antennes
         console.log("Antenne..")
