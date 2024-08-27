@@ -28,6 +28,8 @@ import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/comp
 import { NavbarComponent } from './navbar/navbar.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MembreComponent } from './beneficiaires/familles/membre/membre.component';
+import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
+import { ActionSelectionComponent } from './benevole/action-selection/action-selection.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { MembreComponent } from './beneficiaires/familles/membre/membre.componen
     CompteDetailComponent,
     NavbarComponent,
     AccueilComponent,
-    MembreComponent
+    MembreComponent,
+    CalendrierComponent,
+    ActionSelectionComponent
   ],
   imports: [
     BrowserModule,

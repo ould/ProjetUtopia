@@ -12,6 +12,7 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { authGuard } from './auth/auth.guard';
 import { AccueilComponent } from './accueil/accueil.component';
+import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
 
 
 // path case sensitive
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'chat', component: ChatsComponent },
       { path: 'reporting', component: ReportingComponent },
       { path: 'logout', component: LogoutComponent },
+      { path: 'missions', component: CalendrierComponent },
     ]
   },
   { path: 'login', component: LoginComponent },

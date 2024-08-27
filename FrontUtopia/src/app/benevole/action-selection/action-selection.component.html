@@ -1,0 +1,11 @@
+<div *ngIf="mission" class="card mt-3">
+    <div class="card-header">
+      <h3>{{ mission.actionType }}</h3>
+    </div>
+    <div class="card-body">
+      <p><strong>Date :</strong> {{ mission.date | date:'fullDate' }}</p>
+      <p><strong>Heure :</strong> {{ mission.time }}</p>
+      <p><strong>Effectifs :</strong> {{ mission.min }} - {{ mission.max }}</p>
+      <button class="btn btn-primary mt-2">Confirmer la participation</button>
+    </div>
+  </div>

@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <h5>Sélectionnez une date</h5>
+        <ngb-datepicker  [(ngModel)]="selectedDate" (dateSelect)="filterMissionsByDate($event)"></ngb-datepicker>
+      </div>
+  
+      <div class="col-md-8">
+        <h5>Missions disponibles</h5>
+        <ul *ngIf="filteredMissions.length > 0; else noMissions" class="list-group">
+          <li *ngFor="let mission of filteredMissions" (click)="onMissionSelected(mission)" class="list-group-item list-group-item-action">
+            <div>{{ mission.time }} - {{ mission.actionType }}</div>
+            <div>Effectifs: {{ mission.min }} - {{ mission.max }}</div>
+          </li>
+        </ul>
+        <ng-template #noMissions>
+          <div class="alert alert-info mt-3">Aucune mission disponible pour cette date.</div>
+        </ng-template>
+      </div>
+    </div>
+  
+    <div class="row mt-4" *ngIf="selectedMission">
+      <div class="col">
+        <app-action-selection [mission]="selectedMission"></app-action-selection>
+      </div>
+    </div>
+  </div>
+  
