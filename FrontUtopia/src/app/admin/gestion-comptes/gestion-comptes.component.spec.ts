@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageComptesComponent } from './manage-comptes.component';
+import { ManageComptesComponent } from './gestion-comptes.component';
 
 describe('ManageComptesComponent', () => {
   let component: ManageComptesComponent;

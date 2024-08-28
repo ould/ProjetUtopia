@@ -97,6 +97,7 @@ const messageSchema = Joi.object({
 
 
 const referentielSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required().messages({
     'string.base': `"nom" doit être un type de chaîne`,
     'string.empty': `"nom" ne peut pas être vide`,
@@ -123,6 +124,7 @@ const referentielSchema = Joi.object({
 });
 
 const historiqueSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   entitee: Joi.string().required().messages({
       'string.base': `"entitee" doit être un type de chaîne`,
       'string.empty': `"entitee" ne peut pas être vide`,
@@ -152,6 +154,7 @@ const historiqueSchema = Joi.object({
 });
 
 const evenementSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   entitee: Joi.string().required().messages({
       'string.base': `"entitee" doit être un type de chaîne`,
       'string.empty': `"entitee" ne peut pas être vide`,

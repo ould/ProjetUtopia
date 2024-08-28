@@ -2,9 +2,8 @@ const Antenne = require('../Models/Antenne.model');
 const createError = require('http-errors')
 
 module.exports = {
-    get: async (req, res, next) => {
-        try {
-    
+    getByNom: async (req, res, next) => {
+        try {    
           const nom = req.params.nom
     
           const doesExist = await Antenne.findOne({ nom: nom })
@@ -13,7 +12,20 @@ module.exports = {
           res.send(doesExist)
     
         } catch (error) {
-          if (error.isJoi === true) error.status = 422
+          next(error)
+        }
+      },
+
+      getById: async (req, res, next) => {
+        try {    
+          const id = req.params.id
+    
+          const doesExist = await Antenne.findOne({ _id: id  })
+          if (!doesExist)
+            throw createError.NotFound(`${id} not found`);
+          res.send(doesExist)
+    
+        } catch (error) {
           next(error)
         }
       },

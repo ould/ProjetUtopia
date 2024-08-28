@@ -4,10 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminComponent } from './admin/admin.component';
-import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
+import { ManageComptesComponent } from './gestion-comptes/gestion-comptes.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfilComponent } from './profil/profil.component';
-import { ProfilDetailComponent } from './profil/profil-detail/profil-detail.component';
+import { ProfilComponent } from './gestion-profil/profil.component';
+import { ProfilDetailComponent } from './gestion-profil/profil-detail/profil-detail.component';
 
 
 @NgModule({

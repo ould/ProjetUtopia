@@ -3,6 +3,7 @@ const userController = require('../Controllers/User.Controller')
 const ProfilController = require('../Controllers/Profil.Controller')
 const logController = require('../Controllers/Log.Controller')
 const HistoriqueController = require('../Controllers/Historique.Controller')
+const ReferentielController = require('../Controllers/Referentiel.Controller')
 
 //Utilisateur
 adminRouter.get('/utilisateur/getAll', userController.getAll)
@@ -37,6 +38,17 @@ adminRouter.get('/log/getByUser/', logController.getByUser)
 adminRouter.post('/log/', logController.save)
 
 //Historique : TODO
+
+//Referentiel
+adminRouter.get('/referentiel/getAll', ReferentielController.getAll)
+
+adminRouter.get('/referentiel/:id', ReferentielController.getById)
+
+adminRouter.post('/referentiel/', ReferentielController.save)
+
+adminRouter.put('/referentiel/', ReferentielController.update)
+
+adminRouter.delete('/referentiel/:id', ReferentielController.delete)
 
 
 module.exports = adminRouter

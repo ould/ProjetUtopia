@@ -1,0 +1,16 @@
+<div *ngIf="referentiel" class="edit-section">
+    <h2>Modification du Référentiel: {{ referentiel.nom }}</h2>
+    <div>
+      <label>Nouvelles Données</label>
+      <textarea [(ngModel)]="newDonnees" placeholder="Ajouter des données, une par ligne"></textarea>
+      <button (click)="addDonnees()">Ajouter</button>
+    </div>
+    <ul>
+      <li *ngFor="let donnee of referentiel.donnees; let i = index">
+        {{ donnee }}
+        <button (click)="deleteDonnee(i)">Supprimer</button>
+      </li>
+    </ul>
+    <button (click)="updateReferentiel()">Enregistrer les modifications</button>
+    <button (click)="cancelEdit()">Annuler</button>
+  </div>

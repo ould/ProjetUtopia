@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { adminGuard } from './admin.guard';
 import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { ManageComptesComponent } from './manage-comptes/manage-comptes.component';
-import { CompteDetailComponent } from './manage-comptes/compte-detail/compte-detail.component';
-import { ProfilComponent } from './profil/profil.component';
-import { ProfilDetailComponent } from './profil/profil-detail/profil-detail.component';
+import { ManageComptesComponent } from './gestion-comptes/gestion-comptes.component';
+import { CompteDetailComponent } from './gestion-comptes/compte-detail/compte-detail.component';
+import { ProfilComponent } from './gestion-profil/profil.component';
+import { ProfilDetailComponent } from './gestion-profil/profil-detail/profil-detail.component';
+import { GestionReferentielsComponent } from './gestion-referentiels/gestion-referentiels.component';
+import { ReferentielDetailComponent } from './gestion-referentiels/referentiel-detail/referentiel-detail.component';
 
 const adminRoutes: Routes = [
   {
@@ -21,6 +23,8 @@ const adminRoutes: Routes = [
           { path: 'modifierUtilisateur/:id', component: CompteDetailComponent },
           { path: 'profil', component: ProfilComponent },
           { path: 'modifierProfil/:id', component: ProfilDetailComponent },
+          { path: 'referentiel', component: GestionReferentielsComponent },
+          { path: 'referentiel/:id', component: ReferentielDetailComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }
@@ -36,4 +40,4 @@ const adminRoutes: Routes = [
     RouterModule
   ]
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

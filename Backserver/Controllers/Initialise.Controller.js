@@ -3,6 +3,7 @@ const Initialise = require('../Models/Initialise.model');
 const Antenne = require('../Models/Antenne.model');
 const User = require('../Models/User.model');
 const Profil = require('../Models/Profil.model');
+const Referentiel = require('../Models/Referentiel.model');
 
 module.exports = {
 
@@ -22,15 +23,15 @@ module.exports = {
         //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
         //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat
         const accesTotal = "carwd"
-        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd","carwd");
-        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd","crwd");
-        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd","");
-        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd","");
-        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd","");
-        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd","");
-        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd","");
-        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd","");
-        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd","");
+        await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd");
+        await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd", "crwd");
+        await creationProfil("Famille", userId, "Acces famille", "", "crwd", "", "", "", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd", "");
+        await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd", "");
 
         //Ajoute les Antennes
         console.log("Antenne..")
@@ -47,6 +48,14 @@ module.exports = {
         await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
         await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
 
+        await creationReferentiel("Pays", userId, pays, null,null)
+        await creationReferentiel("Langues", userId, langues, null,null)
+        await creationReferentiel("ProcedureFamille", userId, procedureFamille, process.env.contexte_famille, "Paris")
+        await creationReferentiel("PaysDublin", userId, paysDublin, null, null)
+        await creationReferentiel("CompositionFamille", userId, compositionFamille, process.env.contexte_famille, "Paris")
+        await creationReferentiel("VulnerabiliteFamille", userId, vulnerabiliteFamille, process.env.contexte_famille, "Paris")
+        await creationReferentiel("FamilleSource", userId, familleSource, process.env.contexte_famille, "Paris")
+        await creationReferentiel("LieuFamilleDodo", userId, lieuFamilleDodo, process.env.contexte_famille, "Paris")
 
         // Fait de l'utilisteur un user admin
         console.log("Admin..")
@@ -124,7 +133,7 @@ async function creationAntenne(nom, userId) {
 async function createFirstAdmin() {
   try {
     //Verifie s'il y'a un profil admin
-    const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin});
+    const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
     if (!profilAdmin)
       throw createError.NotFound(`Profil admin not found`);
     const profilAdminId = profilAdmin._id + "";
@@ -140,7 +149,7 @@ async function createFirstAdmin() {
     let utilisateurExistant = await User.findOne({ email: "adminUtopia@test.fr" });
     if (!utilisateurExistant) {
       const user = new User({ email: "adminUtopia@test.fr", password: "123456789", nom: "admin", prenom: "utopia", antennes: [idAntennePrincipale], antenneDefautId: idAntennePrincipale, creePar: "Initialisation", derniereConnexion: null, derniereModificationMdp: null })
-      await user.save() 
+      await user.save()
       utilisateurExistant = await User.findOne({ email: "adminUtopia@test.fr" });
       if (!utilisateurExistant)
         throw createError.NotFound(`user not found`);
@@ -158,4 +167,50 @@ async function createFirstAdmin() {
     throw createError[500](`Admin error` + error);
   }
 }
+
+async function creationReferentiel(nom, userId, tableau, entitee, nomAntenne) {
+  try {
+    const referentiel = await Referentiel.findOne({ nom: nom });
+
+    if (!referentiel) {
+      const nouveauReferentiel = new Referentiel({ nom: nom, creePar: userId, donnees: tableau, entitee:entitee, antenneId:getAntenneIdByNom(nomAntenne) });
+      const savedRef = await nouveauReferentiel.save();
+      console.log("Referentiel crée :" + savedRef.nom);
+    }
+  } catch (error) {
+    throw createError[500](`Referentiel error` + error);
+  }
+}
+
+async function getAntenneIdByNom(nom) {
+  try {
+    if(!nom) return null
+    const antenne = await Antenne.findOne({ nom: nom });
+    if (!antenne) {
+      throw createError[500](`antenne get id error` + error);
+    }
+    return antenne?._id
+  } catch (error) {
+    throw createError[500](`antenne get id error` + error);
+  }
+}
+
+
+
+const pays = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (fmr. \"Swaziland\")", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
+
+const langues = ["akan", "allemand", "amharique", "anglais", "arabe", "assamais", "awadhi", "azéri", "bengali", "bhojpouri", "birman", "chewa (nyanja)", "chhattisgarhi", "chinois cantonais", "chinois gan", "chinois hakka", "chinois jing", "chinois mandarin", "chinois min", "chinois min bei", "chinois wu", "chinois xiang", "chinois zhouang", "chittagonien", "coréen", "créole haïtien", "deccan", "espagnol", "filipino (tagalog)", "français", "géorgien", "grec", "gujarati", "haoussa", "haryanvi", "hindi /ourdou", "hongrois", "igbo (ibo)", "italien", "japonais", "javanais", "kannada", "kazakh", "khmer", "kurde", "madourais", "magahi", "maithili", "malais", "malayalam", "malgache", "marathi", "marwari", "néerlandais", "oriya (odiya)", "oromo", "ouzbek", "pachtou", "panjabi", "persan", "peul / pular", "polonais", "portugais", "roumain", "russe", "saraiki", "sindhi", "somali", "soundanais", "sylheti", "tamoul", "tchèque", "télougou", "thaï", "tigrigna", "turc", "turkmène", "ukrainien", "vietnamien", "visayan (cibuano)", "yorouba", "zoulou", "dari", "farsi", "soniké", "ourdou", "bambara", "djoula", "sousou", "woloff", "mandinka", "malinke", "albanais", "lingala", "krio", "koyaka/koyaga", "zarma", "tama"]
+
+const procedureFamille = ["Débouté", "Inconnue", "Mixte", "Primo", "Procédure Accélérée", "Procédure Dublin", "Procédure Normale", "Protection subsidiaire", "Réfugié Statutaire", "Sans Papier", "Titre de séjour", "Dublin en fuite", "Réexamen", "Passeport UE", "En demande de titre de séjour", "Regroupement familial"]
+
+const paysDublin = ["Allemagne", "Autre", "Autriche", "Belgique", "Bulgarie", "Chypre", "Croatie", "Danemark", "Espagne", "Estonie", "Finlande", "France", "Grèce", "Hongrie", "Irlande", "Islande", "Italie", "Lettonie", "Liechtenstein", "Lituanie", "Luxembourg", "Malte", "Norvège", "Pays-Bas", "Pologne", "Portugal", "République tchèque", "Roumanie", "Royaume-Uni", "Slovaquie", "Slovénie", "Suède"]
+
+const compositionFamille = ["Couple", "Famille", "Femme seule", "Monoparentale femme", "Monoparentale homme"]
+
+const vulnerabiliteFamille = ["Femme enceinte", "Enfant(s) malade(s)", "Adulte(s) malade(s)", "Analphabétisme", "Handicap", "Personne(s) agée(s)", "Problèmes psychologiques", "Victime de violence (VVS / VG)", "LGBTI"]
+
+const familleSource = ["115", "Accueil de jour", "Bouche à Oreille", "Maraude d'une autre asso", "Maraude utopia", "Watizat"]
+
+const lieuFamilleDodo = ["Logement individuel","Proches","115","Centre d'hébergement (à préciser)","Rue, Gare...","Autre (squat, bidon ville)","Arrivé hier"]
+
 

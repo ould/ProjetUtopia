@@ -27,6 +27,11 @@ Les antennes------------------------
 
 
 
+Referentiels--------------------------
+
+Ce sont les listes globale ou specifiques aux sections (comme les pays, les statuts etc). Si globale ils sont accessibles via la route globale, sinon il faut utiliser les routes pour chaque section
+
+
 
 
 Nouvel utilisateur ------------------

@@ -1,0 +1,97 @@
+.utopia-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.utopia-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.utopia-container input[type="text"] {
+    width: calc(100% - 130px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.utopia-container input[type="text"]:focus {
+    border-color: #00a59e;
+    outline: none;
+}
+
+.utopia-container button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #00a59e;
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.utopia-container button:hover {
+    background-color: #00897b;
+}
+
+.utopia-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+}
+
+.utopia-container table thead {
+    background-color: #00a59e;
+    color: #fff;
+}
+
+.utopia-container table th, .utopia-container table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.utopia-container table th {
+    font-weight: bold;
+}
+
+.utopia-container table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.utopia-container table tbody td button {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.utopia-container table tbody td button:hover {
+    background-color: #e60000;
+}
+
+.utopia-container table tbody td button:first-child {
+    background-color: #4CAF50;
+    margin-right: 10px;
+}
+
+.utopia-container table tbody td button:first-child:hover {
+    background-color: #388E3C;
+}

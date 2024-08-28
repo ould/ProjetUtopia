@@ -13,7 +13,7 @@ const ReferentielSchema = new Schema({
     },
     antenneId: {
       type: String,
-      required: true,
+      required: false,
     },
     creePar: {
         type: String,

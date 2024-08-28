@@ -18,7 +18,7 @@ module.exports = {
             next(error)
         }
     },
-
+//Acces seulement a travers les sections; pour les referentiels specifiques à ces sections 
     getByNom: async (req, res, next) => {
         try {
             const nom = req.params.nom;
@@ -34,10 +34,36 @@ module.exports = {
             next(error)
         }
     },
+//Pour les referentiels globaux comme les pays etc => entitee nulle
+    getGlobalByNom: async (req, res, next) => {
+        try {
+            const nom = req.params.nom;
+            const userReferent = await UserController.getCurrentUser(req, res, next);
+            const filtre = { entitee: null, nom: nom, antenneId: userReferent.antenneDefautId }
+
+            const referentiel = await Referentiel.findOne(filtre);
+            if (!referentiel)
+                throw createError.NotFound(`${nom} not found`);
+            res.send(referentiel.donnees)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    getAll: async (req, res, next) => {
+        try {
+            const referentiels = await Referentiel.find();
+            if (!referentiels)
+                throw createError.NotFound(`liste not found`);
+            res.send(referentiels)
+        } catch (error) {
+            next(error)
+        }
+    },
 
     save: async (req, res, next) => {
         try {
-            const nom = req.params.nom;
+            const nom = req.body.nom;
             const userReferent = await UserController.getCurrentUser(req, res, next);
             const nouveauReferentiel= new Referentiel({nom:nom,donnees:[],antenneId:userReferent.antenneDefautId,creePar:userReferent._id});
             const savedHRef = await nouveauReferentiel.save();
@@ -49,7 +75,7 @@ module.exports = {
 
     update: async (req, res, next) => {
         try {
-            const referentielRequete = await referentielSchema.validateAsync(req.body);
+            const referentielRequete = await referentielSchema.validateAsync(req.body, { allowUnknown: true });
             const filtre = { nom: referentielRequete.nom }
 
             const doesExist = await Referentiel.findOne(filtre)

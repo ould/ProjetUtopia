@@ -24,12 +24,14 @@ import { RequeteDetailComponent } from './reporting/requete-detail/requete-detai
 import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupComponent } from './popup/popup.component';
-import { CompteDetailComponent } from './admin/manage-comptes/compte-detail/compte-detail.component';
+import { CompteDetailComponent } from './admin/gestion-comptes/compte-detail/compte-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MembreComponent } from './beneficiaires/familles/membre/membre.component';
 import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
 import { ActionSelectionComponent } from './benevole/action-selection/action-selection.component';
+import { GestionReferentielsComponent } from './admin/gestion-referentiels/gestion-referentiels.component';
+import { ReferentielDetailComponent } from './admin/gestion-referentiels/referentiel-detail/referentiel-detail.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ActionSelectionComponent } from './benevole/action-selection/action-sel
     AccueilComponent,
     MembreComponent,
     CalendrierComponent,
-    ActionSelectionComponent
+    ActionSelectionComponent,
+    GestionReferentielsComponent,
+    ReferentielDetailComponent
   ],
   imports: [
     BrowserModule,

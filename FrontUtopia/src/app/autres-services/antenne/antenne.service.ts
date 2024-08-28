@@ -10,6 +10,7 @@ import { Antenne } from 'src/app/interfaces/antenne';
 export class AntenneService {
 
   private antenneUrl = environment.apiUrl + 'antenne';
+  private adminAntenneUrl = environment.apiUrl + 'antenne';
   private publicAntenneUrl = environment.apiUrl + 'public/antenne';
 
   private httpOptions = {
@@ -17,9 +18,12 @@ export class AntenneService {
   };
 
 
+  getAntenneById(id: string): Observable<Antenne>{
+    return this.http.get<Antenne>(this.antenneUrl + "/getById/" +id ).pipe()
+  }
 
-  getAntenne(id: string): Observable<Antenne>{
-    return this.http.get<Antenne>(this.antenneUrl + "/" +id ).pipe()
+  getAntenneByNom(nom: string): Observable<Antenne>{
+    return this.http.get<Antenne>(this.antenneUrl + "/getByNom/" +nom ).pipe()
   }
 
   getAll(): Observable<Antenne[]>{
@@ -31,19 +35,19 @@ export class AntenneService {
   }
 
   addAntenne(utilisateur: Antenne): Observable<Antenne> {
-    return this.http.post<Antenne>(this.antenneUrl, utilisateur, this.httpOptions).pipe(
+    return this.http.post<Antenne>(this.adminAntenneUrl, utilisateur, this.httpOptions).pipe(
       catchError(this.handleError<any>('addutilisateur'))
     );
   }
 
   updateAntenne(utilisateur:Antenne): Observable<Antenne> {
-    return this.http.put<Antenne>(this.antenneUrl, utilisateur, this.httpOptions).pipe(
+    return this.http.put<Antenne>(this.adminAntenneUrl, utilisateur, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateAntenne'))
     );
   }
 
   deleteAntenne(id: string): Observable<Antenne> {
-    const url = `${this.antenneUrl}/${id}`;
+    const url = `${this.adminAntenneUrl}/${id}`;
     return this.http.delete<Antenne>(url, this.httpOptions).pipe(
       catchError(this.handleError<any>('deleteAntenne'))
     );

@@ -8,9 +8,9 @@ import { Antenne } from 'src/app/interfaces/antenne';
 import { PopupComponent } from 'src/app/popup/popup.component';
 
 @Component({
-  selector: 'app-manage-comptes',
-  templateUrl: './manage-comptes.component.html',
-  styleUrls: ['./manage-comptes.component.css']
+  selector: 'app-gestion-comptes',
+  templateUrl: './gestion-comptes.component.html',
+  styleUrls: ['./gestion-comptes.component.css']
 })
 export class ManageComptesComponent implements OnInit {
 

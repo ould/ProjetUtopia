@@ -1,0 +1,24 @@
+<div class="utopia-container">
+    <h1>Gestion des Référentiels</h1>
+    <input type="text" #newReferentiel placeholder="Nom du nouveau référentiel">
+    <button (click)="creerReferentiel(newReferentiel)">Ajouter un nouveau référentiel</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Antenne</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let referentiel of referentiels">
+          <td>{{ referentiel.nom }}</td>
+          <td>{{ referentiel.nomAntenne }}</td>
+          <td>
+            <button (click)="editReferentiel(referentiel._id!)">Modifier</button>
+            <button (click)="openPopupSuppression(referentiel.nom , referentiel._id!)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

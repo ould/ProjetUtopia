@@ -6,8 +6,8 @@ import { Antenne } from 'src/app/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
-import { Profil } from '../../profil/profil';
-import { ProfilService } from '../../profil/profil.service';
+import { Profil } from '../../gestion-profil/profil';
+import { ProfilService } from '../../gestion-profil/profil.service';
 
 @Component({
   selector: 'app-compte-detail',
