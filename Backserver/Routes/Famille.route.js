@@ -6,7 +6,7 @@ const ReferentielController = require('../Controllers/Referentiel.Controller')
 
 familleRouter.get('/:id', FamilleController.get)
 
-familleRouter.get('/search/:nomFamille', FamilleController.search)
+familleRouter.get('/search/:nom', FamilleController.search)
 
 familleRouter.post('/', FamilleController.save)
 
@@ -15,7 +15,7 @@ familleRouter.put('/', FamilleController.update)
 familleRouter.delete('/:id', FamilleController.delete)
 
 //Beneficiaire famille
-familleRouter.get('/membre/:id', BeneficiaireController.get)
+familleRouter.get('/membre/:id', BeneficiaireController.getById)
 
 familleRouter.post('/membre/', BeneficiaireController.save)
 

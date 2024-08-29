@@ -1,26 +1,31 @@
-<div class="container">
+<div class="container-fluid" *ngIf="familleInput">
   <div class="family-details">
-    <h2 class="family-title">{{ familleInput.nomFamille | uppercase }}</h2>
-    <app-membre [membresInput]="membresFamille" [lectureSeuleInput]="lectureSeule"></app-membre>
-    <div class="row">
+    <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
+    <div class="btn-group">
+      <button class="btn btn-primary" *ngIf="!modificationEnCours" (click)="change()">Modifier</button>
+      <button class="btn btn-success" *ngIf="modificationEnCours" (click)="saveOrUpdate(familleInput._id !== undefined)">Sauvegarder</button>
+      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+    </div>
+    <app-membre [membresInput]="membresFamille" [modificationEnCours]="modificationEnCours"></app-membre>
+    <div class="row details-row">
       <legend>Détails de la famille</legend>
       <div class="col-md-6">
         <div class="form-group">
           <label for="famille-composition">Composition :</label>
           <input id="famille-composition" class="form-control" [(ngModel)]="familleInput.composition" placeholder="Composition"
-            [disabled]="lectureSeule">
+            [disabled]="!modificationEnCours">
         </div>
         <div class="form-group">
-          <label for="famille-Commentaire">Commentaire :</label>
-          <input id="famille-Commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" placeholder="Commentaire"
-            [disabled]="lectureSeule">
+          <label for="famille-commentaire">Commentaire :</label>
+          <input id="famille-commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" placeholder="Commentaire"
+            [disabled]="!modificationEnCours">
         </div>
       </div>
     </div>
     <div class="btn-group">
-      <button class="btn btn-primary" *ngIf="lectureSeule" (click)="change()">Modifier</button>
-      <button class="btn btn-success" *ngIf="!lectureSeule" (click)="save()">Sauvegarder</button>
-      <button class="btn btn-primary" (click)="goBack()">Retour</button>
+      <button class="btn btn-primary" *ngIf="!modificationEnCours" (click)="change()">Modifier</button>
+      <button class="btn btn-success" *ngIf="modificationEnCours" (click)="saveOrUpdate(familleInput._id !== undefined)">Sauvegarder</button>
+      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
     </div>
   </div>
 </div>

@@ -8,7 +8,7 @@ import { CompteDetailComponent } from './gestion-comptes/compte-detail/compte-de
 import { ProfilComponent } from './gestion-profil/profil.component';
 import { ProfilDetailComponent } from './gestion-profil/profil-detail/profil-detail.component';
 import { GestionReferentielsComponent } from './gestion-referentiels/gestion-referentiels.component';
-import { ReferentielDetailComponent } from './gestion-referentiels/referentiel-detail/referentiel-detail.component';
+import { ReferentielDetailComponent } from '../referentiel-detail/referentiel-detail.component';
 
 const adminRoutes: Routes = [
   {

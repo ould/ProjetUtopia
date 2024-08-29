@@ -9,7 +9,7 @@
     <div class="families-container">
       <div class="family" *ngFor="let famille of familles$ | async" routerLink="/detailFamille/{{famille._id}}">
         <div class="family-info">
-          <h2>{{ famille.nomFamille }}</h2>
+          <h2>{{ famille.nom }}</h2>
           <p>{{ famille._id }}</p>
         </div>
       </div>

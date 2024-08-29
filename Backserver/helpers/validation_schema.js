@@ -52,20 +52,22 @@ const logSchema = Joi.object({
 
 const familleSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  nomFamille: Joi.string().min(5).required(),
-  beneficiaires : Joi.array().required(),
-  composition: Joi.string().required(),
-
-  antenne:Joi.string().optional(),
+  nom: Joi.string().min(5).required(),
+  beneficiairesId : Joi.array().required(),
+  
+  composition: Joi.string().optional(),
+  antenneId:Joi.string().optional(),
   commentaire: Joi.string().optional()
 })
 
 const beneficiaireSchema = Joi.object({
-  _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required(),
-  prenom: Joi.string().required(),
-  
+
+  _id: Joi.string().hex().length(24).optional(),
+  parentId:Joi.string().optional(),
   type: Joi.string().optional(),
+  
+  prenom: Joi.string().optional(),
   nationalite: Joi.string().optional(),
   ddn: Joi.date().optional(),
   situation: Joi.string().optional(),
@@ -73,9 +75,8 @@ const beneficiaireSchema = Joi.object({
   email: Joi.string().email().lowercase().optional(),
   telephone: Joi.string().optional(),
   commentaire: Joi.string().optional(),
-  antenne:Joi.string().optional(),
+  antenneId:Joi.string().optional()
   
-  parentId:Joi.string().optional()
 })
 
 const chatSchema = Joi.object({
@@ -84,7 +85,7 @@ const chatSchema = Joi.object({
   messagesId: Joi.array().required(),
   droitsLecturePersonneId: Joi.array().required(),
   droitsEcriturePersonneId: Joi.array().required(),
-  antenne:Joi.string().optional()
+  antenneId:Joi.string().optional()
 })
 
 const messageSchema = Joi.object({

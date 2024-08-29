@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Referentiel } from 'src/app/interfaces/referentiel';
-import { ReferentielsService } from '../referentiels.service';
+import { ReferentielsService } from '../admin/gestion-referentiels/referentiels.service';
 import { Location } from '@angular/common';
 
 @Component({

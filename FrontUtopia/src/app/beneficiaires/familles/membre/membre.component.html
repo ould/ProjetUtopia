@@ -1,51 +1,66 @@
-<div class="container">
-    <div class="text-end mb-3">
-      <button class="btn btn-primary me-2" type="button" (click)="ajouterPersonne()">Ajouter personne à la
-        famille</button>
-    </div>
-    <!-- Formulaire pour les détails de la famille -->
-    <fieldset>
-      <!-- Boutons pour la navigation entre les personnes -->
-      <div class="text-center mt-4">
-        <legend>Personnes de la famille</legend>
-        <button class="btn btn-secondary me-2" type="button" (click)="prevPersonne()">Précédent</button>
-        <button class="btn btn-secondary me-2" type="button" (click)="nextPersonne()">Suivant</button>
-      </div>
+<div class="container-fluid">
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" type="button" (click)="ajouterPersonne()">Ajouter personne</button>
+  </div>
   
-      <div class="personne-details">
-        <div *ngFor="let membre of membresInput; let i = index" [ngClass]="{ 'active': i === currentPersonneIndex }">
-          <h3>{{ membre.nom }} {{ membre.prenom }}</h3>
-          <div class="form-group">
-            <label for="nom">Nom :</label>
-            <input id="nom" class="form-control" [(ngModel)]="membre.nom" [readonly]="lectureSeuleInput">
+  <fieldset class="personne-fieldset">
+    <div class="personne-navigation">
+      <button class="btn nav-btn left" (click)="prevPersonne()" [disabled]="currentPersonneIndex === 0">
+        <span class="icon">&#9664;</span>
+      </button>
+      
+      <div class="personne-details" *ngIf="currentMember">
+        <h3 class="text-center mb-3">{{ currentMember.nom }} {{ currentMember.prenom }}</h3>
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="nom">Nom :</label>
+              <input id="nom" class="form-control form-control-sm" [(ngModel)]="currentMember.nom" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="prenom">Prénom :</label>
-            <input id="prenom" class="form-control" [(ngModel)]="membre.prenom" [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="prenom">Prénom :</label>
+              <input id="prenom" class="form-control form-control-sm" [(ngModel)]="currentMember.prenom" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="ddn">Date de naissance :</label>
-            <input id="ddn" class="form-control" [(ngModel)]="membre.ddn" [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="ddn">Date de naissance :</label>
+              <input id="ddn" class="form-control form-control-sm" [(ngModel)]="currentMember.ddn" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="situation">Situation :</label>
-            <input id="situation" class="form-control" [(ngModel)]="membre.situation" [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="situation">Situation :</label>
+              <input id="situation" class="form-control form-control-sm" [(ngModel)]="currentMember.situation" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="procedure">Procédure :</label>
-            <input id="procedure" class="form-control" [(ngModel)]="membre.procedure" [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="procedure">Procédure :</label>
+              <input id="procedure" class="form-control form-control-sm" [(ngModel)]="currentMember.procedure" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="telephone">Téléphone :</label>
-            <input id="telephone" class="form-control" [(ngModel)]="membre.telephone" [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="telephone">Téléphone :</label>
+              <input id="telephone" class="form-control form-control-sm" [(ngModel)]="currentMember.telephone" [readonly]="!modificationEnCours">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="nationalite">Nationalité :</label>
-            <input id="nationalite" class="form-control" [(ngModel)]="membre.nationalite"
-              [readonly]="lectureSeuleInput">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="nationalite">Nationalité :</label>
+              <input id="nationalite" class="form-control form-control-sm" [(ngModel)]="currentMember.nationalite" [readonly]="!modificationEnCours">
+            </div>
           </div>
         </div>
       </div>
-  
-    </fieldset>
-  </div>
+      
+      
+      <button class="btn nav-btn right" (click)="nextPersonne()" [disabled]="currentPersonneIndex === membresInput.length - 1">
+        <span class="icon">&#9654;</span>
+      </button>
+    </div>
+  </fieldset>
+</div>

@@ -1,44 +1,107 @@
-.container {
-    padding: 20px;
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container-fluid {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.text-end {
+  margin-bottom: 1rem;
+}
+
+.personne-fieldset {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.personne-navigation {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Pour éviter que les flèches sortent du conteneur */
+}
+
+/* Styles pour les boutons de navigation */
+.nav-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  z-index: 10; /* Assure que les flèches sont au-dessus du contenu */
+}
+
+.nav-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.nav-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.icon {
+  font-size: 1.5rem;
+}
+
+.left {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.personne-details {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+/* Ajout de marges et de paddings conditionnels */
+@media (min-width: 769px) {
+  .personne-navigation {
+    margin: 0 1rem; /* Marge extérieure pour les écrans plus larges */
   }
-  
-  .personne-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+  .personne-details {
+    margin: 0 2rem; /* Marge intérieure pour les écrans plus larges */
+    padding: 1rem; /* Marge intérieure pour les champs */
   }
-  
-  .personne {
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
+
+  .personne-fieldset {
+    padding: 1rem;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .nav-btn {
+    display: none; /* Masquer les flèches sur les petits écrans */
   }
-  
-  .navigation {
-    display: flex;
-    justify-content: space-between;
+
+  .personne-details {
+    margin: 0; /* Pas de marge intérieure sur les petits écrans */
+    padding: 0.5rem; /* Moins de padding pour les petits écrans */
   }
-  
-  .btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
+
+  .form-control-sm {
+    font-size: 0.9rem; /* Ajuster la taille des champs sur les petits écrans */
   }
-  
-  .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
+}

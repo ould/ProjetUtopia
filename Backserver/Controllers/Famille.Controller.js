@@ -10,31 +10,27 @@ module.exports = {
       const id = req.params.id
       const userReferent = await UserController.getCurrentUser(req, res, next)
 
-      const familleExistante = await Famille.findOne({ _id: id, antenne: userReferent.antenneDefautId })
+      const familleExistante = await Famille.findOne({ _id: id, antenneId: userReferent.antenneDefautId })
       if (!familleExistante)
         throw createError.NotFound(`${id} not found`);
       res.send(familleExistante)
 
     } catch (error) {
-      if (error.isJoi === true) error.status = 422
       next(error)
     }
   },
   save: async (req, res, next) => {
     try {
-
-      const familleASauver = await familleSchema.validateAsync(req.body);
-
-      const userId = req.payload.userId; 
+      const familleASauver = await familleSchema.validateAsync(req.body, { allowUnknown: true });
       const userReferent = await UserController.getCurrentUser(req, res, next)
-
-      familleASauver.antenne = userReferent.antenneDefautId;
-      familleASauver.creePar = userId;
+      
+      familleASauver.antenneId = userReferent.antenneDefautId;
+      familleASauver.creePar = userReferent._id;
       const nouvelleFamille = new Famille(familleASauver);
       const savedFamille = await nouvelleFamille.save();
       const savedFamilleId = savedFamille._id;
 
-      res.send({ savedFamilleId })
+      res.send(savedFamilleId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -43,10 +39,10 @@ module.exports = {
 
   update: async (req, res, next) => {
     try {
-      const familleRequete = await familleSchema.validateAsync(req.body)
+      const familleRequete = await familleSchema.validateAsync(req.body, { allowUnknown: true })
       const userReferent = await UserController.getCurrentUser(req, res, next)
 
-      const filter = { _id: familleRequete._id, antenne: userReferent.antenneDefautId  };
+      const filter = { _id: familleRequete._id, antenneId: userReferent.antenneDefautId  };
       const FamilleExistante = await Famille.findOne(filter)
       if (!FamilleExistante)
         throw createError.NotFound(`${familleRequete.id} not found`);
@@ -56,7 +52,6 @@ module.exports = {
       const updatedFamille = await Famille.findOneAndUpdate(filter, familleRequete, {
         returnOriginal: false
       });
-      updatedFamille.id = updatedFamille.id;
       res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -67,16 +62,15 @@ module.exports = {
 
   search: async (req, res, next) => {
     try {
-      const nom = req.params.nomFamille
+      const nom = req.params.nom
       const userReferent = await UserController.getCurrentUser(req, res, next)
 
-      const listeFamilles = await Famille.find({ "nomFamille": { $regex: nom }, "antenne": userReferent.antenneDefautId })
+      const listeFamilles = await Famille.find({ "nom": { $regex: nom }, "antenneId": userReferent.antenneDefautId })
       if (!listeFamilles)
         throw createError.NotFound(`${nom} not found`);
       res.send(listeFamilles)
 
     } catch (error) {
-      if (error.isJoi === true) error.status = 422
       next(error)
     }
   },
@@ -86,11 +80,10 @@ module.exports = {
       const id = req.params.id
       const userReferent =  await UserController.getCurrentUser(req, res, next);
 
-      const familleExistante = await Famille.findOneAndDelete({ _id: id, antenne: userReferent.antenneDefautId });
+      const familleExistante = await Famille.findOneAndDelete({ _id: id, antenneId: userReferent.antenneDefautId });
       res.send(familleExistante._id)
 
     } catch (error) {
-      if (error.isJoi === true) error.status = 422
       next(error)
     }
   }

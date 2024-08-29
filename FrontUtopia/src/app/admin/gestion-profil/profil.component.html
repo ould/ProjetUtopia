@@ -1,22 +1,24 @@
 <div class="utopia-container">
-    <h1>Gestion des profils utilisateur</h1>
-    <input type="text" #newType placeholder="Nom du nouveau profil">
-    <button (click)="creerProfil(newType)">Ajouter un nouveau profil</button>
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let profil of profils">
-          <td>{{ profil.nom }}</td>
-          <td>
-            <button routerLink="/admin/modifierProfil/{{profil._id}}">Modifier</button>
-            <button (click)="openPopupSuppression(profil.nom , profil._id)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <h1>Gestion des Profils Utilisateur</h1>
+  <div class="add-profile">
+    <input type="text" #newType class="profile-input" placeholder="Nom du nouveau profil">
+    <button class="add-button" (click)="creerProfil(newType)">Ajouter un nouveau profil</button>
+  </div>
+  <table class="profile-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let profil of profils">
+        <td>{{ profil.nom }}</td>
+        <td>
+          <button class="edit-button" routerLink="/admin/modifierProfil/{{profil._id}}">Modifier</button>
+          <button class="delete-button" (click)="openPopupSuppression(profil.nom, profil._id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

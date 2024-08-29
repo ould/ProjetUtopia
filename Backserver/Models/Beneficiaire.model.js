@@ -6,6 +6,10 @@ const BeneficiaireSchema = new Schema({
     type: String,
     required: true,
   },
+  parentId: {
+    type: String,
+    required: false,
+  },
   nom: {
     type: String,
     required: true,

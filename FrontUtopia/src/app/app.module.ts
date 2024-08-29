@@ -31,7 +31,7 @@ import { MembreComponent } from './beneficiaires/familles/membre/membre.componen
 import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
 import { ActionSelectionComponent } from './benevole/action-selection/action-selection.component';
 import { GestionReferentielsComponent } from './admin/gestion-referentiels/gestion-referentiels.component';
-import { ReferentielDetailComponent } from './admin/gestion-referentiels/referentiel-detail/referentiel-detail.component';
+import { ReferentielDetailComponent } from './referentiel-detail/referentiel-detail.component';
 
 @NgModule({
   declarations: [

@@ -1,40 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { Membre } from '../models/membre';
+
 @Component({
   selector: 'app-membre',
   templateUrl: './membre.component.html',
   styleUrls: ['./membre.component.css']
 })
 export class MembreComponent {
-  @Input() membresInput!: Membre[];
-  @Input() lectureSeuleInput!: boolean;
-  @Input() ActiveInput!: Boolean;
-  currentPersonneIndex: number = 0; // Indice de la personne actuelle
 
-  get currentPersonne(): Membre {
+  @Input() membresInput: Membre[] = [];
+  @Input() modificationEnCours: boolean = true;
+  currentPersonneIndex: number = 0;
+  startX: number | null = null;
+  deltaX: number = 0;
+  touchThreshold: number = 50;
+
+  get currentMember() {
     return this.membresInput[this.currentPersonneIndex];
   }
 
-  prevPersonne(): void {
-    if (this.currentPersonneIndex > 0) {
-      this.currentPersonneIndex--;
-    }
+  ajouterPersonne() {
+    this.membresInput.push({ nom: '' });
+    this.currentPersonneIndex
+      = this.membresInput.length - 1;
   }
 
-  nextPersonne(): void {
-    if (this.currentPersonneIndex < this.membresInput.length - 1) {
-      this.currentPersonneIndex++;
-    }
+  @HostListener('mousedown', ['$event']) @HostListener('touchstart', ['$event']) onStart(event: MouseEvent | TouchEvent) { const e = event as MouseEvent | TouchEvent; this.startX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX; this.deltaX = 0; }
+  @HostListener('mousemove', ['$event']) @HostListener('touchmove', ['$event']) onMove(event: MouseEvent | TouchEvent) {
+    if (this.startX === null) return;
+    const e = event as MouseEvent | TouchEvent;
+    this.deltaX = e instanceof MouseEvent ? e.clientX - this.startX : e.touches[0].clientX - this.startX;
   }
 
-  isFirstPersonne(): boolean {
-    return this.currentPersonneIndex === 0;
+  @HostListener('mouseup', ['$event']) @HostListener('touchend', ['$event']) onEnd(event: MouseEvent | TouchEvent) {
+    if (Math.abs(this.deltaX) > this.touchThreshold) { if (this.deltaX < 0) { this.nextPersonne(); } else { this.prevPersonne(); } }
+    this.resetTouch();
   }
 
-  isLastPersonne(): boolean {
-    return this.currentPersonneIndex === this.membresInput.length - 1;
-  }
+  private resetTouch() { this.startX = null; this.deltaX = 0; }
 
-  ajouterPersonne(): void {
-  }
+  prevPersonne() { if (this.currentPersonneIndex > 0) { this.currentPersonneIndex--; } }
+
+  nextPersonne() { if (this.currentPersonneIndex < this.membresInput.length - 1) { this.currentPersonneIndex++; } }
 }

@@ -1,8 +1,8 @@
 export interface Famille {
     _id?:string;
-    nomFamille: string;
-    personnesId: string[];
+    nom: string;
+    beneficiairesId: string[];
     composition?: string;
     commentaire?: string;
-    antenne?: string;
+    antenneId?: string;
 }

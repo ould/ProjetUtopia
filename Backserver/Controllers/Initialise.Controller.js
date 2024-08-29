@@ -19,6 +19,7 @@ module.exports = {
         // Efface les tables de parametrage
         Antenne.collection.drop();
         Profil.collection.drop();
+        Referentiel.collection.drop()
 
         //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
         //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat

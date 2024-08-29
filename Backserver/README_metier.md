@@ -4,9 +4,10 @@
 L'application (App) est découpée en plusieurs "sections" qui correspondent aux partie fonctionnelles de l'App (ou contexte applicatif).
 Les noms de ces sections sont listés en tant que variable d'envirionement.
 
-Les personnes listée dans l'App sont classée en 2 categories : 
+Les personnes listée dans l'App Back sont classée en 2 categories : 
     - les membres : comprennant les adherents, bénévoles, hebergeurse, etc
     - les beneficiaires : les personnes demandant les services de l'association (mineurs, famille etc)
+On peut differencier les types de personnes via le champ type, qui prend le nom des sections (par exemple les personnes dans les familles seront des beneficiares avec un type famille )
 
 
 Evenements : chaque personne a des evenemnt liés (visite med, hebergement, accouchement etc) ces event peuvent aussi suivre lesmodifs des champs => a venir

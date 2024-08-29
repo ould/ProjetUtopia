@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Famille } from './models/famille';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Membre } from './models/membre';
 
@@ -11,69 +11,42 @@ import { Membre } from './models/membre';
 })
 export class FamilleService {
 
+
   private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que section)
   private membreFamilleUrl = this.familleUrl + '/membre';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
-
+  //If you neglect to subscribe(), the service can't send the request to the server. As a rule, an Observable does nothing until something subscribes.
   getFamille(id: string): Observable<Famille> {
-    if (id === "") {
-      // if not search term, return empty array.
-      return of();
-    }
     const url = `${this.familleUrl}/${id}`;
     return this.http.get<Famille>(url).pipe(
-      tap(_ => this.log(`fetched famille id=${id}`)),
       catchError(this.handleError<Famille>(`getFamille id=${id}`))
     );
   }
 
   /** POST: add  Famille */
-  addFamille(Famille: Famille): Observable<Famille> {
-    return this.http.post<Famille>(this.familleUrl, Famille, this.httpOptions).pipe(
-      tap((newFamille: Famille) => this.log(`added Famille w/ id=${newFamille._id}`)),
-      catchError(this.handleError<Famille>('addFamille'))
+  addFamille(famille: Famille): Observable<string> {
+    return this.http.post<string>(this.familleUrl, famille, this.httpOptions).pipe(
+      catchError(this.handleError<string>('addFamille'))
     );
   }
-
 
   /** PUT: update Famille */
-  updateFamille(Famille: Famille): Observable<any> {
-    return this.http.put(this.familleUrl, Famille, this.httpOptions).pipe(
-      tap(_ => this.log(`updated Famille id=${Famille._id}`)),
-      catchError(this.handleError<any>('updateFamille'))
+  updateFamille(Famille: Famille): Observable<string> {
+    return this.http.put<string>(this.familleUrl, Famille, this.httpOptions).pipe(
+      catchError(this.handleError<string>('updateFamille'))
     );
-  }
-
-  addOrUpdate(fam: Famille): Observable<any> {
-    if (!fam._id) {
-      return this.addFamille(fam);
-    }
-    else {
-      const doesExist = this.getFamille(fam._id);
-      if (doesExist) {
-        return this.updateFamille(fam);
-      }
-      else {
-        this.handleError<any>('addOrUpdate Famille : ' + fam._id)
-        return doesExist
-      }
-    }
-    //TODO : faire monter l'erreur à l'utilisteur 
   }
 
   /** DELETE: delete Famille*/
-  deleteFamille(id: number): Observable<Famille> {
+  deleteFamille(id: number): Observable<string> {
     const url = `${this.familleUrl}/${id}`;
-
-    return this.http.delete<Famille>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted Famille id=${id}`)),
-      catchError(this.handleError<Famille>('deleteFamille'))
+    return this.http.delete<string>(url, this.httpOptions).pipe(
+      catchError(this.handleError<string>('deleteFamille'))
     );
   }
-  //If you neglect to subscribe(), the service can't send the delete request to the server. As a rule, an Observable does nothing until something subscribes.
 
   searchFamilles(term: string): Observable<Famille[]> { //TODO : TOP 10 only, order by date desc
     if (!term.trim()) {
@@ -82,36 +55,58 @@ export class FamilleService {
     }
     const url = `${this.familleUrl}`;
     return this.http.get<Famille[]>(`${url}/search/${term}`).pipe(
-      tap(x => x.length ?
-        this.log(`found famille matching "${term}"`) :
-        this.log(`no famille matching "${term}"`)),
       catchError(this.handleError<Famille[]>('searchFamilles', []))
     );
   }
 
 
-  getMembre(id: string): Observable<Membre> { //TODO : TOP 10 only, order by date desc
-    if (id === "") {
-      // if not search term, return empty array.
-      return of();
-    }
-    const url = `${this.familleUrl}/${id}`;
+  getMembre(id: string): Observable<Membre> {
+    const url = `${this.membreFamilleUrl}/${id}`;
     return this.http.get<Membre>(url).pipe(
-      tap(_ => this.log(`fetched famille id=${id}`)),
-      catchError(this.handleError<Membre>(`getFamille id=${id}`))
+      catchError(this.handleError<Membre>(`getMembre id=${id}`))
     );
   }
 
-  addOrUpdateAllMembres(id: Membre[]): Observable<string[]> { //TODO : TOP 10 only, order by date desc
+  getMembres(ids: string[]): Observable<Membre[]> {
+    const requests = ids.map(id => this.http.get<Membre>(`${this.membreFamilleUrl}/${id}`));
+    return forkJoin(requests);
+  }
 
-    const url = `${this.familleUrl}/${id}`;
-    return this.http.get<string[]>(url).pipe(
-      tap(_ => this.log(`fetched famille id=${id}`)),
-      catchError(this.handleError<string[]>(`getFamille id=${id}`))
+  addMembre(membre: Membre): Observable<string> {
+    return this.http.post<string>(this.membreFamilleUrl, membre, this.httpOptions).pipe(
+      catchError(this.handleError<string>('addMembre'))
     );
   }
 
+  //-----------------------------------
+  updateMembre(membre: Membre): Observable<string> {
+    return this.http.put<string>(this.membreFamilleUrl, membre, this.httpOptions).pipe(
+      catchError(this.handleError<string>('updateMembre'))
+    );
+  }
 
+  saveOrUpdateMembres(membres: Membre[]): Observable<string[]> {
+    console.log(membres)
+    // Séparer les membres à mettre à jour et ceux à ajouter
+    const membresAUpdate = membres.filter((membre): membre is Membre => membre._id !== undefined);
+    const membresASauver = membres.filter((membre): membre is Membre => membre._id === undefined);
+
+    // Création des Observables pour les POST et PUT
+    const saveRequests = membresASauver.map(membre => this.http.post<string>(`${this.membreFamilleUrl}`, membre));
+    const updateRequests = membresAUpdate.map(membre => this.http.put<string>(`${this.membreFamilleUrl}`, membre));
+
+    // Combine les Observables avec forkJoin
+    return forkJoin([...saveRequests, ...updateRequests]).pipe(
+      map(responses => responses as string[]) // Assume que toutes les réponses sont des IDs
+    );
+  }
+
+  deleteMembre(id: string): Observable<string> {
+    const url = `${this.membreFamilleUrl}/${id}`;
+    return this.http.delete<string>(url, this.httpOptions).pipe(
+      catchError(this.handleError<string>('deleteMembre'))
+    );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

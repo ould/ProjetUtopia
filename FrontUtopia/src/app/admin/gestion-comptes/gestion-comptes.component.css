@@ -1,82 +1,101 @@
-/* Conteneur principal */
-:host {
-  display: block;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  color: #333; /* Couleur du texte principale */
-}
-
-/* Titre */
+/* Style général pour la page de gestion des utilisateurs */
 h1 {
-  color: #00a59e; /* Couleur du titre */
-  margin-bottom: 20px;
+  text-align: center;
+  color: var(--utopia-primary-color);
 }
 
-/* Formulaire */
+h2 {
+  margin-top: 20px;
+  color: var(--utopia-primary-color);
+}
+
 form {
-  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--utopia-primary-color);
+  border-radius: 8px;
+  background-color: var(--utopia-background-color);
+}
+
+.form-group {
+  margin-bottom: 15px;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
+  color: var(--utopia-primary-color);
 }
 
-
-
-input[type="text"],
-input[type="email"],
-select {
+input[type="text"], input[type="email"], input[type="password"], select {
   width: 100%;
   padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--utopia-primary-color);
   border-radius: 4px;
-  box-sizing: border-box;
 }
 
-button[type="submit"] {
-  background-color: #00a59e; /* Couleur du bouton d'ajout */
-  color: #fff;
+button.btn {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #007d74; /* Couleur au survol du bouton d'ajout */
+button.btn-primary {
+  background-color: var(--utopia-primary-color);
+  color: var(--utopia-background-color);
 }
 
-button[type="submit"]:disabled {
-  background-color: #e1f3f2; /* Couleur au survol du bouton d'ajout */
+button.btn-primary:hover {
+  background-color: darken(var(--utopia-primary-color), 10%);
 }
 
-/* Liste des utilisateurs */
-ul {
-  list-style-type: none;
+button.btn-secondary {
+  background-color: #6c757d;
+  color: var(--utopia-background-color);
+}
+
+button.btn-secondary:hover {
+  background-color: darken(#6c757d, 10%);
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  color: var(--utopia-background-color);
+}
+
+button.btn-danger:hover {
+  background-color: darken(#dc3545, 10%);
+}
+
+button.btn-warning {
+  background-color: #ffc107;
+  color: var(--utopia-text-color);
+}
+
+button.btn-warning:hover {
+  background-color: darken(#ffc107, 10%);
+}
+
+.user-list {
+  max-width: 600px;
+  margin: 20px auto;
   padding: 0;
+  list-style-type: none;
 }
 
-li {
-  margin-bottom: 10px;
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
-  background-color: #f9f9f9; /* Couleur de fond des éléments de la liste */
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-bottom: 1px solid #ddd;
+  background-color: var(--utopia-background-color);
 }
 
-/* Style des boutons dans la liste des utilisateurs */
-li button {
-  margin-left: 10px;
-  background-color: #13d3a3; /* Couleur des boutons */
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-li button:hover {
-  background-color: #999; /* Couleur au survol des boutons */
+.user-actions {
+  display: flex;
+  gap: 10px;
 }

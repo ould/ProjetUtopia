@@ -1,31 +1,41 @@
 <h1>Gestion des utilisateurs</h1>
 
-<!-- Formulaire d'ajout d'utilisateur TODO : le faire sortir dans un compo séparé --> 
+<!-- Formulaire d'ajout d'utilisateur -->
 <h2>Ajouter un utilisateur</h2>
 <form [formGroup]="newUtilisateurForm" (ngSubmit)="ajouterUtilisateur()">
-  <label for="nom-utilisateur">Nom d'utilisateur :</label>
-  <input type="text" id="nom-utilisateur" name="nom" formControlName="nom"  ngModel required>
-  <label for="nom-utilisateur">Prénom de l'utilisateur :</label>
-  <input type="text" id="nom-utilisateur" name="prenom" formControlName="prenom"  ngModel required>
-  <label for="role-utilisateur">Email :</label>
-  <input type="text" id="role-utilisateur" name="email" formControlName="email"  ngModel required>
-  <label for="role-utilisateur">Mot de passe provisoire :</label>
-  <input type="text" id="role-utilisateur" name="password" formControlName="password" ngModel required>
-  <div class="mb-3">
-    <label for="role-utilisateur">Antenne principale :</label>
+  <div class="form-group">
+    <label for="nom-utilisateur">Nom d'utilisateur :</label>
+    <input type="text" id="nom-utilisateur" name="nom" formControlName="nom" required>
+  </div>
+  <div class="form-group">
+    <label for="prenom-utilisateur">Prénom de l'utilisateur :</label>
+    <input type="text" id="prenom-utilisateur" name="prenom" formControlName="prenom" required>
+  </div>
+  <div class="form-group">
+    <label for="email-utilisateur">Email :</label>
+    <input type="email" id="email-utilisateur" name="email" formControlName="email" required>
+  </div>
+  <div class="form-group">
+    <label for="password-utilisateur">Mot de passe provisoire :</label>
+    <input type="password" id="password-utilisateur" name="password" formControlName="password" required>
+  </div>
+  <div class="form-group">
+    <label for="antenne-principale">Antenne principale :</label>
     <select class="custom-select" formControlName="antennes">
-      <option *ngFor="let antenne of Antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
+      <option *ngFor="let antenne of Antennes" [value]="antenne._id">{{ antenne.nom }}</option>
     </select>
-  </div>  
-  <button class="button" type="submit" [disabled]="newUtilisateurForm.invalid">Ajouter</button>
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="newUtilisateurForm.invalid">Ajouter</button>
 </form>
 
 <h2>Liste des utilisateurs</h2>
-<ul>
-    <li *ngFor="let utilisateur of utilisateurs">
-        {{ utilisateur.nom }} {{ utilisateur.prenom }}- {{ utilisateur.email }}
-        <button routerLink="/admin/modifierUtilisateur/{{utilisateur._id}}">Modifier</button>
-        <button (click)="openPopupSupprimer(utilisateur)">Supprimer</button>
-        <button (click)="reinitialiseMotDePasse(utilisateur)">Reinitialise mdp</button>
-    </li>
+<ul class="user-list">
+  <li *ngFor="let utilisateur of utilisateurs" class="user-item">
+    {{ utilisateur.nom }} {{ utilisateur.prenom }} - {{ utilisateur.email }}
+    <div class="user-actions">
+      <button routerLink="/admin/modifierUtilisateur/{{utilisateur._id}}" class="btn btn-secondary">Modifier</button>
+      <button (click)="openPopupSupprimer(utilisateur)" class="btn btn-danger">Supprimer</button>
+      <button (click)="reinitialiseMotDePasse(utilisateur)" class="btn btn-warning">Réinitialiser mdp</button>
+    </div>
+  </li>
 </ul>
