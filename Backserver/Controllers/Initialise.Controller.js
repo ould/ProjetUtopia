@@ -174,7 +174,8 @@ async function creationReferentiel(nom, userId, tableau, entitee, nomAntenne) {
     const referentiel = await Referentiel.findOne({ nom: nom });
 
     if (!referentiel) {
-      const nouveauReferentiel = new Referentiel({ nom: nom, creePar: userId, donnees: tableau, entitee:entitee, antenneId:getAntenneIdByNom(nomAntenne) });
+      const antenneId = await getAntenneIdByNom(nomAntenne);
+      const nouveauReferentiel = new Referentiel({ nom: nom, creePar: userId, donnees: tableau, entitee:entitee, antenneId:antenneId });
       const savedRef = await nouveauReferentiel.save();
       console.log("Referentiel crée :" + savedRef.nom);
     }

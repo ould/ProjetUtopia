@@ -8,8 +8,7 @@ module.exports = {
     getById: async (req, res, next) => {
         try {
             const id = req.params.id;
-            const userReferent = await UserController.getCurrentUser(req, res, next);
-            const filtre = { _id: id, antenneId: userReferent.antenneDefautId }
+            const filtre = { _id: id}
             const referentiel = await Referentiel.findOne(filtre);
             if (!referentiel)
                 throw createError.NotFound(`${id} not found`);
