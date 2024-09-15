@@ -24,6 +24,6 @@ familleRouter.put('/membre/', BeneficiaireController.update)
 familleRouter.delete('/membre/:id', BeneficiaireController.delete)
 
 //Referentiel pour famille
-familleRouter.get('/getByNom/:nom', ReferentielController.getByNom)
+familleRouter.get('/getReferentielByNom/:nom', ReferentielController.getByNom)
 
 module.exports = familleRouter

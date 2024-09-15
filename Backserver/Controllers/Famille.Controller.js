@@ -65,7 +65,9 @@ module.exports = {
       const nom = req.params.nom
       const userReferent = await UserController.getCurrentUser(req, res, next)
 
-      const listeFamilles = await Famille.find({ "nom": { $regex: nom }, "antenneId": userReferent.antenneDefautId })
+      const filter = { "nom": { $regex: nom }, "antenneId": userReferent.antenneDefautId }; //TODO ajouter champ recherché
+
+      const listeFamilles = await Famille.find(filter)
       if (!listeFamilles)
         throw createError.NotFound(`${nom} not found`);
       res.send(listeFamilles)

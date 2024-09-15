@@ -23,11 +23,16 @@ module.exports = {
             const nom = req.params.nom;
             const sectionDemandee = req.baseUrl.split('/')[2];
             const userReferent = await UserController.getCurrentUser(req, res, next);
-            const filtre = { entitee: sectionDemandee, nom: nom, antenneId: userReferent.antenneDefautId }
+            let filtre = { entitee: sectionDemandee, nom: nom, antenneId: userReferent.antenneDefautId }
+            let referentiel = await Referentiel.findOne(filtre);
+            //Si on ne trouve pas de referentiel lié aux entitée et antennes, on cherche les referentiels globaux
+            if(!referentiel){
+                filtre = { entitee: null, nom: nom, antenneId: null }
+                referentiel = await Referentiel.findOne(filtre);
+            }
 
-            const referentiel = await Referentiel.findOne(filtre);
             if (!referentiel)
-                throw createError.NotFound(`${nom} not found`);
+                throw createError.NotFound(`referentiel ${nom} not found`);
             res.send(referentiel.donnees)
         } catch (error) {
             next(error)

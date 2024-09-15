@@ -15,6 +15,10 @@ const ReferentielSchema = new Schema({
       type: String,
       required: false,
     },
+    entitee: {
+      type: String,
+      required: false,
+    },
     creePar: {
         type: String,
         required: true,

@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div class="text-end mb-3">
     <button class="btn btn-primary" type="button" (click)="ajouterPersonne()">Ajouter personne</button>
+    <button class="btn btn-danger" type="button" (click)="supprimerPersonne()">Supprimer personne</button>
   </div>
   
   <fieldset class="personne-fieldset">
@@ -15,48 +16,53 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="nom">Nom :</label>
-              <input id="nom" class="form-control form-control-sm" [(ngModel)]="currentMember.nom" [readonly]="!modificationEnCours">
+              <input id="nom" class="form-control form-control-sm" [(ngModel)]="currentMember.nom" required [readonly]="!modificationEnCours">
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="prenom">Prénom :</label>
-              <input id="prenom" class="form-control form-control-sm" [(ngModel)]="currentMember.prenom" [readonly]="!modificationEnCours">
+              <input id="prenom" class="form-control form-control-sm" [(ngModel)]="currentMember.prenom" required [readonly]="!modificationEnCours">
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="ddn">Date de naissance :</label>
-              <input id="ddn" class="form-control form-control-sm" [(ngModel)]="currentMember.ddn" [readonly]="!modificationEnCours">
+              <input id="ddn" type="date" class="form-control form-control-sm" [(ngModel)]="currentMember.ddn" required [readonly]="!modificationEnCours">
             </div>
           </div>
-          <div class="col-12 col-md-6 col-lg-4">
+          <!-- <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
-              <label for="situation">Situation :</label>
-              <input id="situation" class="form-control form-control-sm" [(ngModel)]="currentMember.situation" [readonly]="!modificationEnCours">
+              <label for="situation">Pays Dublin :</label>
+              <select id="situation" class="form-control form-control-sm" [(ngModel)]="currentMember.paysDublin" [attr.disabled]="!modificationEnCours">
+                <option *ngFor="let option of paysDublin" [value]="option">{{ option }}</option>
+              </select>
             </div>
-          </div>
+          </div> -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="procedure">Procédure :</label>
-              <input id="procedure" class="form-control form-control-sm" [(ngModel)]="currentMember.procedure" [readonly]="!modificationEnCours">
+              <select id="procedure" class="form-select form-select-sm" [(ngModel)]="currentMember.procedure" [attr.disabled]="!modificationEnCours">
+                <option *ngFor="let option of procedures" [value]="option">{{ option }}</option>
+              </select>
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="telephone">Téléphone :</label>
-              <input id="telephone" class="form-control form-control-sm" [(ngModel)]="currentMember.telephone" [readonly]="!modificationEnCours">
+              <input id="telephone" type="tel" pattern="[0-9]{10}" class="form-control form-control-sm" [(ngModel)]="currentMember.telephone" [readonly]="!modificationEnCours">
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="nationalite">Nationalité :</label>
-              <input id="nationalite" class="form-control form-control-sm" [(ngModel)]="currentMember.nationalite" [readonly]="!modificationEnCours">
+              <select id="nationalite" class="form-select form-select-sm" [(ngModel)]="currentMember.nationalite" [attr.disabled]="!modificationEnCours">
+                <option *ngFor="let option of nationalites" [value]="option">{{ option }}</option>
+              </select>
             </div>
           </div>
         </div>
       </div>
-      
       
       <button class="btn nav-btn right" (click)="nextPersonne()" [disabled]="currentPersonneIndex === membresInput.length - 1">
         <span class="icon">&#9654;</span>

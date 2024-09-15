@@ -1,31 +1,37 @@
 <div class="container-fluid" *ngIf="familleInput">
   <div class="family-details">
     <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
-    <div class="btn-group">
-      <button class="btn btn-primary" *ngIf="!modificationEnCours" (click)="change()">Modifier</button>
+
+    <!-- Boutons flottants au bas de l'écran -->
+    <div class="btn-group floating-buttons">
       <button class="btn btn-success" *ngIf="modificationEnCours" (click)="saveOrUpdate(familleInput._id !== undefined)">Sauvegarder</button>
       <button class="btn btn-secondary" (click)="goBack()">Retour</button>
     </div>
-    <app-membre [membresInput]="membresFamille" [modificationEnCours]="modificationEnCours"></app-membre>
+
+    <!-- Bouton pour afficher/cacher app-membre -->
+    <button class="btn toggle-btn" (click)="toggleMembres()">
+      {{ showMembres ? 'Cacher les membres' : 'Afficher les membres' }}
+    </button>
+
+    <!-- Contenu collapsible -->
+    <div class="collapse-section" [ngClass]="{ 'collapsed': !showMembres }">
+      <app-membre [membresInput]="membresFamille" [modificationEnCours]="modificationEnCours"></app-membre>
+    </div>
+
     <div class="row details-row">
       <legend>Détails de la famille</legend>
       <div class="col-md-6">
         <div class="form-group">
           <label for="famille-composition">Composition :</label>
-          <input id="famille-composition" class="form-control" [(ngModel)]="familleInput.composition" placeholder="Composition"
+          <input id="famille-composition" class="form-control" [(ngModel)]="familleInput.composition"  required
             [disabled]="!modificationEnCours">
         </div>
         <div class="form-group">
           <label for="famille-commentaire">Commentaire :</label>
-          <input id="famille-commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" placeholder="Commentaire"
+          <input id="famille-commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" required
             [disabled]="!modificationEnCours">
         </div>
       </div>
-    </div>
-    <div class="btn-group">
-      <button class="btn btn-primary" *ngIf="!modificationEnCours" (click)="change()">Modifier</button>
-      <button class="btn btn-success" *ngIf="modificationEnCours" (click)="saveOrUpdate(familleInput._id !== undefined)">Sauvegarder</button>
-      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
     </div>
   </div>
 </div>

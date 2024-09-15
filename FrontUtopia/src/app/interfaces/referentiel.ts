@@ -4,6 +4,7 @@ export interface Referentiel {
     donnees?: string[]; 
     antenneId?: string; 
     nomAntenne?: string; 
+    entitee?:string;
     creePar?: string;
     dateCreation?: Date; 
     dateModification?: Date; 

@@ -21,8 +21,8 @@ module.exports = {
         Profil.collection.drop();
         Referentiel.collection.drop()
 
-        //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev)
-        //nom, userId,admin,famille,hebergeuse,benevole,adherente,mineur,hommeSeul,rapports,stock,chat
+        //Profils utilisateur (pole) => regroupe des droits utilisateurs pour un ou plusieurs Sections precedents (on peut en ajouter sans dev necessaires)
+        console.log("Profil..")
         const accesTotal = "carwd"
         await creationProfil(process.env.contexte_admin, userId, "Adminisatrateur general (acces complet à l'application)", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd", "carwd");
         await creationProfil("Astreinte", userId, "Astreinte: lien entre famille et HC", "", "crwd", "crwd", "r", "", "crwd", "", "crwd", "", "crwd", "crwd");
@@ -47,16 +47,16 @@ module.exports = {
         await creationAntenne("Lorient", userId);
         await creationAntenne("Autre", userId);
         await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
-        await creationAntenne("Toutes", userId); // Permet de voir toutes les antennes (TODO : a implementer)
 
-        await creationReferentiel("Pays", userId, pays, null,null)
-        await creationReferentiel("Langues", userId, langues, null,null)
-        await creationReferentiel("ProcedureFamille", userId, procedureFamille, process.env.contexte_famille, "Paris")
-        await creationReferentiel("PaysDublin", userId, paysDublin, null, null)
-        await creationReferentiel("CompositionFamille", userId, compositionFamille, process.env.contexte_famille, "Paris")
-        await creationReferentiel("VulnerabiliteFamille", userId, vulnerabiliteFamille, process.env.contexte_famille, "Paris")
-        await creationReferentiel("FamilleSource", userId, familleSource, process.env.contexte_famille, "Paris")
-        await creationReferentiel("LieuFamilleDodo", userId, lieuFamilleDodo, process.env.contexte_famille, "Paris")
+        console.log("Referentiel..")
+        await creationReferentiel("Pays", userId, pays, null,null);
+        await creationReferentiel("Langues", userId, langues, null,null);
+        await creationReferentiel("Procedure", userId, procedureFamille, process.env.contexte_famille, "Paris");
+        await creationReferentiel("PaysDublin", userId, paysDublin, null, null);
+        await creationReferentiel("Composition", userId, compositionFamille, process.env.contexte_famille, "Paris");
+        await creationReferentiel("Vulnerabilite", userId, vulnerabiliteFamille, process.env.contexte_famille, "Paris");
+        await creationReferentiel("Source", userId, familleSource, process.env.contexte_famille, "Paris");
+        await creationReferentiel("LieuDodo", userId, lieuFamilleDodo, process.env.contexte_famille, "Paris");
 
         // Fait de l'utilisteur un user admin
         console.log("Admin..")

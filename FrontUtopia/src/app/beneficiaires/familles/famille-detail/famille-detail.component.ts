@@ -17,6 +17,7 @@ export class FamilleDetailComponent implements OnInit {
   @Input() familleInput!: Famille;
   membresFamille: Membre[] = [];
   modificationEnCours: boolean = false;
+  showMembres: boolean = false;  // Par défaut, la section est cachée
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +35,10 @@ export class FamilleDetailComponent implements OnInit {
     }
   }
 
+  toggleMembres() {
+    this.showMembres = !this.showMembres;  // Bascule l'état d'affichage
+  }
+
   private initNouvelleFamille(): void {
     this.familleInput = { nom: "", beneficiairesId: [] };
     this.membresFamille.push({ nom: "" });
@@ -47,8 +52,6 @@ export class FamilleDetailComponent implements OnInit {
         this.loadMembres(famille.beneficiairesId);
       });
   }
-
-
 
   goBack(): void {
     if (this.modificationEnCours) {

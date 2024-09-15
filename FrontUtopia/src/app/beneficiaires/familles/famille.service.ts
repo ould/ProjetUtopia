@@ -91,15 +91,17 @@ export class FamilleService {
   saveOrUpdateMembres(membres: Membre[]): Observable<string[]> {
     console.log(membres)
     // Séparer les membres à mettre à jour et ceux à ajouter
-    const membresAUpdate = membres.filter((membre): membre is Membre => membre._id !== undefined);
+    const membresAUpdate = membres.filter((membre): membre is Membre => membre._id !== undefined && membre.nom !== "Suppression");
+    const membresASupprimer = membres.filter((membre): membre is Membre => membre._id !== undefined && membre.nom === "Suppression");
     const membresASauver = membres.filter((membre): membre is Membre => membre._id === undefined);
 
     // Création des Observables pour les POST et PUT
-    const saveRequests = membresASauver.map(membre => this.http.post<string>(`${this.membreFamilleUrl}`, membre));
-    const updateRequests = membresAUpdate.map(membre => this.http.put<string>(`${this.membreFamilleUrl}`, membre));
+    const saveRequests = membresASauver.map(membre => this.addMembre(membre));
+    const updateRequests = membresAUpdate.map(membre => this.updateMembre(membre));
+    const deleteRequests = membresASupprimer.map(membre => this.deleteMembre(membre._id || ""));
 
     // Combine les Observables avec forkJoin
-    return forkJoin([...saveRequests, ...updateRequests]).pipe(
+    return forkJoin([...saveRequests, ...updateRequests, ...deleteRequests]).pipe(
       map(responses => responses as string[]),  // Assume que toutes les réponses sont des IDs string
       catchError(this.logger.handleError<string[]>('saveOrUpdateMembres'))
     );
@@ -109,6 +111,13 @@ export class FamilleService {
     const url = `${this.membreFamilleUrl}/${id}`;
     return this.http.delete<string>(url, this.httpOptions).pipe(
       catchError(this.logger.handleError<string>('deleteMembre'))
+    );
+  }
+
+  getReferentielByNom(nom: string): Observable<string[]> {
+    const url = `${this.familleUrl}/getReferentielByNom/${nom}`;
+    return this.http.get<string[]>(url).pipe(
+      catchError(this.logger.handleError<string[]>(`referentiel not found ${nom}`))
     );
   }
 
