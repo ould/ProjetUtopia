@@ -39,7 +39,7 @@ export class ChatsComponent {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.chatService.searchChats(term)),
+      switchMap((term: string) => this.chatService.search(term)),
     );
   }
 
@@ -71,14 +71,14 @@ export class ChatsComponent {
 
   selectChat(indexChat?: string): void {
     if(indexChat)
-    this.chatService.getChat(indexChat).subscribe((response: Chat) => {
+    this.chatService.get(indexChat).subscribe((response: Chat) => {
       this.selectedChat = response;
     });;
   }
 
   creerChat(): void {
     if (this.newChat.nom) {
-      this.chatService.addChat(this.newChat).subscribe(chat => {
+      this.chatService.add(this.newChat).subscribe(chat => {
         //Sthis.newChat = { _id: '', nom: '', messages: [] };
         this.ngOnInit();
       });

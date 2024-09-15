@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Antenne } from 'src/app/interfaces/antenne';
+import { LoggerService } from '../logger/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,59 +19,50 @@ export class AntenneService {
   };
 
 
-  getAntenneById(id: string): Observable<Antenne>{
-    return this.http.get<Antenne>(this.antenneUrl + "/getById/" +id ).pipe()
+  getById(id: string): Observable<Antenne> {
+    return this.http.get<Antenne>(this.antenneUrl + "/getById/" + id).pipe(
+      catchError(this.logger.handleError<Antenne>('AntennegetById'))
+    );
   }
 
-  getAntenneByNom(nom: string): Observable<Antenne>{
-    return this.http.get<Antenne>(this.antenneUrl + "/getByNom/" +nom ).pipe()
+  getByNom(nom: string): Observable<Antenne> {
+    return this.http.get<Antenne>(this.antenneUrl + "/getByNom/" + nom).pipe(
+      catchError(this.logger.handleError<Antenne>('getAntenneByNom'))
+    );
   }
 
-  getAll(): Observable<Antenne[]>{
-    return this.http.get<Antenne[]>(this.antenneUrl + "/getAll")
+  getAll(): Observable<Antenne[]> {
+    return this.http.get<Antenne[]>(this.antenneUrl + "/getAll").pipe(
+      catchError(this.logger.handleError<Antenne[]>('getAllAntenne'))
+    );
   }
 
-  getAllPublic(): Observable<Antenne[]>{
-    return this.http.get<Antenne[]>(this.publicAntenneUrl + "/getAll")
+  getAllPublic(): Observable<Antenne[]> {
+    return this.http.get<Antenne[]>(this.publicAntenneUrl + "/getAll").pipe(
+      catchError(this.logger.handleError<Antenne[]>('getAllPublicAntenne'))
+    );
   }
 
-  addAntenne(utilisateur: Antenne): Observable<Antenne> {
+  add(utilisateur: Antenne): Observable<Antenne> {
     return this.http.post<Antenne>(this.adminAntenneUrl, utilisateur, this.httpOptions).pipe(
-      catchError(this.handleError<any>('addutilisateur'))
+      catchError(this.logger.handleError<Antenne>('addAntenne'))
     );
   }
 
-  updateAntenne(utilisateur:Antenne): Observable<Antenne> {
+  update(utilisateur: Antenne): Observable<Antenne> {
     return this.http.put<Antenne>(this.adminAntenneUrl, utilisateur, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateAntenne'))
+      catchError(this.logger.handleError<any>('updateAntenne'))
     );
   }
 
-  deleteAntenne(id: string): Observable<Antenne> {
+  delete(id: string): Observable<Antenne> {
     const url = `${this.adminAntenneUrl}/${id}`;
     return this.http.delete<Antenne>(url, this.httpOptions).pipe(
-      catchError(this.handleError<any>('deleteAntenne'))
+      catchError(this.logger.handleError<any>('deleteAntenne'))
     );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for uti consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-
-  private log(message: string) {
-    console.log(message);
-  }
-  
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private logger: LoggerService) { }
 }

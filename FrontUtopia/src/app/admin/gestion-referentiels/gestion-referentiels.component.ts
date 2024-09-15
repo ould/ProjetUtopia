@@ -62,7 +62,7 @@ export class GestionReferentielsComponent implements OnInit {
 
   async getNomAntenneByID(id: string|undefined) {
     if (!id?.trim()) return "Global";
-    const requete$ = this.antenneService.getAntenneById(id).pipe();
+    const requete$ = this.antenneService.getById(id).pipe();
     const antenne = await firstValueFrom(requete$);
     return antenne?.nom || "Global?"
   }

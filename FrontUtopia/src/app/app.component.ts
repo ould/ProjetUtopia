@@ -8,7 +8,7 @@ import { AuthService } from './auth/auth.service';
   
 })
 export class AppComponent {
-  title = 'FrontUtopia';
+  title = 'Utopia56 App';
   active = 1;
 
   constructor(public AuthService: AuthService) {}

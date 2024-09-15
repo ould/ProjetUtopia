@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'FrontUtopia'`, () => {
+  it(`should have as title 'Utopia56 App'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('FrontUtopia');
+    expect(app.title).toEqual('Utopia56 App');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('FrontUtopia app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('Utopia56 App is running!');
   });
 });

@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Antenne } from './interfaces/antenne';
-import { UtilisateurService } from './autres-services/utilisateur/utilisateur.service';
+import { Antenne } from '../app/interfaces/antenne';
+import { UtilisateurService } from '../app/autres-services/utilisateur/utilisateur.service';
 
 @Injectable({
   providedIn: 'root',

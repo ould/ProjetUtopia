@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { AuthInterceptorService } from './autres-services/auth-interceptor/auth-interceptor.service';
 import { AppComponent } from './app.component';
 import { ComptesComponent } from './comptes/comptes.component';
 import { ChatsComponent } from './chats/chats.component';
