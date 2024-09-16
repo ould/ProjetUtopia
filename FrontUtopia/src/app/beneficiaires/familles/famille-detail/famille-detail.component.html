@@ -1,37 +1,52 @@
 <div class="container-fluid" *ngIf="familleInput">
-  <div class="family-details">
-    <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
+  <form [formGroup]="familleForm" (ngSubmit)="saveOrUpdate(familleInput._id !== undefined)">
+    <div class="family-details">
+      <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
 
-    <!-- Boutons flottants au bas de l'écran -->
-    <div class="btn-group floating-buttons">
-      <button class="btn btn-success" *ngIf="modificationEnCours" (click)="saveOrUpdate(familleInput._id !== undefined)">Sauvegarder</button>
-      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
-    </div>
+      <!-- Bandeau rouge pour les messages d'erreur -->
+      <div *ngIf="formulaireInvalide" class="error-banner">
+        Veuillez corriger les champs en rouge avant de continuer.
+      </div>
 
-    <!-- Bouton pour afficher/cacher app-membre -->
-    <button class="btn toggle-btn" (click)="toggleMembres()">
-      {{ showMembres ? 'Cacher les membres' : 'Afficher les membres' }}
-    </button>
+      <!-- Boutons flottants au bas de l'écran -->
+      <div class="btn-group floating-buttons">
+        <button class="btn btn-success" *ngIf="modificationEnCours" type="submit">Sauvegarder</button>
+        <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+      </div>
 
-    <!-- Contenu collapsible -->
-    <div class="collapse-section" [ngClass]="{ 'collapsed': !showMembres }">
-      <app-membre [membresInput]="membresFamille" [modificationEnCours]="modificationEnCours"></app-membre>
-    </div>
+      <!-- Bouton pour afficher/cacher app-membre -->
+      <button class="btn toggle-btn" (click)="basculerAffichageMembres()">
+        {{ showMembres ? 'Cacher les membres' : 'Afficher les membres' }}
+      </button>
 
-    <div class="row details-row">
-      <legend>Détails de la famille</legend>
-      <div class="col-md-6">
+      <!-- Contenu collapsible -->
+      <div class="collapse-section" [ngClass]="{ 'collapsed': !showMembres }">
+        <app-membre [familleForm]="this.familleForm" [membresInput]="membresFamille"
+          [modificationEnCours]="modificationEnCours"></app-membre>
+      </div>
+
+      <div class="row details-row">
+        <legend>Détails de la famille</legend>
         <div class="form-group">
-          <label for="famille-composition">Composition :</label>
-          <input id="famille-composition" class="form-control" [(ngModel)]="familleInput.composition"  required
-            [disabled]="!modificationEnCours">
+          <label for="composition">Composition :</label>
+          <input id="composition" formControlName="composition" class="form-control" />
+          <div *ngIf="familleForm.get('composition')?.invalid && familleForm.get('composition')?.touched"
+            class="text-danger">
+            Composition est obligatoire.
+          </div>
         </div>
-        <div class="form-group">
+
+        <div class="form-group"
+          [ngClass]="{ 'has-error': familleForm.get('commentaire')?.invalid && familleForm.get('commentaire')?.touched }">
           <label for="famille-commentaire">Commentaire :</label>
-          <input id="famille-commentaire" class="form-control" [(ngModel)]="familleInput.commentaire" required
+          <input id="famille-commentaire" class="form-control" formControlName="commentaire"
             [disabled]="!modificationEnCours">
+          <div *ngIf="familleForm.get('commentaire')?.invalid && familleForm.get('commentaire')?.touched"
+            class="text-danger">
+            Commentaire est requis.
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

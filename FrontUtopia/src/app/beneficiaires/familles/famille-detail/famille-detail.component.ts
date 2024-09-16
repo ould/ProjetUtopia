@@ -5,26 +5,44 @@ import { DatePipe, formatDate, Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
 import { Membre } from '../models/membre';
 import { forkJoin, switchMap } from 'rxjs';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-famille-detail',
   templateUrl: './famille-detail.component.html',
   styleUrls: ['./famille-detail.component.css'],
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class FamilleDetailComponent implements OnInit {
 
   @Input() familleInput!: Famille;
   membresFamille: Membre[] = [];
   modificationEnCours: boolean = false;
-  showMembres: boolean = false;  // Par défaut, la section est cachée
+  showMembres: boolean = false;  // Par défaut, la section membres est cachée
+  familleForm: FormGroup;
+  formulaireInvalide: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private familleService: FamilleService,
     private location: Location,
-    private datePipe: DatePipe
-  ) { }
+    private datePipe: DatePipe,
+    private fb: FormBuilder
+  ) {
+    this.familleForm = this.fb.group({
+      nom: [''],
+      composition: ['', Validators.required],
+      commentaire: ['', Validators.required]
+    });
+  }
+
+  InitialiseFromWithData(): void {
+    this.familleForm.patchValue({
+      nom: this.familleInput.nom,
+      composition: this.familleInput.composition,
+      commentaire: this.familleInput.commentaire
+    });
+  }
 
   ngOnInit(): void {
     const idFamille = this.route.snapshot.paramMap.get('id');
@@ -35,13 +53,9 @@ export class FamilleDetailComponent implements OnInit {
     }
   }
 
-  toggleMembres() {
-    this.showMembres = !this.showMembres;  // Bascule l'état d'affichage
-  }
-
   private initNouvelleFamille(): void {
     this.familleInput = { nom: "", beneficiairesId: [] };
-    this.membresFamille.push({ nom: "" });
+    this.membresFamille.push({ nom: '' });
     this.modificationEnCours = true;
   }
 
@@ -49,8 +63,13 @@ export class FamilleDetailComponent implements OnInit {
     this.familleService.getFamille(idFamille)
       .subscribe(famille => {
         this.familleInput = famille;
+        this.InitialiseFromWithData();
         this.loadMembres(famille.beneficiairesId);
       });
+  }
+
+  basculerAffichageMembres() {
+    this.showMembres = !this.showMembres;  // Bascule l'état d'affichage
   }
 
   goBack(): void {
@@ -64,23 +83,26 @@ export class FamilleDetailComponent implements OnInit {
   }
 
   saveOrUpdate(isUpdate: boolean): void {
-    if (!this.verificationCoherence()) return;
-  
+    if (this.familleForm.invalid) {
+      this.formulaireInvalide = true;
+      return;
+    }
+
     // Enregistrer ou mettre à jour les membres
     this.familleService.saveOrUpdateMembres(this.membresFamille)
       .subscribe(ids => {
         if (ids) {
           // Filtrer les valeurs undefined
           const validIds = ids.filter((id): id is string => id !== undefined);
-  
+
           this.familleInput.beneficiairesId = validIds;
-          this.familleInput.nom = this.membresFamille[0].nom+ " - " + this.datePipe.transform(new Date(), 'dd/MM/yyyy')?.substring(0,5);;
-  
+          this.familleInput.nom = this.membresFamille[0].nom + " - " + this.datePipe.transform(new Date(), 'dd/MM/yyyy')?.substring(0, 5);;
+
           // Déterminer l'opération sur la famille
           const familleOperation = isUpdate ?
             this.familleService.updateFamille(this.familleInput) :
             this.familleService.addFamille(this.familleInput);
-  
+
           familleOperation.subscribe(familleId => {
             if (!isUpdate) {
               this.familleInput._id = familleId;
@@ -99,7 +121,7 @@ export class FamilleDetailComponent implements OnInit {
       });
   }
 
-  private updateMembresParentId(membresIds:string[]): void {
+  private updateMembresParentId(membresIds: string[]): void {
     this.familleService.getMembres(membresIds).pipe(
       switchMap(membres => {
         this.membresFamille = membres;
@@ -114,17 +136,5 @@ export class FamilleDetailComponent implements OnInit {
     ).subscribe(() => {
       // Optionnel : Actions après la mise à jour de tous les membres
     });
-  }
-
-  change(): void {
-    this.modificationEnCours = true;
-  }
-
-  verificationCoherence(): boolean {
-    if (!this.membresFamille.length || !this.membresFamille[0].nom) {
-      alert("Le nom du premier membre est requis.");
-      return false;
-    }
-    return true;
   }
 }

@@ -10,39 +10,35 @@
         <span class="icon">&#9664;</span>
       </button>
       
-      <div class="personne-details" *ngIf="currentMember">
+      <div class="personne-details" *ngIf="currentMember" [formGroup]="membreForm">
         <h3 class="text-center mb-3">{{ currentMember.nom }} {{ currentMember.prenom }}</h3>
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="form-group col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="nom">Nom :</label>
-              <input id="nom" class="form-control form-control-sm" [(ngModel)]="currentMember.nom" required [readonly]="!modificationEnCours">
+              <input id="nom" formControlName="nom" class="form-control form-control-sm" [readonly]="!modificationEnCours"/>
+              <div *ngIf="membreForm.get('nom')?.invalid && membreForm.get('nom')?.touched"
+              class="text-danger">
+              Nom est obligatoire.
             </div>
+          </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="prenom">Prénom :</label>
-              <input id="prenom" class="form-control form-control-sm" [(ngModel)]="currentMember.prenom" required [readonly]="!modificationEnCours">
+              <input id="prenom" class="form-control form-control-sm" formControlName="prenom" [(ngModel)]="currentMember.prenom" [readonly]="!modificationEnCours">
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="ddn">Date de naissance :</label>
-              <input id="ddn" type="date" class="form-control form-control-sm" [(ngModel)]="currentMember.ddn" required [readonly]="!modificationEnCours">
+              <input id="ddn" type="date" class="form-control form-control-sm" formControlName="ddn" [(ngModel)]="currentMember.ddn" [readonly]="!modificationEnCours">
             </div>
           </div>
-          <!-- <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <label for="situation">Pays Dublin :</label>
-              <select id="situation" class="form-control form-control-sm" [(ngModel)]="currentMember.paysDublin" [attr.disabled]="!modificationEnCours">
-                <option *ngFor="let option of paysDublin" [value]="option">{{ option }}</option>
-              </select>
-            </div>
-          </div> -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="procedure">Procédure :</label>
-              <select id="procedure" class="form-select form-select-sm" [(ngModel)]="currentMember.procedure" [attr.disabled]="!modificationEnCours">
+              <select id="procedure" class="form-select form-select-sm" formControlName="procedure" [(ngModel)]="currentMember.procedure" [attr.disabled]="!modificationEnCours">
                 <option *ngFor="let option of procedures" [value]="option">{{ option }}</option>
               </select>
             </div>
@@ -50,13 +46,13 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="telephone">Téléphone :</label>
-              <input id="telephone" type="tel" pattern="[0-9]{10}" class="form-control form-control-sm" [(ngModel)]="currentMember.telephone" [readonly]="!modificationEnCours">
+              <input id="telephone" type="tel" pattern="[0-9]{10}" class="form-control form-control-sm" formControlName="telephone" [(ngModel)]="currentMember.telephone" [readonly]="!modificationEnCours">
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="form-group">
               <label for="nationalite">Nationalité :</label>
-              <select id="nationalite" class="form-select form-select-sm" [(ngModel)]="currentMember.nationalite" [attr.disabled]="!modificationEnCours">
+              <select id="nationalite" class="form-select form-select-sm"  formControlName="nationalite" [(ngModel)]="currentMember.nationalite" [attr.disabled]="!modificationEnCours">
                 <option *ngFor="let option of nationalites" [value]="option">{{ option }}</option>
               </select>
             </div>
