@@ -1,7 +1,6 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Membre } from '../models/membre';
 import { FamilleService } from '../famille.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-membre',
@@ -10,9 +9,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class MembreComponent implements OnInit {
   @Input() membresInput: Membre[] = [];
-  @Input() modificationEnCours: boolean = true;
-  @Input() familleForm!: FormGroup;
-  membreForm:FormGroup;
+  @Input() modificationEnCours: boolean =false;
+  @Output() modificationEnCoursChange = new EventEmitter<boolean>();
 
   currentPersonneIndex: number = 0;
   situations!: string[];
@@ -31,39 +29,25 @@ export class MembreComponent implements OnInit {
         this.nationalites = data
       }
     )
-    this.loadCurrentMembre();
-    this.familleForm.addControl("membre", this.membreForm.controls)
   }
 
   constructor(
-    private fb: FormBuilder,
     private familleService: FamilleService
-  ) {
-    this.membreForm = this.fb.group({
-        nom: ['', Validators.required],
-        prenom: ['', Validators.required],
-        ddn: ['', Validators.required],
-        procedure: [''],
-        telephone: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-        nationalite: ['']
-      });
+  ) { }
+  
+  changementChamp(): void {  
+      this.modificationEnCours = true;
+      this.modificationEnCoursChange.emit(true); 
   }
 
   get currentMember() {
     return this.membresInput[this.currentPersonneIndex];
   }
 
-  loadCurrentMembre(): void {
-    if (this.membresInput[this.currentPersonneIndex]) {
-      //this.membresForm.patchValue(this.membresInput[this.currentPersonneIndex]);
-    }
-  }
-
   ajouterPersonne() {
     this.membresInput.push({ nom: '' });
     this.currentPersonneIndex
       = this.membresInput.length - 1;
-    this.loadCurrentMembre();
   }
 
   supprimerPersonne() {
@@ -81,7 +65,6 @@ export class MembreComponent implements OnInit {
       if (this.membresInput.length === 0) {
         this.currentPersonneIndex = 0;
       }
-      this.loadCurrentMembre();
     }
   }
 

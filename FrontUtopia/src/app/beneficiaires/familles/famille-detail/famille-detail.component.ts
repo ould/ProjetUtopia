@@ -5,7 +5,6 @@ import { DatePipe, formatDate, Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
 import { Membre } from '../models/membre';
 import { forkJoin, switchMap } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-famille-detail',
@@ -19,30 +18,14 @@ export class FamilleDetailComponent implements OnInit {
   membresFamille: Membre[] = [];
   modificationEnCours: boolean = false;
   showMembres: boolean = false;  // Par défaut, la section membres est cachée
-  familleForm: FormGroup;
   formulaireInvalide: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private familleService: FamilleService,
     private location: Location,
-    private datePipe: DatePipe,
-    private fb: FormBuilder
-  ) {
-    this.familleForm = this.fb.group({
-      nom: [''],
-      composition: ['', Validators.required],
-      commentaire: ['', Validators.required]
-    });
-  }
-
-  InitialiseFromWithData(): void {
-    this.familleForm.patchValue({
-      nom: this.familleInput.nom,
-      composition: this.familleInput.composition,
-      commentaire: this.familleInput.commentaire
-    });
-  }
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit(): void {
     const idFamille = this.route.snapshot.paramMap.get('id');
@@ -56,20 +39,23 @@ export class FamilleDetailComponent implements OnInit {
   private initNouvelleFamille(): void {
     this.familleInput = { nom: "", beneficiairesId: [] };
     this.membresFamille.push({ nom: '' });
-    this.modificationEnCours = true;
   }
 
   private getFamille(idFamille: string): void {
     this.familleService.getFamille(idFamille)
       .subscribe(famille => {
         this.familleInput = famille;
-        this.InitialiseFromWithData();
         this.loadMembres(famille.beneficiairesId);
       });
   }
 
   basculerAffichageMembres() {
     this.showMembres = !this.showMembres;  // Bascule l'état d'affichage
+  }
+
+  // Méthode pour vérifier si les données ont été modifiées
+  changementChamp() {
+    this.modificationEnCours = true
   }
 
   goBack(): void {
@@ -83,11 +69,6 @@ export class FamilleDetailComponent implements OnInit {
   }
 
   saveOrUpdate(isUpdate: boolean): void {
-    if (this.familleForm.invalid) {
-      this.formulaireInvalide = true;
-      return;
-    }
-
     // Enregistrer ou mettre à jour les membres
     this.familleService.saveOrUpdateMembres(this.membresFamille)
       .subscribe(ids => {

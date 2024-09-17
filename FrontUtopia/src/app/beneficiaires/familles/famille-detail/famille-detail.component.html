@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="familleInput">
-  <form [formGroup]="familleForm" (ngSubmit)="saveOrUpdate(familleInput._id !== undefined)">
+  <form (ngSubmit)="saveOrUpdate(familleInput._id !== undefined)" #familleForm="ngForm">
     <div class="family-details">
       <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
 
@@ -10,40 +10,56 @@
 
       <!-- Boutons flottants au bas de l'écran -->
       <div class="btn-group floating-buttons">
-        <button class="btn btn-success" *ngIf="modificationEnCours" type="submit">Sauvegarder</button>
-        <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+        <button class="btn btn-success" *ngIf="this.modificationEnCours" type="submit" [disabled]="familleForm.invalid">
+          Sauvegarder
+        </button>
+        <button class="btn btn-secondary" type="button" (click)="goBack()">Retour</button>
       </div>
 
       <!-- Bouton pour afficher/cacher app-membre -->
-      <button class="btn toggle-btn" (click)="basculerAffichageMembres()">
+      <a class="btn toggle-btn" (click)="basculerAffichageMembres()">
         {{ showMembres ? 'Cacher les membres' : 'Afficher les membres' }}
-      </button>
+      </a>
 
       <!-- Contenu collapsible -->
       <div class="collapse-section" [ngClass]="{ 'collapsed': !showMembres }">
-        <app-membre [familleForm]="this.familleForm" [membresInput]="membresFamille"
-          [modificationEnCours]="modificationEnCours"></app-membre>
+        <app-membre [membresInput]="membresFamille" [(modificationEnCours)]="modificationEnCours"></app-membre>
       </div>
 
       <div class="row details-row">
         <legend>Détails de la famille</legend>
+
+        <!-- Composition -->
         <div class="form-group">
           <label for="composition">Composition :</label>
-          <input id="composition" formControlName="composition" class="form-control" />
-          <div *ngIf="familleForm.get('composition')?.invalid && familleForm.get('composition')?.touched"
-            class="text-danger">
-            Composition est obligatoire.
+          <input 
+            id="composition" 
+            name="composition"
+            class="form-control"
+            [(ngModel)]="familleInput.composition" 
+            required 
+            minlength="3" 
+            #compositionField="ngModel" 
+          />
+          <div *ngIf="compositionField.invalid && compositionField.touched" class="text-danger">
+            <div *ngIf="compositionField.errors?.['required']">Composition est obligatoire.</div>
+            <div *ngIf="compositionField.errors?.['minlength']">La composition doit comporter au moins 3 caractères.</div>
           </div>
         </div>
 
-        <div class="form-group"
-          [ngClass]="{ 'has-error': familleForm.get('commentaire')?.invalid && familleForm.get('commentaire')?.touched }">
+        <!-- Commentaire -->
+        <div class="form-group" [ngClass]="{ 'has-error': commentaireField.invalid && commentaireField.touched }">
           <label for="famille-commentaire">Commentaire :</label>
-          <input id="famille-commentaire" class="form-control" formControlName="commentaire"
-            [disabled]="!modificationEnCours">
-          <div *ngIf="familleForm.get('commentaire')?.invalid && familleForm.get('commentaire')?.touched"
-            class="text-danger">
-            Commentaire est requis.
+          <input 
+            id="famille-commentaire" 
+            name="commentaire"
+            class="form-control" 
+            [(ngModel)]="familleInput.commentaire" 
+            required 
+            #commentaireField="ngModel" 
+          />
+          <div *ngIf="commentaireField.invalid && commentaireField.touched" class="text-danger">
+            <div *ngIf="commentaireField.errors?.['required']">Commentaire est requis.</div>
           </div>
         </div>
       </div>
