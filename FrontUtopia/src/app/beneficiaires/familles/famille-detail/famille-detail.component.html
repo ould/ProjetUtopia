@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="familleInput">
-  <form (ngSubmit)="saveOrUpdate(familleInput._id !== undefined)" #familleForm="ngForm">
+  <form (ngSubmit)="saveOrUpdate(familleForm)" #familleForm="ngForm">
     <div class="family-details">
       <h2 class="family-title">{{ familleInput.nom | uppercase }}</h2>
 
@@ -37,6 +37,7 @@
             name="composition"
             class="form-control"
             [(ngModel)]="familleInput.composition" 
+            (ngModelChange)="changementChamp()"
             required 
             minlength="3" 
             #compositionField="ngModel" 
@@ -54,13 +55,10 @@
             id="famille-commentaire" 
             name="commentaire"
             class="form-control" 
-            [(ngModel)]="familleInput.commentaire" 
-            required 
+            [(ngModel)]="familleInput.commentaire"
+            (ngModelChange)="changementChamp()"
             #commentaireField="ngModel" 
           />
-          <div *ngIf="commentaireField.invalid && commentaireField.touched" class="text-danger">
-            <div *ngIf="commentaireField.errors?.['required']">Commentaire est requis.</div>
-          </div>
         </div>
       </div>
     </div>

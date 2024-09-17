@@ -30,7 +30,6 @@ module.exports = {
 
   update: async (req, res, next) => {
     try {
-      console.log("eeee")
       const beneficaireRequete = await beneficiaireSchema.validateAsync(req.body, { allowUnknown: true });
       const utilisateurReferent = await UserController.getCurrentUser(req, res, next);
 

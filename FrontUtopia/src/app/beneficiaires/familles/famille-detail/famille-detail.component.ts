@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Famille } from '../models/famille';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, formatDate, Location } from '@angular/common';
 import { FamilleService } from '../famille.service';
 import { Membre } from '../models/membre';
 import { forkJoin, switchMap } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-famille-detail',
@@ -19,9 +20,11 @@ export class FamilleDetailComponent implements OnInit {
   modificationEnCours: boolean = false;
   showMembres: boolean = false;  // Par défaut, la section membres est cachée
   formulaireInvalide: boolean = false;
+  isUpdate: boolean = this.route.snapshot.paramMap.get('id') !== null;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private familleService: FamilleService,
     private location: Location,
     private datePipe: DatePipe
@@ -68,31 +71,37 @@ export class FamilleDetailComponent implements OnInit {
     }
   }
 
-  saveOrUpdate(isUpdate: boolean): void {
-    // Enregistrer ou mettre à jour les membres
-    this.familleService.saveOrUpdateMembres(this.membresFamille)
-      .subscribe(ids => {
-        if (ids) {
-          // Filtrer les valeurs undefined
-          const validIds = ids.filter((id): id is string => id !== undefined);
+  saveOrUpdate(familleForm: NgForm): void {
+    if (familleForm.invalid) {
+      return;
+    }
+    else {
+      // Enregistrer ou mettre à jour les membres
+      this.familleService.saveOrUpdateMembres(this.membresFamille)
+        .subscribe(ids => {
+          if (ids) {
+            // Filtrer les valeurs undefined
+            const validIds = ids.filter((id): id is string => id !== undefined);
 
-          this.familleInput.beneficiairesId = validIds;
-          this.familleInput.nom = this.membresFamille[0].nom + " - " + this.datePipe.transform(new Date(), 'dd/MM/yyyy')?.substring(0, 5);;
+            this.familleInput.beneficiairesId = validIds;
+            this.familleInput.nom = this.membresFamille[0].nom + " - " + this.datePipe.transform(new Date(), 'dd/MM/yyyy')?.substring(0, 5);;
 
-          // Déterminer l'opération sur la famille
-          const familleOperation = isUpdate ?
-            this.familleService.updateFamille(this.familleInput) :
-            this.familleService.addFamille(this.familleInput);
+            // Déterminer l'opération sur la famille
+            const familleOperation = this.isUpdate ?
+              this.familleService.updateFamille(this.familleInput) :
+              this.familleService.addFamille(this.familleInput);
 
-          familleOperation.subscribe(familleId => {
-            if (!isUpdate) {
-              this.familleInput._id = familleId;
-            }
-            this.updateMembresParentId(ids);
-            this.modificationEnCours = false; // Fin des modifications
-          });
-        }
-      });
+            familleOperation.subscribe(familleId => {
+              if (!this.isUpdate) {
+                this.familleInput._id = familleId;
+              }
+              this.updateMembresParentId(ids);
+              this.modificationEnCours = false; // Fin des modifications
+              this.router.navigate(['/detailFamille/'+ this.familleInput._id])
+            });
+          }
+        });
+    }
   }
 
   private loadMembres(membreIds: string[]): void {

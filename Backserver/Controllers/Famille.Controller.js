@@ -28,9 +28,8 @@ module.exports = {
       familleASauver.creePar = userReferent._id;
       const nouvelleFamille = new Famille(familleASauver);
       const savedFamille = await nouvelleFamille.save();
-      const savedFamilleId = savedFamille._id;
 
-      res.send(savedFamilleId)
+      res.send(savedFamille._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)

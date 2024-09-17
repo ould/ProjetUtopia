@@ -1,11 +1,13 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Membre } from '../models/membre';
 import { FamilleService } from '../famille.service';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-membre',
   templateUrl: './membre.component.html',
-  styleUrls: ['./membre.component.css']
+  styleUrls: ['./membre.component.css'],
+  viewProviders: [{provide: ControlContainer, useExisting: NgForm}]
 })
 export class MembreComponent implements OnInit {
   @Input() membresInput: Membre[] = [];

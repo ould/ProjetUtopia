@@ -65,12 +65,8 @@
                 class="form-control form-control-sm"
                 [(ngModel)]="currentMember.ddn"
                 (ngModelChange)="changementChamp()"
-                required
                 #ddnField="ngModel"
               />
-              <div *ngIf="ddnField.invalid && ddnField.touched" class="text-danger">
-                <div *ngIf="ddnField.errors?.['required']">La date de naissance est requise.</div>
-              </div>
             </div>
           </div>
 
@@ -84,14 +80,10 @@
                 class="form-select form-select-sm"
                 [(ngModel)]="currentMember.procedure"
                 (ngModelChange)="changementChamp()"
-                required
                 #procedureField="ngModel"
               >
                 <option *ngFor="let option of procedures" [value]="option">{{ option }}</option>
               </select>
-              <div *ngIf="procedureField.invalid && procedureField.touched" class="text-danger">
-                <div *ngIf="procedureField.errors?.['required']">La procédure est requise.</div>
-              </div>
             </div>
           </div>
 
@@ -107,11 +99,9 @@
                 class="form-control form-control-sm"
                 [(ngModel)]="currentMember.telephone"
                 (ngModelChange)="changementChamp()"
-                required
                 #telephoneField="ngModel"
               />
               <div *ngIf="telephoneField.invalid && telephoneField.touched" class="text-danger">
-                <div *ngIf="telephoneField.errors?.['required']">Le téléphone est requis.</div>
                 <div *ngIf="telephoneField.errors?.['pattern']">Le numéro de téléphone doit comporter 10 chiffres.</div>
               </div>
             </div>
@@ -127,14 +117,10 @@
                 class="form-select form-select-sm"
                 [(ngModel)]="currentMember.nationalite"
                 (ngModelChange)="changementChamp()"
-                required
                 #nationaliteField="ngModel"
               >
                 <option *ngFor="let option of nationalites" [value]="option">{{ option }}</option>
               </select>
-              <div *ngIf="nationaliteField.invalid && nationaliteField.touched" class="text-danger">
-                <div *ngIf="nationaliteField.errors?.['required']">La nationalité est requise.</div>
-              </div>
             </div>
           </div>
 

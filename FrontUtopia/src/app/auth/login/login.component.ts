@@ -34,7 +34,6 @@ export class LoginComponent {
           this.authService.login(val)
               .subscribe(
                   result => {
-                      console.log(result + " is logged in");
                       window.location.href = '/'+originUrl
                   }
               );

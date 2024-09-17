@@ -89,7 +89,6 @@ export class FamilleService {
   }
 
   saveOrUpdateMembres(membres: Membre[]): Observable<string[]> {
-    console.log(membres)
     // Séparer les membres à mettre à jour et ceux à ajouter
     const membresAUpdate = membres.filter((membre): membre is Membre => membre._id !== undefined && membre.nom !== "Suppression");
     const membresASupprimer = membres.filter((membre): membre is Membre => membre._id !== undefined && membre.nom === "Suppression");
