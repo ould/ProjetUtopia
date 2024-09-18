@@ -4,7 +4,7 @@ export interface Membre {
     nom: string;
     prenom?: string;
     telephone?: string;
-    ddn?: Date;
+    ddn?: String;
     nationalite?: string;
     situation?: string;
     procedure?: string;

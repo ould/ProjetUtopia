@@ -39,7 +39,8 @@ module.exports = {
         throw createError.NotFound(`beneficaiire not found`);
 
       beneficaireRequete.modifiePar = utilisateurReferent._id
-
+      beneficaireRequete.dateModification = Date.now();
+      
       const updatedBeneficiaire = await Beneficiaire.findOneAndUpdate(filter, beneficaireRequete, {
         returnOriginal: false
       });

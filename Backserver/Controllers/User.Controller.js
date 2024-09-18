@@ -43,6 +43,7 @@ module.exports = {
             if (!utilisateurExistant)  throw createError.NotFound(`${utilisateurRequete._id} not found`);
             
             utilisateurRequete.modifiePar = req.payload.userId
+            utilisateurRequete.dateModification = Date.now();
 
             const filter = { _id: utilisateurRequete._id };
             const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {

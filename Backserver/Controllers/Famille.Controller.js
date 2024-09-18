@@ -47,6 +47,7 @@ module.exports = {
         throw createError.NotFound(`${familleRequete.id} not found`);
 
       familleRequete.modifiePar = req.payload.userId
+      familleRequete.dateModification = Date.now();
 
       const updatedFamille = await Famille.findOneAndUpdate(filter, familleRequete, {
         returnOriginal: false

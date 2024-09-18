@@ -47,7 +47,7 @@ const FamilleSchema = new Schema({
 FamilleSchema.pre('save', async function (next) {
   try {
     if (this.isNew) {
-      this.dateCreation = Date.now()
+      this.dateCreation = Date.now();
     }
     next()
   } catch (error) {
@@ -57,7 +57,16 @@ FamilleSchema.pre('save', async function (next) {
 
 FamilleSchema.pre('updateOne', async function (next) {
   try {
-    this.dateModification = Date.now()
+    this.dateModification = Date.now();
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
+FamilleSchema.pre('findOneAndUpdate', async function (next) {
+  try {
+    this.dateModification = Date.now();
     next()
   } catch (error) {
     next(error)

@@ -69,7 +69,7 @@ const beneficiaireSchema = Joi.object({
   
   prenom: Joi.string().optional(),
   nationalite: Joi.string().optional(),
-  ddn: Joi.date().optional(),
+  ddn: Joi.string().optional(),
   situation: Joi.string().optional(),
   procedure: Joi.string().optional(),
   email: Joi.string().email().lowercase().optional(),

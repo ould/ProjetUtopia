@@ -31,6 +31,8 @@ module.exports = {
                 throw createError.NotFound(`${nouveauProfil.nom} not found`);
 
             nouveauProfil.modifiePar = req.payload.userId;
+            nouveauProfil.dateModification = Date.now();
+            
             const filter = { nom: nouveauProfil.nom };
             const updatedProfil = await Profil.findOneAndUpdate(filter, nouveauProfil, {
                 returnOriginal: false

@@ -87,6 +87,7 @@ module.exports = {
                 throw createError.NotFound(`${referentielRequete.nom} not found`);
 
             referentielRequete.modifiePar = req.payload.userId
+            referentielRequete.dateModification = Date.now();
             const updatedRef = await Referentiel.findOneAndUpdate(filtre, referentielRequete, {
                 returnOriginal: false
             });
