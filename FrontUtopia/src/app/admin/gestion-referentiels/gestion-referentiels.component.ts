@@ -33,6 +33,7 @@ export class GestionReferentielsComponent implements OnInit {
       // Création d'un tableau de promesses pour chaque nom d'antenne
       const promises = this.referentiels.map(async (referentiel) => {
         referentiel.nomAntenne = await this.getNomAntenneByID(referentiel.antenneId);
+        referentiel.entitee = referentiel.entitee ?? "Global"
       });
   
       // Attente de toutes les promesses

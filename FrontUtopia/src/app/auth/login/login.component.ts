@@ -28,12 +28,12 @@ export class LoginComponent {
 
       if (val.email && val.password) {
         let originUrl:string = this.route.snapshot.queryParams['originUrl']
-        if (originUrl?.length < 1) {
+        if (originUrl?.length < 1 || originUrl?.includes("logout") ) {
             originUrl = "accueil"
         }
           this.authService.login(val)
               .subscribe(
-                  result => {
+                  () => {
                       window.location.href = '/'+originUrl
                   }
               );

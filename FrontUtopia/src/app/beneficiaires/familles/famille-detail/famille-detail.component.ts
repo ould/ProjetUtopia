@@ -84,7 +84,7 @@ export class FamilleDetailComponent implements OnInit {
             const validIds = ids.filter((id): id is string => id !== undefined);
 
             this.familleInput.beneficiairesId = validIds;
-            this.familleInput.nom = this.membresFamille[0].nom + " - " + this.datePipe.transform(new Date(), 'dd/MM/yyyy')?.substring(0, 5);;
+            this.familleInput.nom = this.membresFamille[0].nom;
 
             // Déterminer l'opération sur la famille
             const familleOperation = this.isUpdate ?

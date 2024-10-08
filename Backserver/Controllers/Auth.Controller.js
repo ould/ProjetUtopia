@@ -46,7 +46,5 @@ module.exports = {
         return next(createError.BadRequest('Invalid'));
       next(error);
     }
-  },
-
-
+  }
 }

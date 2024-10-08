@@ -7,6 +7,7 @@
         <tr>
           <th>Nom</th>
           <th>Antenne</th>
+          <th>Contexte</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -14,6 +15,7 @@
         <tr *ngFor="let referentiel of referentiels">
           <td>{{ referentiel.nom }}</td>
           <td>{{ referentiel.nomAntenne }}</td>
+          <td>{{ referentiel.entitee }}</td>
           <td>
             <button (click)="editReferentiel(referentiel._id!)">Modifier</button>
             <button (click)="openPopupSuppression(referentiel.nom , referentiel._id!)">Supprimer</button>

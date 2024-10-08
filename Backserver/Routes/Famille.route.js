@@ -4,6 +4,8 @@ const FamilleController = require('../Controllers/Famille.Controller')
 const BeneficiaireController = require('../Controllers/Beneficiaire.Controller')
 const ReferentielController = require('../Controllers/Referentiel.Controller')
 
+familleRouter.get('/recentes/', FamilleController.recentes)
+
 familleRouter.get('/:id', FamilleController.get)
 
 familleRouter.get('/search/:nom', FamilleController.search)

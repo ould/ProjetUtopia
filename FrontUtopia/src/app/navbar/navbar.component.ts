@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit {
       data => {
         this.antenneActuelle = data.nom
       });
+      location.reload()
   }
 
 

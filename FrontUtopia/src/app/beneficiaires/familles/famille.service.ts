@@ -120,6 +120,22 @@ export class FamilleService {
     );
   }
 
+  getFamillesRecentes(): Observable<Famille[]> {
+    // Logique pour récupérer les familles récemment créées
+    const url = `${this.familleUrl}/recentes/`;
+    return this.http.get<Famille[]>(url).pipe(
+      catchError(this.logger.handleError<Famille[]>(`famille recentes not found`))
+    );
+  }
+
+  getStats(): Observable<any> {
+    // Logique pour récupérer les statistiques
+    return of({
+      famillesVuesAujourdhui: 5,
+      totalFamilles: 150
+    });
+  }
+
   constructor(
     private http: HttpClient,
     private logger: LoggerService) { }

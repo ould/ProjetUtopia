@@ -18,6 +18,11 @@ export class FamillesComponent {
   
   barreRecherche:Boolean = true;
   familles$!: Observable<Famille[]>;
+  famillesRecentes$?: Observable<Famille[]>;
+  stats = {
+    famillesVuesAujourdhui: 0,
+    totalFamilles: 0
+  };
 
   private searchTerms = new Subject<string>();
 
@@ -26,6 +31,8 @@ export class FamillesComponent {
   }
 
   ngOnInit(): void {
+    this.famillesRecentes$ = this.familleService.getFamillesRecentes();
+    this.loadStats();
     this.familles$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
@@ -36,6 +43,13 @@ export class FamillesComponent {
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.familleService.searchFamilles(term)),
     );
+  }
+
+  loadStats(): void {
+    this.familleService.getStats().subscribe(data => {
+      this.stats.famillesVuesAujourdhui = data.famillesVuesAujourdhui;
+      this.stats.totalFamilles = data.totalFamilles;
+    });
   }
 
   constructor(private familleService: FamilleService) {}

@@ -1,18 +1,61 @@
-<div class="container">
-    <div class="header">
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="title-section">
       <h1>Gestion des Familles</h1>
-      <button class="btn btn-primary" routerLink="/ajouterFamille">Ajouter une Famille</button>
+      <p>Suivez et gérez facilement les familles</p>
     </div>
+    <button class="btn btn-primary AjoutScope" routerLink="/ajouterFamille">
+      <i class="fas fa-plus"></i> Ajouter une Famille
+    </button>
+  </header>
+
+  <!-- Section Recherche -->
+  <section class="search-section">
+    <h2>Rechercher une Famille</h2>
     <div class="search-container">
       <input #searchBox class="form-control" type="text" placeholder="Rechercher une famille..." (input)="search(searchBox.value)">
     </div>
+  </section>
+
+    <!-- Liste des familles -->
+    <section class="families-section">
+      <div class="families-container">
+        <div class="family-card" *ngFor="let famille of familles$ | async" routerLink="/detailFamille/{{famille._id}}">
+          <div class="family-info">
+            <h3>{{ famille.nom }}</h3>
+            <p>{{ famille.dateCreation }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Familles récemment créées -->
+  <section class="recent-families-section">
+    <h2>Familles récemment créées</h2>
     <div class="families-container">
-      <div class="family" *ngFor="let famille of familles$ | async" routerLink="/detailFamille/{{famille._id}}">
+      <div class="family-card" *ngFor="let famille of famillesRecentes$ | async" routerLink="/detailFamille/{{famille._id}}">
         <div class="family-info">
-          <h2>{{ famille.nom }}</h2>
-          <p>{{ famille._id }}</p>
+          <h3>{{ famille.nom }}</h3>
+          <p>{{ famille.dateCreation | date:'dd/MM/yyyy' }}</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+    <!-- Statistiques -->
+    <section class="stats-section">
+      <h2>Statistiques du Jour</h2>
+      <div class="stats-container">
+        <div class="stat">
+          <h3><i class="fas fa-eye"></i> Familles vues aujourd'hui</h3>
+          <p>{{ stats.famillesVuesAujourdhui }}</p>
+        </div>
+        <div class="stat">
+          <h3><i class="fas fa-users"></i> Nombre total de familles</h3>
+          <p>{{ stats.totalFamilles }}</p>
+        </div>
+      </div>
+    </section>
   
+</div>

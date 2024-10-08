@@ -77,6 +77,24 @@ module.exports = {
     }
   },
 
+  recentes: async (req, res, next) => {
+    try {
+      console.log("test")
+      const userReferent = await UserController.getCurrentUser(req, res, next)
+
+      const filter = {"antenneId": userReferent.antenneDefautId };
+
+      const listeFamilles = await Famille.find(filter).sort({ dateCreation: -1 }) // Trie par dateDeCreation en ordre décroissant
+      .limit(5); // Limite à 5 résultats
+      if (!listeFamilles)
+        throw createError.NotFound(`recentes not found`);
+      res.send(listeFamilles)
+
+    } catch (error) {
+      next(error)
+    }
+  },
+
   delete: async (req, res, next) => {
     try {
       const id = req.params.id

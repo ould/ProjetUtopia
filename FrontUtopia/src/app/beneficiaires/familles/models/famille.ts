@@ -5,4 +5,5 @@ export interface Famille {
     composition?: string;
     commentaire?: string;
     antenneId?: string;
+    dateCreation?:Date;
 }

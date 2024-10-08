@@ -1,75 +1,205 @@
-.container {
-  max-width: 800px;
+/* Global Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f7f7f9;
+  color: #333;
+}
+
+.dashboard-container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+h1, h2 {
+  font-weight: 600;
+  color: var(--utopia-primary-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-}
-
-.header h1 {
-  font-size: 24px;
-  color: var(--utopia-primary-color);
+  margin-bottom: 30px;
 }
 
 .btn-primary {
   background-color: var(--utopia-primary-color);
-  color: var(--utopia-background-color);
+  color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
   background-color: var(--utopia-primary-dark-color);
+  transform: translateY(-3px);
 }
 
-.search-container {
+.btn-primary i {
+  margin-right: 8px;
+}
+
+/* Section Recherche */
+.search-section {
   margin-bottom: 20px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.families-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.family {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.family:hover {
-  transform: translateY(-5px);
-}
-
-.family-info {
   text-align: center;
 }
 
-.family-info h2 {
-  font-size: 20px;
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-control {
+  width: 70%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--utopia-primary-color);
+}
+
+.btn-search {
+  background-color: var(--utopia-primary-color);
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-search i {
+  font-size: 16px;
+}
+
+.btn-search:hover {
+  background-color: var(--utopia-primary-dark-color);
+}
+
+/* Statistiques */
+.stats-section {
+  margin-bottom: 40px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.stat {
+  flex: 1;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-5px);
+}
+
+.stat h3 {
+  font-size: 18px;
   margin-bottom: 10px;
 }
 
-.family-info p {
-  font-size: 14px;
-  color: #666;
+.stat p {
+  font-size: 22px;
+  color: #444;
 }
+
+/* Familles */
+.families-section h2 {
+  text-align: left;
+}
+
+/* Familles */
+.families-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Réduit la largeur minimale */
+  gap: 15px; /* Réduit l'espacement entre les cartes */
+}
+
+.family-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Réduction du radius */
+  padding: 15px; /* Réduit le padding interne */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Réduit l'ombre */
+  cursor: pointer;
+}
+
+.family-card:hover {
+  transform: translateY(-3px); /* Réduit l'élévation au survol */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Ombre plus légère */
+}
+
+.family-info h3 {
+  font-size: 18px; /* Taille du texte */
+  margin-bottom: 8px;
+  white-space: nowrap; /* Empêche le texte de se casser sur plusieurs lignes */
+  overflow: hidden; /* Cache le texte qui dépasse du conteneur */
+  text-overflow: ellipsis; /* Ajoute les points de suspension (...) à la fin du texte si trop long */
+  max-width: 100%; /* Assure que le texte prenne toute la largeur possible du conteneur */
+}
+
+.family-info p {
+  font-size: 12px; /* Texte plus petit */
+  color: #777;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .families-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Moins d'espace sur mobile */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .families-container {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Encore plus compact sur petits écrans */
+  }
+}
+
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-control {
+    width: 90%;
+  }
+}
+
