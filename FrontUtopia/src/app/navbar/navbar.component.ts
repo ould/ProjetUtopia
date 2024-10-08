@@ -12,6 +12,7 @@ import { Section } from '../interfaces/section';
 })
 export class NavbarComponent implements OnInit {
 
+  section =Section
    antenneDefautForm: FormGroup;
   public activeTab: String = ''
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
@@ -26,7 +27,7 @@ export class NavbarComponent implements OnInit {
   public aAccesBenevole: Boolean = false;
   public aAccesAdherent: Boolean = false;
   public aAccesHommeSeul: Boolean = false;
-  public aAccesRapports: Boolean = false;
+  public aAccesReporting: Boolean = false;
   public aAccesStock: Boolean = false;
   public aAccesChat: Boolean = false;
 
@@ -40,8 +41,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  switchActive(term: String) {
+  switchActive(term: string) {
     this.activeTab = term
+    this.utilisateurService.getDroits(term).subscribe();
     this.collapseNavbar();
   }
 
@@ -90,9 +92,9 @@ export class NavbarComponent implements OnInit {
         data => {
           this.aAccesHommeSeul = data
         });
-      this.utilisateurService.accesSection(Section.rapports).subscribe(
+      this.utilisateurService.accesSection(Section.reporting).subscribe(
         data => {
-          this.aAccesRapports = data
+          this.aAccesReporting = data
         });
       this.utilisateurService.accesSection(Section.stock).subscribe(
         data => {

@@ -11,6 +11,8 @@ selfUserRouter.get('/isAdmin', userController.isAdmin)
 
 selfUserRouter.get('/accesSection/:nomSectionDemandee', userController.accesSection)
 
+selfUserRouter.get('/droits/:nomSectionDemandee', userController.getDroitsSection)
+
 selfUserRouter.post('/antenneDefaut', userController.changeAntennesUser)
 
 

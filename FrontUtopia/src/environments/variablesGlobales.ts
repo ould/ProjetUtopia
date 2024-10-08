@@ -6,16 +6,16 @@ import { UtilisateurService } from '../app/autres-services/utilisateur/utilisate
   providedIn: 'root',
 })
 export class VariablesGlobales implements OnInit {
-    antenneActuelle?:Antenne 
+    autoriseAjout:boolean = false;
 
 
 
     ngOnInit(): void {
-        this.utilisateurService.getAntenneDefaut().subscribe(
-            data => {
-                this.antenneActuelle = data
-              }
-        )
+        // this.utilisateurService.getDroits().subscribe(
+        //     data => {
+        //         this.antenneActuelle = data
+        //       }
+        // )
     }
     constructor(public utilisateurService: UtilisateurService) { }
 

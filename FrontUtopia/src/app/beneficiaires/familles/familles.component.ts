@@ -6,6 +6,8 @@ import {
 
 import { Famille } from './models/famille';
 import { FamilleService } from './famille.service';
+import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
+import { Section } from 'src/app/interfaces/section';
 
 
 @Component({
@@ -15,8 +17,8 @@ import { FamilleService } from './famille.service';
 })
 
 export class FamillesComponent {
-  
-  barreRecherche:Boolean = true;
+
+  barreRecherche: Boolean = true;
   familles$!: Observable<Famille[]>;
   famillesRecentes$?: Observable<Famille[]>;
   stats = {
@@ -52,8 +54,9 @@ export class FamillesComponent {
     });
   }
 
-  constructor(private familleService: FamilleService) {}
+  constructor(private familleService: FamilleService,
+    private utilisateurService: UtilisateurService) { }
 
-  
+
 }
 

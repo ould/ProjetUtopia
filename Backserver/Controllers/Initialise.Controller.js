@@ -30,7 +30,7 @@ module.exports = {
         await creationProfil("Hebergeuse", userId, "Compte hebergeuse", "", "", "crwd", "", "", "", "", "crwd", "", "crwd", "");
         await creationProfil("Benevole", userId, "Compte bénévole", "", "", "", "crwd", "", "", "", "crwd", "", "crwd", "");
         await creationProfil("Adherent", userId, "Compte adherent", "", "", "", "", "crwd", "", "", "crwd", "", "crwd", "");
-        await creationProfil("Rapports", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd", "");
+        await creationProfil("Reporting", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd", "");
         await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd", "");
         await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd", "");
 
@@ -92,7 +92,7 @@ module.exports = {
   },
 }
 
-async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, rapports, stock, chat, astreinte) {
+async function creationProfil(nom, userId, commentaire, admin, famille, hebergeuse, benevole, adherente, mineur, hommeSeul, reporting, stock, chat, astreinte) {
   try {
     const nouveauProfil = new Profil({
       nom: nom, creePar: userId, commentaire: commentaire,
@@ -103,7 +103,7 @@ async function creationProfil(nom, userId, commentaire, admin, famille, hebergeu
       { section: process.env.contexte_adherente, droits: adherente },
       { section: process.env.contexte_mineur, droits: mineur },
       { section: process.env.contexte_hommeSeul, droits: hommeSeul },
-      { section: process.env.contexte_rapports, droits: rapports },
+      { section: process.env.contexte_reporting, droits: reporting },
       { section: process.env.contexte_stock, droits: stock },
       { section: process.env.contexte_chat, droits: chat },
       { section: process.env.contexte_astreinte, droits: astreinte }]

@@ -19,9 +19,9 @@ module.exports = {
     save: async (req, res, next) => {
         try {
             const utilisateurRequete = await userSchema.validateAsync(req.body, { allowUnknown: true })
-            
+
             if (utilisateurRequete._id) throw createError.Conflict(`${utilisateurRequete._id} is already `);
-            
+
             utilisateurRequete.creePar = req.payload.userId
             const nouvelUtilisateur = new User(utilisateurRequete)
             const utilisateurSauve = await nouvelUtilisateur.save()
@@ -40,8 +40,8 @@ module.exports = {
             const utilisateurRequete = await userSchema.validateAsync(req.body, { allowUnknown: true })
 
             const utilisateurExistant = await User.findOne({ _id: utilisateurRequete._id })
-            if (!utilisateurExistant)  throw createError.NotFound(`${utilisateurRequete._id} not found`);
-            
+            if (!utilisateurExistant) throw createError.NotFound(`${utilisateurRequete._id} not found`);
+
             utilisateurRequete.modifiePar = req.payload.userId
             utilisateurRequete.dateModification = Date.now();
 
@@ -86,12 +86,12 @@ module.exports = {
             next(error)
         }
     },
-    
+
     //Permet de visualiser sur l'appli front les entités selon ses acces aux sections (contexte metier)
     accesSection: async (req, res, next) => {
         try {
             const userId = req.payload.userId;
-            
+
             const user = await User.findOne({ _id: userId });
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
             const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
@@ -104,6 +104,24 @@ module.exports = {
                 const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).droits.length > 0
                 res.send(accesAutorise)
             }
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            next(error)
+        }
+    },
+
+    //Permet de visualiser sur l'appli front les entités selon ses droits et la section demandée (bouton ajouter etc)
+    getDroitsSection: async (req, res, next) => {
+        try {
+            const userId = req.payload.userId;
+            const user = await User.findOne({ _id: userId });
+
+            const nomSectionDemandee = req.params.nomSectionDemandee
+            const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
+            const tableauDroitSection = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee)
+            console.log(tableauDroitSection)
+            res.send(tableauDroitSection)
+
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -124,29 +142,6 @@ module.exports = {
                 const nomProfilRequete = req.params.nomProfilAVerifier
                 const ProfilRequete = await Profil.findOne({ nom: nomProfilRequete });
                 const estInclus = user.profilId.includes(ProfilRequete._id);
-
-                res.send(estInclus)
-            }
-        } catch (error) {
-            if (error.isJoi === true) error.status = 422
-            next(error)
-        }
-    },
-
-    //Permet de visualiser sur l'appli front les entités selon ses droits et la section demandée (bouton ajouter etc)
-    isDroit: async (req, res, next) => {
-        try {
-            const userId = req.payload.userId;
-
-            const user = await User.findOne({ _id: userId });
-            //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc) a remplacer peut etre par un droit admin aussi 
-            const groupeAdmin = await Groupe.findOne({ nom: process.env.contexte_admin });
-            if (user.groupes.includes(groupeAdmin._id)) {
-                res.send(true)
-            }
-            else {
-                const nomGDroitAVerifier = req.params.nomDroitAVerifier
-               //TODO a faire 
 
                 res.send(estInclus)
             }
@@ -208,7 +203,7 @@ module.exports = {
         try {
             const idUser = req.payload.userId
 
-            const utilisateurExistant = await User.findOne({ _id: idUser })        
+            const utilisateurExistant = await User.findOne({ _id: idUser })
             if (!utilisateurExistant) {
                 throw createError.NotFound(`${idUser} not found`);
             }
@@ -221,12 +216,12 @@ module.exports = {
         }
     },
 
-    
+
     changeAntennesUser: async (req, res, next) => {
         try {
             const idUser = req.payload.userId
             const nomAntenne = req.body.nouvelleAntenneId //Post => body
-            const utilisateurExistant = await User.findOne({ _id: idUser })           
+            const utilisateurExistant = await User.findOne({ _id: idUser })
             if (!utilisateurExistant) {
                 throw createError.NotFound(`${idUser} not found`);
             }
@@ -241,7 +236,7 @@ module.exports = {
             utilisateurExistant.modifiePar = req.payload.userId
 
             //MAJ de l'utilisateur
-            const filter = { _id: utilisateurExistant._id };          
+            const filter = { _id: utilisateurExistant._id };
             const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
                 returnOriginal: false
             });
@@ -253,17 +248,17 @@ module.exports = {
             if (error.isJoi === true) error.status = 422
             next(error)
         }
-    },  
-    
+    },
+
     isAdmin: async (req, res, next) => {
-        try {    
-          const profilUtilisateur = req.payload.profilId
-          const profilAdminId = await Profil.findOne({ nom: process.env.contexte_admin })
-          const isAdmin = profilUtilisateur.includes(profilAdminId._id);
-          res.send(isAdmin)
+        try {
+            const profilUtilisateur = req.payload.profilId
+            const profilAdminId = await Profil.findOne({ nom: process.env.contexte_admin })
+            const isAdmin = profilUtilisateur.includes(profilAdminId._id);
+            res.send(isAdmin)
         } catch (error) {
-          if (error.isJoi === true) error.status = 422
-          next(error)
+            if (error.isJoi === true) error.status = 422
+            next(error)
         }
-      }
+    }
 }

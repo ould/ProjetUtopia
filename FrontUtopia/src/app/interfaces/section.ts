@@ -6,7 +6,7 @@ export enum Section {
     adherente = "adherente",
     mineur = "mineur",
     hommeSeul = "hommeSeul",
-    rapports = "rapports",
+    reporting = "reporting",
     stock = "stock",
     chat = "chat",
     astreinte = "astreinte"
