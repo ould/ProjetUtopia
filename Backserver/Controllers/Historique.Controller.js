@@ -36,21 +36,19 @@ module.exports = {
         }
     },
 
-    save: async (req, res, next) => {
+    save: async (section, listeChamps, userId) => {
         try {
-            const historiqueRequete = await historiqueSchema.validateAsync(req.body);
-            const userReferent = await UserController.getCurrentUser(req, res, next);
-            const sectionDemandee = req.baseUrl.split('/')[2];
-
-            historiqueRequete.entitee = sectionDemandee;
-            historiqueRequete.creePar = userReferent._id;
-            const nouveauHistorique = new Historique(historiqueRequete);
-            const savedHisto = await nouveauHistorique.save();
-
-            res.send(savedHisto)
+            
+            Object(listeChamps).forEach(async item => {
+                item.entitee = section;
+                item.utilisateurId = userId;
+                item.date = Date.now();
+                const nouveauHistorique = new Historique(item);
+                await nouveauHistorique.save();
+              });
+            return true
         } catch (error) {
-            if (error.isJoi === true) error.status = 422
-            next(error)
+            return false
         }
     },
 

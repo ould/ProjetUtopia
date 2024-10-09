@@ -124,36 +124,6 @@ const referentielSchema = Joi.object({
   })
 });
 
-const historiqueSchema = Joi.object({
-  _id: Joi.string().hex().length(24).optional(),
-  entitee: Joi.string().required().messages({
-      'string.base': `"entitee" doit être un type de chaîne`,
-      'string.empty': `"entitee" ne peut pas être vide`,
-      'any.required': `"entitee" est un champ requis`
-  }),
-  entiteeId: Joi.string().required().messages({
-      'string.base': `"entiteeId" doit être un type de chaîne`,
-      'string.empty': `"entiteeId" ne peut pas être vide`,
-      'any.required': `"entiteeId" est un champ requis`
-  }),
-  action: Joi.string().required().messages({
-      'string.base': `"action" doit être un type de chaîne`,
-      'string.empty': `"action" ne peut pas être vide`,
-      'any.required': `"action" est un champ requis`
-  }),
-  detail: Joi.string().optional().messages({
-      'string.base': `"detail" doit être un type de chaîne`
-  }),
-  creePar: Joi.string().required().messages({
-      'string.base': `"creePar" doit être un type de chaîne`,
-      'string.empty': `"creePar" ne peut pas être vide`,
-      'any.required': `"creePar" est un champ requis`
-  }),
-  dateCreation: Joi.date().optional().messages({
-      'date.base': `"dateCreation" doit être une date valide`
-  })
-});
-
 const evenementSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
   entitee: Joi.string().required().messages({
@@ -197,6 +167,5 @@ module.exports = {
   profilSchema,
   logSchema,
   referentielSchema,
-  historiqueSchema,
   evenementSchema
 }

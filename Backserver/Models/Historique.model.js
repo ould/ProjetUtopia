@@ -6,27 +6,27 @@ const HistoriqueSchema = new Schema({
         type: String,
         required: true
     },
-    entiteeId: {
+    objetId: {
         type: String,
         required: true
     },
-    action: {
+    champ: {
         type: String,
         required: true
     },
-    detail: {
+    ancienneValeur: {
         type: String,
-        required: false
+        required: true
     },
-    antenneId: {
+    nouvelleValeur: {
       type: String,
       required: true,
     },
-    creePar: {
+    utilisateurId: {
         type: String,
         required: true,
     },
-    dateCreation: {
+    date: {
         type: Date,
         required: false,
     }
@@ -36,7 +36,7 @@ const HistoriqueSchema = new Schema({
 HistoriqueSchema.pre('save', async function (next) {
     try {
         if (this.isNew) {
-            this.dateCreation = Date.now()
+            this.date = Date.now()
         }
         next()
     } catch (error) {

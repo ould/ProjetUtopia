@@ -1,8 +1,9 @@
 const createError = require('http-errors')
 const Famille = require('../Models/Famille.model')
 const { familleSchema } = require('../helpers/validation_schema');
-const BeneficiaireController = require('./Beneficiaire.Controller');
 const UserController = require('./User.Controller');
+const { historique_ChercheChampsModifies } = require('../helpers/methodes');
+const HistoriqueController = require('./Historique.Controller');
 
 module.exports = {
   get: async (req, res, next) => {
@@ -28,7 +29,7 @@ module.exports = {
       familleASauver.creePar = userReferent._id;
       const nouvelleFamille = new Famille(familleASauver);
       const savedFamille = await nouvelleFamille.save();
-
+      
       res.send(savedFamille._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -40,18 +41,22 @@ module.exports = {
     try {
       const familleRequete = await familleSchema.validateAsync(req.body, { allowUnknown: true })
       const userReferent = await UserController.getCurrentUser(req, res, next)
+      const userId = req.payload.userId
 
       const filter = { _id: familleRequete._id, antenneId: userReferent.antenneDefautId  };
       const FamilleExistante = await Famille.findOne(filter)
       if (!FamilleExistante)
         throw createError.NotFound(`${familleRequete.id} not found`);
 
-      familleRequete.modifiePar = req.payload.userId
+      familleRequete.modifiePar = userId
       familleRequete.dateModification = Date.now();
 
       const updatedFamille = await Famille.findOneAndUpdate(filter, familleRequete, {
         returnOriginal: false
       });
+      const champsModifies = historique_ChercheChampsModifies(FamilleExistante, familleRequete)
+      HistoriqueController.save(process.env.contexte_famille,champsModifies, userId)
+      
       res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
