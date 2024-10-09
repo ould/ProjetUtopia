@@ -6,6 +6,9 @@ import { FamilleService } from '../famille.service';
 import { Membre } from '../models/membre';
 import { forkJoin, switchMap } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
+import { Section } from 'src/app/interfaces/section';
+import { Autorisations } from 'src/app/interfaces/autorisations';
 
 @Component({
   selector: 'app-famille-detail',
@@ -15,6 +18,7 @@ import { NgForm } from '@angular/forms';
 })
 export class FamilleDetailComponent implements OnInit {
 
+  autorisations!:Autorisations;
   @Input() familleInput!: Famille;
   membresFamille: Membre[] = [];
   modificationEnCours: boolean = false;
@@ -27,8 +31,11 @@ export class FamilleDetailComponent implements OnInit {
     private router: Router,
     private familleService: FamilleService,
     private location: Location,
-    private datePipe: DatePipe
-  ) { }
+    private utilisateurService: UtilisateurService
+  ) { 
+    this.utilisateurService.getDroits(Section.famille).subscribe(
+      (result) => this.autorisations = result
+    )}
 
   ngOnInit(): void {
     const idFamille = this.route.snapshot.paramMap.get('id');

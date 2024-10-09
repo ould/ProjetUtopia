@@ -10,7 +10,7 @@
 
       <!-- Boutons flottants au bas de l'écran -->
       <div class="btn-group floating-buttons">
-        <button class="btn btn-success" *ngIf="this.modificationEnCours" type="submit" [disabled]="familleForm.invalid">
+        <button class="btn btn-success" *ngIf="this.modificationEnCours && (this.autorisations.ajout || this.autorisations.modification)" type="submit" [disabled]="familleForm.invalid">
           Sauvegarder
         </button>
         <button class="btn btn-secondary" type="button" (click)="goBack()">Retour</button>

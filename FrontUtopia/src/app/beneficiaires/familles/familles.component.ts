@@ -8,6 +8,7 @@ import { Famille } from './models/famille';
 import { FamilleService } from './famille.service';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
 import { Section } from 'src/app/interfaces/section';
+import { Autorisations } from 'src/app/interfaces/autorisations';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { Section } from 'src/app/interfaces/section';
 })
 
 export class FamillesComponent {
-
+  autorisations!:Autorisations;
   barreRecherche: Boolean = true;
   familles$!: Observable<Famille[]>;
   famillesRecentes$?: Observable<Famille[]>;
@@ -55,7 +56,12 @@ export class FamillesComponent {
   }
 
   constructor(private familleService: FamilleService,
-    private utilisateurService: UtilisateurService) { }
+    private utilisateurService: UtilisateurService
+  ) { 
+    this.utilisateurService.getDroits(Section.famille).subscribe(
+      (result) => this.autorisations = result
+    )
+  }
 
 
 }

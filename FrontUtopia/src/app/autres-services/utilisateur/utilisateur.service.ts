@@ -132,7 +132,6 @@ export class UtilisateurService {
         }
       }
     }
-    console.log(autorisations)
     return autorisations;
 
   }

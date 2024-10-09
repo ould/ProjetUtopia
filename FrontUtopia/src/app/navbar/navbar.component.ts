@@ -12,8 +12,8 @@ import { Section } from '../interfaces/section';
 })
 export class NavbarComponent implements OnInit {
 
-  section =Section
-   antenneDefautForm: FormGroup;
+  section = Section
+  antenneDefautForm: FormGroup;
   public activeTab: String = ''
   public isLoggedIn: boolean = this.AuthService.isLoggedIn()
   public utilisateurMultipleAntennes: Boolean = false
@@ -48,11 +48,11 @@ export class NavbarComponent implements OnInit {
   }
 
   changeAntenneDefaut(idNouvelleAntenne: any) {
-    if(idNouvelleAntenne)  this.utilisateurService.changeAntenneDefaut(idNouvelleAntenne).subscribe(
+    if (idNouvelleAntenne) this.utilisateurService.changeAntenneDefaut(idNouvelleAntenne).subscribe(
       data => {
         this.antenneActuelle = data.nom
       });
-      location.reload()
+    location.reload()
   }
 
 
@@ -80,10 +80,10 @@ export class NavbarComponent implements OnInit {
         data => {
           this.aAccesAstreinte = data
         });
-        this.utilisateurService.accesSection(Section.benevole).subscribe(
-          data => {
-            this.aAccesBenevole = data
-          });
+      this.utilisateurService.accesSection(Section.benevole).subscribe(
+        data => {
+          this.aAccesBenevole = data
+        });
       this.utilisateurService.accesSection(Section.adherente).subscribe(
         data => {
           this.aAccesAdherent = data
@@ -118,19 +118,19 @@ export class NavbarComponent implements OnInit {
           );
         }
       );
-      
+
     }
   }
 
 
   constructor(public AuthService: AuthService,
     public utilisateurService: UtilisateurService,
-    private fb: FormBuilder) { 
+    private fb: FormBuilder) {
 
-      this.antenneDefautForm = this.fb.group({
-        antenneDefaut: ['', Validators.required]
-      });
+    this.antenneDefautForm = this.fb.group({
+      antenneDefaut: ['', Validators.required]
+    });
 
 
-    }
+  }
 }

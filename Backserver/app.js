@@ -19,7 +19,7 @@ const antenneRouter = require('./Routes/Antenne.route')
 const logRouter = require('./Routes/Log.route')
 const publicRouter = require('./Routes/Public.route')
 const adminRouter = require('./Routes/Admin.route')
-const referentielGlobalRouter = require('./Routes/ReferentielGlobal.route')
+const referentielRouter = require('./Routes/Referentiel.route')
 
 const corsOptions = {
   origin: '*',
@@ -49,7 +49,7 @@ app.use('/api/message', verifyAccessToken, haveDroits, messageRouter) //TODO fai
 //Routes communes internes libres
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
 app.use('/api/selfUtilisateur', verifyAccessToken, selfUserRouter)
-app.use('/api/referencielGlobal', verifyAccessToken, referentielGlobalRouter)
+app.use('/api/referentiel', verifyAccessToken, referentielRouter)
 
 //Routes publiques
 app.use('/api/auth', AuthRoute)

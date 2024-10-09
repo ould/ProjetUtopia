@@ -14,6 +14,7 @@ export class FamilleService {
 
 
   private familleUrl = environment.apiUrl + 'famille';  // URL to web api (meme nom que section)
+  private familleReferentielUrl = environment.apiUrl  + 'referentiel/famille';  // referentiel des familles
   private membreFamilleUrl = this.familleUrl + '/membre';
 
   httpOptions = {
@@ -114,7 +115,7 @@ export class FamilleService {
   }
 
   getReferentielByNom(nom: string): Observable<string[]> {
-    const url = `${this.familleUrl}/getReferentielByNom/${nom}`;
+    const url = `${this.familleReferentielUrl}/getReferentielByNom/${nom}`;
     return this.http.get<string[]>(url).pipe(
       catchError(this.logger.handleError<string[]>(`referentiel not found ${nom}`))
     );

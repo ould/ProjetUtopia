@@ -91,7 +91,6 @@ module.exports = {
     accesSection: async (req, res, next) => {
         try {
             const userId = req.payload.userId;
-
             const user = await User.findOne({ _id: userId });
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
             const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });

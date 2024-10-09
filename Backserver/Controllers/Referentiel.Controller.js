@@ -21,7 +21,7 @@ module.exports = {
     getByNom: async (req, res, next) => {
         try {
             const nom = req.params.nom;
-            const sectionDemandee = req.baseUrl.split('/')[2];
+            const sectionDemandee = req.path.split('/')[1];
             const userReferent = await UserController.getCurrentUser(req, res, next);
             let filtre = { entitee: sectionDemandee, nom: nom, antenneId: userReferent.antenneDefautId }
             let referentiel = await Referentiel.findOne(filtre);

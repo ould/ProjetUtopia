@@ -5,13 +5,13 @@
       <h1>Gestion des Familles</h1>
       <p>Suivez et gérez facilement les familles</p>
     </div>
-    <button class="btn btn-primary AjoutScope" routerLink="/ajouterFamille">
+    <button class="btn btn-primary AjoutScope" routerLink="/ajouterFamille" *ngIf="autorisations?.ajout">
       <i class="fas fa-plus"></i> Ajouter une Famille
     </button>
   </header>
 
   <!-- Section Recherche -->
-  <section class="search-section">
+  <section class="search-section" *ngIf="autorisations?.lecture">
     <h2>Rechercher une Famille</h2>
     <div class="search-container">
       <input #searchBox class="form-control" type="text" placeholder="Rechercher une famille..." (input)="search(searchBox.value)">
@@ -19,7 +19,7 @@
   </section>
 
     <!-- Liste des familles -->
-    <section class="families-section">
+    <section class="families-section" *ngIf="autorisations?.lecture">
       <div class="families-container">
         <div class="family-card" *ngFor="let famille of familles$ | async" routerLink="/detailFamille/{{famille._id}}">
           <div class="family-info">
@@ -31,7 +31,7 @@
     </section>
 
   <!-- Familles récemment créées -->
-  <section class="recent-families-section">
+  <section class="recent-families-section" *ngIf="autorisations?.lecture">
     <h2>Familles récemment créées</h2>
     <div class="families-container">
       <div class="family-card" *ngFor="let famille of famillesRecentes$ | async" routerLink="/detailFamille/{{famille._id}}">
@@ -44,7 +44,7 @@
   </section>
 
     <!-- Statistiques -->
-    <section class="stats-section">
+    <section class="stats-section" *ngIf="autorisations?.lecture">
       <h2>Statistiques du Jour</h2>
       <div class="stats-container">
         <div class="stat">

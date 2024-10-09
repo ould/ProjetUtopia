@@ -2,6 +2,9 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleCha
 import { Membre } from '../models/membre';
 import { FamilleService } from '../famille.service';
 import { ControlContainer, NgForm } from '@angular/forms';
+import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
+import { Section } from 'src/app/interfaces/section';
+import { Autorisations } from 'src/app/interfaces/autorisations';
 
 @Component({
   selector: 'app-membre',
@@ -14,6 +17,7 @@ export class MembreComponent implements OnInit {
   @Input() modificationEnCours: boolean =false;
   @Output() modificationEnCoursChange = new EventEmitter<boolean>();
 
+  autorisations!:Autorisations;
   currentPersonneIndex: number = 0;
   situations!: string[];
   procedures!: string[];
@@ -34,8 +38,12 @@ export class MembreComponent implements OnInit {
   }
 
   constructor(
-    private familleService: FamilleService
-  ) { }
+    private familleService: FamilleService,
+    private utilisateurService: UtilisateurService
+  ) { 
+    this.utilisateurService.getDroits(Section.famille).subscribe(
+      (result) => this.autorisations = result
+    )}
   
   changementChamp(): void {  
       this.modificationEnCours = true;
