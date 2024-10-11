@@ -37,7 +37,10 @@ adminRouter.get('/log/getByUser/', logController.getByUser)
 
 adminRouter.post('/log/', logController.save)
 
-//Historique : TODO
+//Historique : 
+adminRouter.get('/historique/getParPage/', HistoriqueController.getParPage)
+
+adminRouter.get('/historique/getAll', HistoriqueController.getAll)
 
 //Referentiel
 adminRouter.get('/referentiel/getAll', ReferentielController.getAll)

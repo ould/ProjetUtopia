@@ -1,32 +1,39 @@
 <h1>Gestion des utilisateurs</h1>
 
-<!-- Formulaire d'ajout d'utilisateur -->
-<h2>Ajouter un utilisateur</h2>
-<form [formGroup]="newUtilisateurForm" (ngSubmit)="ajouterUtilisateur()">
-  <div class="form-group">
-    <label for="nom-utilisateur">Nom d'utilisateur :</label>
-    <input type="text" id="nom-utilisateur" name="nom" formControlName="nom" required>
+<!-- Panneau d'ajout d'utilisateur -->
+<div class="collapsible-panel">
+  <!-- Bouton pour afficher/cacher app-membre -->
+  <a class="btn toggle-btn" (click)="isPanelOpen = !isPanelOpen">
+    Ajouter un utilisateur
+  </a>
+  <div class="collapsible-content" *ngIf="isPanelOpen">
+    <form [formGroup]="newUtilisateurForm" (ngSubmit)="ajouterUtilisateur()">
+      <div class="form-group">
+        <label for="nom-utilisateur">Nom d'utilisateur :</label>
+        <input type="text" id="nom-utilisateur" name="nom" formControlName="nom" required>
+      </div>
+      <div class="form-group">
+        <label for="prenom-utilisateur">Prénom de l'utilisateur :</label>
+        <input type="text" id="prenom-utilisateur" name="prenom" formControlName="prenom" required>
+      </div>
+      <div class="form-group">
+        <label for="email-utilisateur">Email :</label>
+        <input type="email" id="email-utilisateur" name="email" formControlName="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password-utilisateur">Mot de passe provisoire :</label>
+        <input type="password" id="password-utilisateur" name="password" formControlName="password" required>
+      </div>
+      <div class="form-group">
+        <label for="antenne-principale">Antenne principale :</label>
+        <select class="custom-select" formControlName="antennes">
+          <option *ngFor="let antenne of Antennes" [value]="antenne._id">{{ antenne.nom }}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="newUtilisateurForm.invalid">Ajouter</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="prenom-utilisateur">Prénom de l'utilisateur :</label>
-    <input type="text" id="prenom-utilisateur" name="prenom" formControlName="prenom" required>
-  </div>
-  <div class="form-group">
-    <label for="email-utilisateur">Email :</label>
-    <input type="email" id="email-utilisateur" name="email" formControlName="email" required>
-  </div>
-  <div class="form-group">
-    <label for="password-utilisateur">Mot de passe provisoire :</label>
-    <input type="password" id="password-utilisateur" name="password" formControlName="password" required>
-  </div>
-  <div class="form-group">
-    <label for="antenne-principale">Antenne principale :</label>
-    <select class="custom-select" formControlName="antennes">
-      <option *ngFor="let antenne of Antennes" [value]="antenne._id">{{ antenne.nom }}</option>
-    </select>
-  </div>
-  <button class="btn btn-primary" type="submit" [disabled]="newUtilisateurForm.invalid">Ajouter</button>
-</form>
+</div>
 
 <h2>Liste des utilisateurs</h2>
 <ul class="user-list">

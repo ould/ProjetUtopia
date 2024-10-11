@@ -32,6 +32,7 @@ import { CalendrierComponent } from './benevole/calendrier/calendrier.component'
 import { ActionSelectionComponent } from './benevole/action-selection/action-selection.component';
 import { GestionReferentielsComponent } from './admin/gestion-referentiels/gestion-referentiels.component';
 import { ReferentielDetailComponent } from './admin/gestion-referentiels/referentiel-detail/referentiel-detail.component';
+import { GestionHistoriqueComponent } from './admin/gestion-historique/gestion-historique.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ReferentielDetailComponent } from './admin/gestion-referentiels/referen
     CalendrierComponent,
     ActionSelectionComponent,
     GestionReferentielsComponent,
-    ReferentielDetailComponent
+    ReferentielDetailComponent,
+    GestionHistoriqueComponent
   ],
   imports: [
     BrowserModule,

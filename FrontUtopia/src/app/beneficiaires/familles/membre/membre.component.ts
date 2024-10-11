@@ -61,6 +61,7 @@ export class MembreComponent implements OnInit {
   }
 
   supprimerPersonne() {
+    this.changementChamp();
     if (this.membresInput.length > 0) {
       this.currentMember.nom = "Suppression"
       // Supprimer la personne actuelle de la liste
@@ -71,10 +72,10 @@ export class MembreComponent implements OnInit {
         this.currentPersonneIndex = this.membresInput.length - 1;
       }
 
-      // Si la liste est vide, réinitialiser l'index
-      if (this.membresInput.length === 0) {
-        this.currentPersonneIndex = 0;
-      }
+    }
+    // Si la liste est vide, réinitialiser l'index
+    if (this.membresInput.length === 0) {
+      this.currentPersonneIndex = 0;
     }
   }
 

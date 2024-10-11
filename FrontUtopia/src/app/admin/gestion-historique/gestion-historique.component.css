@@ -1,0 +1,80 @@
+.historique-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: var(--utopia-primary-color);
+    margin-bottom: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+  }
+  
+  .historique-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .historique-table th, .historique-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .historique-table th {
+    background-color: var(--utopia-light-color);
+    color: #333;
+  }
+  
+  .historique-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .historique-table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .historique-table td {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Pagination Styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+  }
+  
+  .pagination button {
+    padding: 10px 15px;
+    background-color: var(--utopia-primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination button:hover:not(:disabled) {
+    background-color: var(--utopia-primary-dark-color);
+  }
+  
+  .pagination span {
+    font-size: 16px;
+    color: #333;
+  }
+  

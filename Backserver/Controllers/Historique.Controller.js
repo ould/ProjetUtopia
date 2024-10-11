@@ -5,6 +5,14 @@ const { historiqueSchema } = require('../helpers/validation_schema');
 
 module.exports = {
 
+    getAll: async (req, res, next) => {
+        try {
+            const historique = await Historique.find();
+            res.send(historique)
+        } catch (error) {
+            next(error)
+        }
+    },
     getById: async (req, res, next) => {
         try {
             const id = req.params.id;
@@ -36,42 +44,44 @@ module.exports = {
         }
     },
 
+    getParPage: async (req, res, next) => {
+        try {
+            // Récupérer les paramètres de pagination à partir de la requête
+            const page = parseInt(req.query.page) || 1; // Par défaut page 1
+            const limit = parseInt(req.query.limit) || 10; // Par défaut 10 éléments par page
+
+            // Calculer le nombre d'éléments à sauter en fonction de la page actuelle
+            const skip = (page - 1) * limit;
+
+            // Compter le nombre total d'éléments dans la collection Historique
+            const total = await Historique.countDocuments();
+
+            // Récupérer les éléments paginés avec skip() et limit()
+            const historiques = await Historique.find()
+                .sort({ date: -1 }) // Tri par date décroissante
+                .skip(skip)
+                .limit(limit);
+
+            res.send({total, historiques})
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
     save: async (section, listeChamps, userId) => {
         try {
-            
+
             Object(listeChamps).forEach(async item => {
                 item.entitee = section;
                 item.utilisateurId = userId;
                 item.date = Date.now();
                 const nouveauHistorique = new Historique(item);
                 await nouveauHistorique.save();
-              });
+            });
             return true
         } catch (error) {
             return false
-        }
-    },
-
-    update: async (req, res, next) => {
-        try {
-            const historiqueRequete = await historiqueSchema.validateAsync(req.body);
-            const userReferent = await UserController.getCurrentUser(req, res, next);
-            const sectionDemandee = req.baseUrl.split('/')[2];
-            const filtre = { _id: historiqueRequete._id, antenneId: userReferent.antenneDefautId }
-
-            const doesExist = await Historique.findOne(filtre)
-            if (!doesExist)
-                throw createError.NotFound(`${historiqueRequete._id} not found`);
-
-            historiqueRequete.entitee = sectionDemandee;
-            historiqueRequete.modifiePar = req.payload.userId
-            const updatedHisto = await Historique.findOneAndUpdate(filtre, historiqueRequete, {
-                returnOriginal: false
-            });
-            res.send(updatedHisto)
-        } catch (error) {
-            if (error.isJoi === true) error.status = 422
-            next(error)
         }
     },
 

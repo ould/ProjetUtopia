@@ -1,6 +1,8 @@
 const createError = require('http-errors')
 const { profilSchema } = require('../helpers/validation_schema')
-const Profil = require('../Models/Profil.model')
+const Profil = require('../Models/Profil.model');
+const { historique_ChercheChampsModifies } = require('../helpers/methodes');
+const HistoriqueController = require('./Historique.Controller');
 
 module.exports = {
     save: async (req, res, next) => {
@@ -11,7 +13,7 @@ module.exports = {
             if (doesExist)
                 throw createError.Conflict(`${result.nom} already exist`);
 
-            let nouveauProfil = {nom:nomNouveauProfil,creePar:utilisateurId,tableauDroits:[]}
+            let nouveauProfil = { nom: nomNouveauProfil, creePar: utilisateurId, tableauDroits: [] }
 
             const newProfil = new Profil(nouveauProfil);
             const savedProfil = await newProfil.save();
@@ -32,11 +34,16 @@ module.exports = {
 
             nouveauProfil.modifiePar = req.payload.userId;
             nouveauProfil.dateModification = Date.now();
-            
+
             const filter = { nom: nouveauProfil.nom };
             const updatedProfil = await Profil.findOneAndUpdate(filter, nouveauProfil, {
                 returnOriginal: false
             });
+
+            //Historisation des modifications
+            const champsModifies = historique_ChercheChampsModifies(profilExistant, nouveauProfil);
+            HistoriqueController.save("Profil", champsModifies, req.payload.userId);
+
             res.send(updatedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422

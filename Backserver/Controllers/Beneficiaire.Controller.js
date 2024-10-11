@@ -3,6 +3,8 @@ const Beneficiaire = require('../Models/Beneficiaire.model')
 const { beneficiaireSchema } = require('../helpers/validation_schema');
 const UserController = require('./User.Controller');
 const Joi = require('@hapi/joi');
+const HistoriqueController = require('./Historique.Controller');
+const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 
 module.exports = {
   save: async (req, res, next) => {
@@ -21,7 +23,7 @@ module.exports = {
       const savedBeneficiaire = await nouveauBeneficiaire.save()
       const savedBeneficiaireId = savedBeneficiaire._id
 
-      res.send(savedBeneficiaireId )
+      res.send(savedBeneficiaireId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -40,10 +42,14 @@ module.exports = {
 
       beneficaireRequete.modifiePar = utilisateurReferent._id
       beneficaireRequete.dateModification = Date.now();
-      
+
       const updatedBeneficiaire = await Beneficiaire.findOneAndUpdate(filter, beneficaireRequete, {
         returnOriginal: false
       });
+      //Historisation des modifications
+      const champsModifies = historique_ChercheChampsModifies(beneficiaireExistant, beneficaireRequete)
+      HistoriqueController.save("beneficiaire", champsModifies, utilisateurReferent._id)
+
       res.send(updatedBeneficiaire._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
@@ -61,13 +67,17 @@ module.exports = {
           const filter = { _id: membre._id, antenneId: utilisateurReferent.antenneDefautId };
           const beneficiaireExistant = await Beneficiaire.findOne(filter)
           if (!beneficiaireExistant)
-            throw createError.NotFound(`${beneficaireRequete._id} not found`);
-          
+            throw createError.NotFound(`${membre._id} not found`);
+
           membre.modifiePar = utilisateurReferent._id;
 
           const updatedBeneficiaire = await Beneficiaire.findOneAndUpdate(filter, beneficaireRequete, {
             returnOriginal: false
           });
+          //Historisation des modifications
+          const champsModifies = historique_ChercheChampsModifies(beneficiaireExistant, membre)
+          HistoriqueController.save("beneficiaire", champsModifies, utilisateurReferent._id)
+
           return updatedBeneficiaire._id; //Retour des promesses 
         })
       );

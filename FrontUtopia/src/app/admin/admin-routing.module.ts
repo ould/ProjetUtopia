@@ -9,6 +9,7 @@ import { ProfilComponent } from './gestion-profil/profil.component';
 import { ProfilDetailComponent } from './gestion-profil/profil-detail/profil-detail.component';
 import { GestionReferentielsComponent } from './gestion-referentiels/gestion-referentiels.component';
 import { ReferentielDetailComponent } from './gestion-referentiels/referentiel-detail/referentiel-detail.component';
+import { GestionHistoriqueComponent } from './gestion-historique/gestion-historique.component';
 
 const adminRoutes: Routes = [
   {
@@ -25,6 +26,7 @@ const adminRoutes: Routes = [
           { path: 'modifierProfil/:id', component: ProfilDetailComponent },
           { path: 'referentiel', component: GestionReferentielsComponent },
           { path: 'referentiel/:id', component: ReferentielDetailComponent },
+          { path: 'historique', component: GestionHistoriqueComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }

@@ -24,12 +24,13 @@
         <div class="family-card" *ngFor="let famille of familles$ | async" routerLink="/detailFamille/{{famille._id}}">
           <div class="family-info">
             <h3>{{ famille.nom }}</h3>
-            <p>{{ famille.dateCreation }}</p>
+            <p>{{ famille.dateCreation | date:'dd/MM/yyyy' }}</p>
+            <p><strong>{{ famille.beneficiairesId.length }}</strong> personnes</p>
           </div>
         </div>
       </div>
     </section>
-
+    <br>
   <!-- Familles récemment créées -->
   <section class="recent-families-section" *ngIf="autorisations?.lecture">
     <h2>Familles récemment créées</h2>
@@ -38,11 +39,12 @@
         <div class="family-info">
           <h3>{{ famille.nom }}</h3>
           <p>{{ famille.dateCreation | date:'dd/MM/yyyy' }}</p>
+          <p><strong>{{ famille.beneficiairesId.length }}</strong>  personne(s)</p>
         </div>
       </div>
     </div>
   </section>
-
+  <br><br>
     <!-- Statistiques -->
     <section class="stats-section" *ngIf="autorisations?.lecture">
       <h2>Statistiques du Jour</h2>

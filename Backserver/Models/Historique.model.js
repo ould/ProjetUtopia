@@ -1,3 +1,4 @@
+const object = require('@hapi/joi/lib/types/object')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -15,11 +16,11 @@ const HistoriqueSchema = new Schema({
         required: true
     },
     ancienneValeur: {
-        type: String,
+        type: Object,
         required: true
     },
     nouvelleValeur: {
-      type: String,
+      type: Object,
       required: true,
     },
     utilisateurId: {

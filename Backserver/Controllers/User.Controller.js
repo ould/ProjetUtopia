@@ -3,6 +3,8 @@ const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema');
 const Antenne = require('../Models/Antenne.model');
 const Profil = require('../Models/Profil.model');
+const { historique_ChercheChampsModifies } = require('../helpers/methodes');
+const HistoriqueController = require('./Historique.Controller');
 
 module.exports = {
 
@@ -49,6 +51,11 @@ module.exports = {
             const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
                 returnOriginal: false
             });
+
+            //Historisation des modifications
+            const champsModifies = historique_ChercheChampsModifies(profilExistant, nouveauProfil);
+            HistoriqueController.save("Utilisateur", champsModifies, utilisateurRequete._id );
+
             res.send(updateduser._id)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -118,7 +125,6 @@ module.exports = {
             const nomSectionDemandee = req.params.nomSectionDemandee
             const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
             const tableauDroitSection = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee)
-            console.log(tableauDroitSection)
             res.send(tableauDroitSection)
 
         } catch (error) {

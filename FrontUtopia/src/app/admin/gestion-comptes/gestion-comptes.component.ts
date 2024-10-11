@@ -17,6 +17,7 @@ export class ManageComptesComponent implements OnInit {
   utilisateurs: Utilisateur[] = [];
   nouvelUtilisateur?:Utilisateur
   Antennes: Antenne[] = []
+  isPanelOpen = false; // Initialise le panneau comme fermé
 
   ngOnInit(): void {
 
