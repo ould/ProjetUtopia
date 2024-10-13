@@ -4,6 +4,7 @@ const { familleSchema } = require('../helpers/validation_schema');
 const UserController = require('./User.Controller');
 const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 const HistoriqueController = require('./Historique.Controller');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
   get: async (req, res, next) => {
@@ -17,6 +18,7 @@ module.exports = {
       res.send(familleExistante)
 
     } catch (error) {
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -33,6 +35,7 @@ module.exports = {
       res.send(savedFamille._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -60,6 +63,7 @@ module.exports = {
       res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -78,6 +82,7 @@ module.exports = {
       res.send(listeFamilles)
 
     } catch (error) {
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -96,6 +101,7 @@ module.exports = {
       res.send(listeFamilles)
 
     } catch (error) {
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -109,6 +115,7 @@ module.exports = {
       res.send(familleExistante._id)
 
     } catch (error) {
+      logErreur(error, req?.params?.id)
       next(error)
     }
   }

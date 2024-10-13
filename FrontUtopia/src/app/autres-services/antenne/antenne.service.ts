@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Antenne } from 'src/app/interfaces/antenne';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { LoggerService } from '../logger/logger.service';
 
 @Injectable({

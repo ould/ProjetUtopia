@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Historique } from 'src/app/interfaces/historique';
+import { Historique } from 'src/app/gestionApp/interfaces/historique';
 import { HistoriqueService } from './historique.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-gestion-historique',
@@ -35,6 +36,19 @@ export class GestionHistoriqueComponent implements OnInit {
         this.loading = false;
       }
     );
+
+    this.loading = true;
+    this.historiqueService.getHistoriqueParPage(page, this.itemsPerPage).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la récupération de l’historique', error);
+        this.loading = false; // Assure que l'indicateur de chargement est désactivé même en cas d'erreur
+        return of({ total: 0, historiques: [] }); // Retourne une valeur par défaut pour éviter des erreurs côté vue
+      })
+    ).subscribe((result: { total: number; historiques: Historique[] }) => {
+      this.historiques = result.historiques; // Met à jour la liste des historiques
+      this.totalHistoriques = result.total; // Met à jour le total pour la pagination
+      this.loading = false; // Désactive l'indicateur de chargement après récupération des données
+    });
   }
 
   // Function to handle page change

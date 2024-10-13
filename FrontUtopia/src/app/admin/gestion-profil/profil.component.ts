@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Profil } from './profil';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupComponent } from 'src/app/popup/popup.component';
+import { PopupComponent } from 'src/app/gestionApp/popup/popup.component';
 import { ProfilService } from './profil.service';
 
 @Component({

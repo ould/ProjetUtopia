@@ -6,15 +6,19 @@ const LogSchema = new Schema({
     type: String,
     required: true,
   },
-  importance:{
+  application:{
     type: String,
     required: true,
   },
-  creePar: {
+  type:{
     type: String,
     required: true,
   },
-  dateCreation: {
+  utilisateurId: {
+    type: String,
+    required: true,
+  },
+  date: {
     type: Date,
     required: false,
   }
@@ -23,7 +27,7 @@ const LogSchema = new Schema({
 LogSchema.pre('save', async function (next) {
     try {
       if (this.isNew) {
-        this.dateCreation = Date.now()
+        this.date = Date.now()
       }
       next()
     } catch (error) {

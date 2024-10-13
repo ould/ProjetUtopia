@@ -3,6 +3,7 @@ const { profilSchema } = require('../helpers/validation_schema')
 const Profil = require('../Models/Profil.model');
 const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 const HistoriqueController = require('./Historique.Controller');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
     save: async (req, res, next) => {
@@ -20,6 +21,7 @@ module.exports = {
             res.send(savedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -47,6 +49,7 @@ module.exports = {
             res.send(updatedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -62,6 +65,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -72,6 +76,7 @@ module.exports = {
             res.send(profils);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -84,6 +89,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     }

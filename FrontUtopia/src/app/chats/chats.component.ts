@@ -5,9 +5,9 @@ import {
 } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Chat } from '../interfaces/chat';
+import { Chat } from '../gestionApp/interfaces/chat';
 import { ChatService } from './chat.service';
-import { PopupComponent } from '../popup/popup.component';
+import { PopupComponent } from '../gestionApp/popup/popup.component';
 
 
 @Component({

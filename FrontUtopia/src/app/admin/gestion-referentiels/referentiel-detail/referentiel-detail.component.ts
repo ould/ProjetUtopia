@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Referentiel } from 'src/app/interfaces/referentiel';
+import { Referentiel } from 'src/app/gestionApp/interfaces/referentiel';
 import { ReferentielsService } from '../referentiels.service';
 import { Location } from '@angular/common';
 

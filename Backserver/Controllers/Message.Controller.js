@@ -1,6 +1,7 @@
 const createError = require('http-errors')
 const { messageSchema } = require('../helpers/validation_schema')
 const Message = require('../Models/Message.model')
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
   save: async (req, res, next) => {
@@ -16,6 +17,7 @@ module.exports = {
       res.send(savedMessageIdPers, savedMessageMessage)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -37,6 +39,7 @@ module.exports = {
       res.send(updatedMessage.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -52,6 +55,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -65,6 +69,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   }

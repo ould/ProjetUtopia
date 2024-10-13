@@ -7,8 +7,8 @@ import {
 import { Famille } from './models/famille';
 import { FamilleService } from './famille.service';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
-import { Section } from 'src/app/interfaces/section';
-import { Autorisations } from 'src/app/interfaces/autorisations';
+import { Section } from 'src/app/gestionApp/interfaces/section';
+import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 
 
 @Component({

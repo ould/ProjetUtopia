@@ -7,8 +7,8 @@ import { Membre } from '../models/membre';
 import { forkJoin, switchMap } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
-import { Section } from 'src/app/interfaces/section';
-import { Autorisations } from 'src/app/interfaces/autorisations';
+import { Section } from 'src/app/gestionApp/interfaces/section';
+import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 
 @Component({
   selector: 'app-famille-detail',

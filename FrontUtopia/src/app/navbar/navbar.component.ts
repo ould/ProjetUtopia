@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
-import { Antenne } from '../interfaces/antenne';
+import { Antenne } from '../gestionApp/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Section } from '../interfaces/section';
+import { Section } from '../gestionApp/interfaces/section';
 
 @Component({
   selector: 'app-navbar',

@@ -46,8 +46,7 @@ const profilSchema = Joi.object({
 
 const logSchema = Joi.object({
   message: Joi.string().required(),
-  type: Joi.string().required(),
-  importance: Joi.string().optional()
+  type: Joi.string().required()
 })
 
 const familleSchema = Joi.object({

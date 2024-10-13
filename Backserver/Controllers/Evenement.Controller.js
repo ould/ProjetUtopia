@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const Evenement = require('../Models/Evenement.model');
 const { evenementSchema } = require('../helpers/validation_schema');
 const UserController = require('./User.Controller');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
 
@@ -16,6 +17,7 @@ module.exports = {
             res.send(evenement)
 
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -33,6 +35,7 @@ module.exports = {
             res.send(evenement)
 
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -51,6 +54,7 @@ module.exports = {
             res.send(savedEvent)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -74,6 +78,7 @@ module.exports = {
             res.send(updatedEvent)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -88,6 +93,7 @@ module.exports = {
             res.send(doesExist._id)
 
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     }

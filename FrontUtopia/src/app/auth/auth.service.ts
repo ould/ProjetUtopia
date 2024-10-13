@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {  tap } from 'rxjs/operators';
+import {  catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Login } from '../interfaces/login';
+import { Login } from '../gestionApp/interfaces/login';
 import { environment } from 'src/environments/environment';
 import { Utilisateur } from '../autres-services/utilisateur/utilisateur';
+import { LoggerService } from '../autres-services/logger/logger.service';
 
 
 @Injectable({
@@ -20,20 +21,23 @@ export class AuthService {
 
 
   register(utilisateur: Utilisateur): Observable<boolean> {
-    return this.http.post<boolean>(this.authUrl + "/register", utilisateur, this.httpOptions)
+    return this.http.post<boolean>(this.authUrl + "/register", utilisateur, this.httpOptions).pipe(
+      catchError(this.logger.handleError<boolean>('register'))
+    )
   }
-
 
   login(utilisateur: Utilisateur): Observable<string> {
     return this.http.post<string>(this.authUrl + "/login", utilisateur, this.httpOptions).pipe(
-      tap(token => this.setSession(token))
+      tap(token => this.setSession(token)),
+      catchError(this.logger.handleError<string>('login'))
     )
   }
 
   logout() {
     this.removeSession();
     this.http.get<Login>(this.authUrl + "/logout").pipe(
-      tap(_ => this.removeSession())
+      tap(_ => this.removeSession()),
+      catchError(this.logger.handleError<string>('logout'))
     );
   }
 
@@ -64,5 +68,6 @@ export class AuthService {
   }
 
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private logger:LoggerService) { }
 }

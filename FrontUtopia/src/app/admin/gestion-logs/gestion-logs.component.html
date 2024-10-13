@@ -1,0 +1,40 @@
+<div class="historique-container">
+    <h1>Historique des Modifications</h1>
+  
+    <div *ngIf="loading" class="loading">
+      <p>Chargement en cours...</p>
+    </div>
+  
+    <table *ngIf="!loading && logs.length > 0" class="historique-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Application</th>
+          <th>Message</th>
+          <th>Utilisateur ID</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of logs">
+          <td>{{ log.type }}</td>
+          <td>{{ log.application }}</td>
+          <td>{{ log.message | json  }}</td>
+          <td>{{ log.utilisateurId }}</td>
+          <td>{{ log.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!loading && logs.length === 0">
+      <p>Aucun logs disponible.</p>
+    </div>
+  
+    <!-- Pagination Controls -->
+    <div class="pagination" *ngIf="!loading && totalLogs > itemsPerPage">
+      <button (click)="onPageChange(page - 1)" [disabled]="page === 1">&laquo; Précédent</button>
+      <span>Page {{ page }} sur {{ totalPages }}</span>
+      <button (click)="onPageChange(page + 1)" [disabled]="page === totalPages">Suivant &raquo;</button>
+    </div>
+  </div>
+  

@@ -37,6 +37,8 @@ adminRouter.get('/log/getByUser/', logController.getByUser)
 
 adminRouter.post('/log/', logController.save)
 
+adminRouter.get('/log/getParPage/', logController.getParPage)
+
 //Historique : 
 adminRouter.get('/historique/getParPage/', HistoriqueController.getParPage)
 

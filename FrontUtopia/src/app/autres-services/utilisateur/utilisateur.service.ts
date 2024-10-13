@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map } from 'rxjs';
-import { Antenne } from 'src/app/interfaces/antenne';
-import { Section } from 'src/app/interfaces/section';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
+import { Section } from 'src/app/gestionApp/interfaces/section';
 import { environment } from 'src/environments/environment';
 import { Utilisateur } from './utilisateur';
 import { LoggerService } from '../logger/logger.service';
-import { Autorisations } from 'src/app/interfaces/autorisations';
+import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 import { Droit, DroitPossible } from 'src/app/admin/gestion-profil/profil';
 
 @Injectable({

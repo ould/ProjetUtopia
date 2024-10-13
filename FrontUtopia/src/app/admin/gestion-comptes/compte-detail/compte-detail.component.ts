@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
 import { Location } from '@angular/common';
-import { Antenne } from 'src/app/interfaces/antenne';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';

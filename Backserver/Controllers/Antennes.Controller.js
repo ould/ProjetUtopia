@@ -1,5 +1,6 @@
 const Antenne = require('../Models/Antenne.model');
 const createError = require('http-errors')
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
     getByNom: async (req, res, next) => {
@@ -12,6 +13,7 @@ module.exports = {
           res.send(doesExist)
     
         } catch (error) {
+          logErreur(error, req?.params?.id)
           next(error)
         }
       },
@@ -26,6 +28,7 @@ module.exports = {
           res.send(doesExist)
     
         } catch (error) {
+          logErreur(error, req?.params?.id)
           next(error)
         }
       },
@@ -37,13 +40,10 @@ module.exports = {
           res.send(antennes)
         } catch (error) {
           if (error.isJoi === true) error.status = 422
+          logErreur(error, req?.params?.id)
           next(error)
         }
       },
-
-      update: async (req, res, next) => {
-
-    },
 
     delete: async (req, res, next) => {
         try {
@@ -53,6 +53,7 @@ module.exports = {
             res.send(doesExist.id)
 
         } catch (error) {
+          logErreur(error, req?.params?.id)
             if (error.isJoi === true) error.status = 422
             next(error)
         }

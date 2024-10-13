@@ -1,0 +1,6 @@
+<div *ngIf="messageErreur" class="error-container">
+    <div class="error-message">
+      <span>{{ messageErreur }}</span>
+      <button class="close-btn" (click)="closeAlert()">×</button>
+    </div>
+  </div>

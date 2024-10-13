@@ -5,6 +5,7 @@ const UserController = require('./User.Controller');
 const Joi = require('@hapi/joi');
 const HistoriqueController = require('./Historique.Controller');
 const { historique_ChercheChampsModifies } = require('../helpers/methodes');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
   save: async (req, res, next) => {
@@ -26,6 +27,7 @@ module.exports = {
       res.send(savedBeneficiaireId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -53,6 +55,7 @@ module.exports = {
       res.send(updatedBeneficiaire._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -84,6 +87,7 @@ module.exports = {
       res.send(listeMembresId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -100,6 +104,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   },
@@ -114,6 +119,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
+      logErreur(error, req?.params?.id)
       next(error)
     }
   }

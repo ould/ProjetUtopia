@@ -5,6 +5,7 @@ const Antenne = require('../Models/Antenne.model');
 const Profil = require('../Models/Profil.model');
 const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 const HistoriqueController = require('./Historique.Controller');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
 
@@ -14,6 +15,7 @@ module.exports = {
             res.send(users)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -28,11 +30,11 @@ module.exports = {
             const nouvelUtilisateur = new User(utilisateurRequete)
             const utilisateurSauve = await nouvelUtilisateur.save()
             const utilisateurId = utilisateurSauve._id
-            if (utilisateurRequete._id) throw createError.Conflict(`${utilisateurRequete._id} is already `);
-
+            logInfo("Création utilisateur :" + utilisateurId , req?.params?.id)
             res.send(utilisateurId)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -44,21 +46,27 @@ module.exports = {
             const utilisateurExistant = await User.findOne({ _id: utilisateurRequete._id })
             if (!utilisateurExistant) throw createError.NotFound(`${utilisateurRequete._id} not found`);
 
-            utilisateurRequete.modifiePar = req.payload.userId
-            utilisateurRequete.dateModification = Date.now();
+            const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
+            if(utilisateurExistant.profilId  === profilAdmin._id || utilisateurRequete.profilAdmin === profilAdmin._id){
+                logInfo("Modification d'un profil admin par " + req.payload.userId)                
+            }
+                utilisateurRequete.modifiePar = req.payload.userId
+                utilisateurRequete.dateModification = Date.now();
+    
+                const filter = { _id: utilisateurRequete._id };
+                const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
+                    returnOriginal: false
+                });
+    
+                //Historisation des modifications
+                const champsModifies = historique_ChercheChampsModifies(profilExistant, nouveauProfil);
+                HistoriqueController.save("Utilisateur", champsModifies, utilisateurRequete._id );
 
-            const filter = { _id: utilisateurRequete._id };
-            const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
-                returnOriginal: false
-            });
+                res.send(updateduser._id)
 
-            //Historisation des modifications
-            const champsModifies = historique_ChercheChampsModifies(profilExistant, nouveauProfil);
-            HistoriqueController.save("Utilisateur", champsModifies, utilisateurRequete._id );
-
-            res.send(updateduser._id)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -75,6 +83,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -90,6 +99,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -112,6 +122,7 @@ module.exports = {
             }
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -129,6 +140,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -152,6 +164,7 @@ module.exports = {
             }
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -164,6 +177,7 @@ module.exports = {
             res.send(userDroits)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -178,6 +192,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -200,6 +215,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -217,6 +233,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -251,6 +268,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -263,6 +281,7 @@ module.exports = {
             res.send(isAdmin)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     }

@@ -23,7 +23,7 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
 import { RequeteDetailComponent } from './reporting/requete-detail/requete-detail.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PopupComponent } from './popup/popup.component';
+import { PopupComponent } from './gestionApp/popup/popup.component';
 import { CompteDetailComponent } from './admin/gestion-comptes/compte-detail/compte-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AccueilComponent } from './accueil/accueil.component';
@@ -33,6 +33,8 @@ import { ActionSelectionComponent } from './benevole/action-selection/action-sel
 import { GestionReferentielsComponent } from './admin/gestion-referentiels/gestion-referentiels.component';
 import { ReferentielDetailComponent } from './admin/gestion-referentiels/referentiel-detail/referentiel-detail.component';
 import { GestionHistoriqueComponent } from './admin/gestion-historique/gestion-historique.component';
+import { GestionLogsComponent } from './admin/gestion-logs/gestion-logs.component';
+import { AffichageErreurComponent } from './gestionApp/affichage-erreur/affichage-erreur.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { GestionHistoriqueComponent } from './admin/gestion-historique/gestion-h
     ActionSelectionComponent,
     GestionReferentielsComponent,
     ReferentielDetailComponent,
-    GestionHistoriqueComponent
+    GestionHistoriqueComponent,
+    GestionLogsComponent,
+    AffichageErreurComponent
   ],
   imports: [
     BrowserModule,

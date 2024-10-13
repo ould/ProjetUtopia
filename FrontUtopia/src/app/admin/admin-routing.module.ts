@@ -10,6 +10,7 @@ import { ProfilDetailComponent } from './gestion-profil/profil-detail/profil-det
 import { GestionReferentielsComponent } from './gestion-referentiels/gestion-referentiels.component';
 import { ReferentielDetailComponent } from './gestion-referentiels/referentiel-detail/referentiel-detail.component';
 import { GestionHistoriqueComponent } from './gestion-historique/gestion-historique.component';
+import { GestionLogsComponent } from './gestion-logs/gestion-logs.component';
 
 const adminRoutes: Routes = [
   {
@@ -27,6 +28,7 @@ const adminRoutes: Routes = [
           { path: 'referentiel', component: GestionReferentielsComponent },
           { path: 'referentiel/:id', component: ReferentielDetailComponent },
           { path: 'historique', component: GestionHistoriqueComponent },
+          { path: 'log', component: GestionLogsComponent },
           { path: '', component: AdminDashboardComponent },
         ]
       }

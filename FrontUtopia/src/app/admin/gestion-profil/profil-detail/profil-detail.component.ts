@@ -3,7 +3,7 @@ import { DroitPossible, Profil } from '../profil';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfilService } from '../profil.service';
 import { ActivatedRoute } from '@angular/router';
-import { Section } from 'src/app/interfaces/section';
+import { Section } from 'src/app/gestionApp/interfaces/section';
 import { Location } from '@angular/common';
 
 @Component({

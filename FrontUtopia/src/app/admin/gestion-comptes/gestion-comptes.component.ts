@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
-import { Antenne } from 'src/app/interfaces/antenne';
-import { PopupComponent } from 'src/app/popup/popup.component';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
+import { PopupComponent } from 'src/app/gestionApp/popup/popup.component';
 
 @Component({
   selector: 'app-gestion-comptes',

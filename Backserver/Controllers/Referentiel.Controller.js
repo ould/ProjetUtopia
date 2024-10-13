@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const UserController = require('./User.Controller');
 const Referentiel = require('../Models/Referentiel.model');
 const { referentielSchema } = require('../helpers/validation_schema');
+const { logErreur, logInfo } = require('../helpers/logs');
 
 module.exports = {
 
@@ -14,6 +15,7 @@ module.exports = {
                 throw createError.NotFound(`${id} not found`);
             res.send(referentiel)
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -35,6 +37,7 @@ module.exports = {
                 throw createError.NotFound(`referentiel ${nom} not found`);
             res.send(referentiel.donnees)
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -50,6 +53,7 @@ module.exports = {
                 throw createError.NotFound(`${nom} not found`);
             res.send(referentiel.donnees)
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -61,6 +65,7 @@ module.exports = {
                 throw createError.NotFound(`liste not found`);
             res.send(referentiels)
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -73,6 +78,7 @@ module.exports = {
             const savedHRef = await nouveauReferentiel.save();
             res.send(savedHRef)
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -94,6 +100,7 @@ module.exports = {
             res.send(updatedRef)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
+            logErreur(error, req?.params?.id)
             next(error)
         }
     },
@@ -104,10 +111,11 @@ module.exports = {
             const userReferent = await UserController.getCurrentUser(req, res, next);
             const filtre = { nom: nom, antenneId: userReferent.antenneDefautId }
 
-            const doesExist = await Referentiel.findOneAndDelete(filtre)
-            res.send(doesExist.nom)
+            const doesExist = await Referentiel.findOneAndDelete(filtre);
+            res.send(doesExist.nom);
 
         } catch (error) {
+            logErreur(error, req?.params?.id)
             next(error)
         }
     }

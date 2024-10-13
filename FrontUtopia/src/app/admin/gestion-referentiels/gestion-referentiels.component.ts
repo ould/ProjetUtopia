@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Referentiel } from 'src/app/interfaces/referentiel';
+import { Referentiel } from 'src/app/gestionApp/interfaces/referentiel';
 import { ReferentielsService } from './referentiels.service';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
-import { Antenne } from 'src/app/interfaces/antenne';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

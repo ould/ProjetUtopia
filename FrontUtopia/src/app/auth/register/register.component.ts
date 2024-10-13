@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
-import { Antenne } from 'src/app/interfaces/antenne';
+import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 
 @Component({

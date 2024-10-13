@@ -1,22 +1,34 @@
-const createError = require('http-errors')
-
+const createError = require('http-errors');
+const Log = require('../Models/Log.model')
 
 
 module.exports = {
-  logInfo: async (req, res, next) => {
-    log(req, res, next, nomGroupeAdmin, "Info")
+  logInfo: async (message, utilisateurId) => {
+    log(message, utilisateurId, "Info", "Back")
+  },
+  logErreur: async (message, utilisateurId) => {
+    log(message, utilisateurId, "Erreur", "Back")
   }
 }
 
 
-async function log(req, res, next, nomDroit, message) {
+async function log(message, utilisateurId, type, application) {
   try {
+    let result = {};
+    result.message = message;
+    result.utilisateurId = utilisateurId;
+    result.type = type;
+    result.application = application;
+    result.date = Date.now();
 
-      return next(createError.Unauthorized(message))
+    const log = new Log(result)
+    await log.save()
+    return true;
     
   } catch (error) {
     error.status = 500
-    next(error)
+    console.log(error);
+    throw createError[500](`log error` + error);
   }
 }
 

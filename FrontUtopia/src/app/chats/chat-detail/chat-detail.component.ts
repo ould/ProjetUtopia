@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Chat } from 'src/app/interfaces/chat';
+import { Chat } from 'src/app/gestionApp/interfaces/chat';
 import { Location } from '@angular/common';
 
 @Component({

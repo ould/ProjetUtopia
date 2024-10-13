@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Chat } from '../interfaces/chat';
+import { Chat } from '../gestionApp/interfaces/chat';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -37,7 +37,9 @@ export class ChatService {
       return of();
     }
     const url = `${this.chatUrl}/${idChat}`;
-    return this.http.get<Chat>(url).pipe();
+    return this.http.get<Chat>(url).pipe(
+      catchError(this.logger.handleError<Chat>('getChat'))
+    );
   }
 
   add(newChat: Chat): Observable<Chat> {

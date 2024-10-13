@@ -31,12 +31,17 @@ export class LoginComponent {
         if (originUrl?.length < 1 || originUrl?.includes("logout") ) {
             originUrl = "accueil"
         }
-          this.authService.login(val)
-              .subscribe(
-                  () => {
-                      window.location.href = '/'+originUrl
-                  }
-              );
+          this.authService.login(val).subscribe({
+            next: (result) => {
+              // Redirection uniquement en cas de succès
+             if(result) window.location.href = '/' + originUrl;
+            },
+            error: (err) => {
+              // Gérer l'erreur ici, par exemple afficher un message d'erreur
+              console.error('Erreur lors de la connexion :', err);
+            }
+          });
+          
       }
   }
 
