@@ -15,7 +15,7 @@ module.exports = {
                 throw createError.NotFound(`${id} not found`);
             res.send(referentiel)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel getById",error, req?.params?.id)
             next(error)
         }
     },
@@ -37,7 +37,7 @@ module.exports = {
                 throw createError.NotFound(`referentiel ${nom} not found`);
             res.send(referentiel.donnees)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel getByNom",error, req?.params?.id)
             next(error)
         }
     },
@@ -53,7 +53,7 @@ module.exports = {
                 throw createError.NotFound(`${nom} not found`);
             res.send(referentiel.donnees)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel getGlobalByNom",error, req?.params?.id)
             next(error)
         }
     },
@@ -65,7 +65,7 @@ module.exports = {
                 throw createError.NotFound(`liste not found`);
             res.send(referentiels)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel getAll",error, req?.params?.id)
             next(error)
         }
     },
@@ -78,7 +78,7 @@ module.exports = {
             const savedHRef = await nouveauReferentiel.save();
             res.send(savedHRef)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel save",error, req?.params?.id)
             next(error)
         }
     },
@@ -100,7 +100,7 @@ module.exports = {
             res.send(updatedRef)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel update",error, req?.params?.id)
             next(error)
         }
     },
@@ -115,7 +115,7 @@ module.exports = {
             res.send(doesExist.nom);
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Referentiel delete",error, req?.params?.id)
             next(error)
         }
     }

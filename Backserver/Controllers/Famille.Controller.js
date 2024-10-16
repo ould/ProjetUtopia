@@ -18,7 +18,7 @@ module.exports = {
       res.send(familleExistante)
 
     } catch (error) {
-      logErreur(error, req?.params?.id)
+      logErreur("Famille get",error, req?.params?.id)
       next(error)
     }
   },
@@ -35,7 +35,7 @@ module.exports = {
       res.send(savedFamille._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Famille save",error, req?.params?.id)
       next(error)
     }
   },
@@ -63,7 +63,7 @@ module.exports = {
       res.send(updatedFamille.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Famille update",error, req?.params?.id)
       next(error)
     }
   },
@@ -82,7 +82,7 @@ module.exports = {
       res.send(listeFamilles)
 
     } catch (error) {
-      logErreur(error, req?.params?.id)
+      logErreur("Famille search",error, req?.params?.id)
       next(error)
     }
   },
@@ -100,7 +100,7 @@ module.exports = {
       res.send(listeFamilles)
 
     } catch (error) {
-      logErreur(error, req?.params?.id)
+      logErreur("Famille recentes",error, req?.params?.id)
       next(error)
     }
   },
@@ -114,7 +114,7 @@ module.exports = {
       res.send(familleExistante._id)
 
     } catch (error) {
-      logErreur(error, req?.params?.id)
+      logErreur("Famille delete",error, req?.params?.id)
       next(error)
     }
   }

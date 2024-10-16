@@ -10,7 +10,7 @@ module.exports = {
             const historique = await Historique.find();
             res.send(historique)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique getAll",error, req?.params?.id)
             next(error)
         }
     },
@@ -24,7 +24,7 @@ module.exports = {
                 throw createError.NotFound(`${id} not found`);
             res.send(historique)
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique getById",error, req?.params?.id)
             next(error)
         }
     },
@@ -42,7 +42,7 @@ module.exports = {
             res.send(historique)
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique getByEntiteeId",error, req?.params?.id)
             next(error)
         }
     },
@@ -68,7 +68,7 @@ module.exports = {
             res.send({total, historiques})
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique getParPage",error, req?.params?.id)
             next(error)
         }
     },
@@ -85,7 +85,7 @@ module.exports = {
             });
             return true
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique save",error, req?.params?.id)
             return false
         }
     },
@@ -100,7 +100,7 @@ module.exports = {
             res.send(doesExist._id)
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Historique delete",error, req?.params?.id)
             next(error)
         }
     }

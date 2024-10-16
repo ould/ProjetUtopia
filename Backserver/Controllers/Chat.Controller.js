@@ -24,7 +24,7 @@ module.exports = {
       res.send(savedChat)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Chat save",error, req?.params?.id)
       next(error)
     }
   },
@@ -46,7 +46,7 @@ module.exports = {
       res.send(updatedChat.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Chat update",error, req?.params?.id)
       next(error)
     }
   },
@@ -62,7 +62,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Chat get",error, req?.params?.id)
       next(error)
     }
   },
@@ -78,7 +78,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Chat search",error, req?.params?.id)
       next(error)
     }
   },
@@ -93,7 +93,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Chat delete",error, req?.params?.id)
       next(error)
     }
   }

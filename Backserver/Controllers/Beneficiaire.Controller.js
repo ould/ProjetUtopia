@@ -27,7 +27,7 @@ module.exports = {
       res.send(savedBeneficiaireId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Beneficiaire save",error, req?.params?.id)
       next(error)
     }
   },
@@ -55,7 +55,7 @@ module.exports = {
       res.send(updatedBeneficiaire._id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Beneficiaire update",error, req?.params?.id)
       next(error)
     }
   },
@@ -87,7 +87,7 @@ module.exports = {
       res.send(listeMembresId)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Beneficiaire updateMultiple",error, req?.params?.id)
       next(error)
     }
   },
@@ -104,7 +104,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Beneficiaire getById",error, req?.params?.id)
       next(error)
     }
   },
@@ -119,7 +119,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Beneficiaire delete",error, req?.params?.id)
       next(error)
     }
   }

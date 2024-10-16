@@ -17,7 +17,7 @@ module.exports = {
             res.send(evenement)
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Evenement getById",error, req?.params?.id)
             next(error)
         }
     },
@@ -35,7 +35,7 @@ module.exports = {
             res.send(evenement)
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Evenement getByEntiteeId",error, req?.params?.id)
             next(error)
         }
     },
@@ -54,7 +54,7 @@ module.exports = {
             res.send(savedEvent)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Evenement save",error, req?.params?.id)
             next(error)
         }
     },
@@ -78,7 +78,7 @@ module.exports = {
             res.send(updatedEvent)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Evenement update",error, req?.params?.id)
             next(error)
         }
     },
@@ -93,7 +93,7 @@ module.exports = {
             res.send(doesExist._id)
 
         } catch (error) {
-            logErreur(error, req?.params?.id)
+            logErreur("Evenement delete",error, req?.params?.id)
             next(error)
         }
     }

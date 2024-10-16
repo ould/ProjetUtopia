@@ -4,21 +4,22 @@ const Log = require('../Models/Log.model')
 
 module.exports = {
   logInfo: async (message, utilisateurId) => {
-    log(message, utilisateurId, "Info", "Back")
+    log("Back",message, utilisateurId, "Info", "Back")
   },
-  logErreur: async (message, utilisateurId) => {
-    log(message, utilisateurId, "Erreur", "Back")
+  logErreur: async (operation ,message, utilisateurId) => {
+    log(operation,message, utilisateurId, "Erreur", "Back")
   }
 }
 
 
-async function log(message, utilisateurId, type, application) {
+async function log(operation,message, utilisateurId, type, application) {
   try {
     let result = {};
-    result.message = message;
-    result.utilisateurId = utilisateurId;
-    result.type = type;
-    result.application = application;
+    result.message = message  ?? "Inconnu";
+    result.operation = operation  ?? "Inconnu";
+    result.utilisateurId = utilisateurId ?? "Inconnu";
+    result.type = type  ?? "Inconnu";
+    result.application = application  ?? "Inconnu";
     result.date = Date.now();
 
     const log = new Log(result)

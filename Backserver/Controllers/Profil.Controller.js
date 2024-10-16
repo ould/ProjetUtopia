@@ -21,7 +21,7 @@ module.exports = {
             res.send(savedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Profil save",error, req?.params?.id)
             next(error)
         }
     },
@@ -49,7 +49,7 @@ module.exports = {
             res.send(updatedProfil);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Profil update",error, req?.params?.id)
             next(error)
         }
     },
@@ -65,7 +65,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Profil get",error, req?.params?.id)
             next(error)
         }
     },
@@ -76,7 +76,7 @@ module.exports = {
             res.send(profils);
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Profil getAll",error, req?.params?.id)
             next(error)
         }
     },
@@ -89,7 +89,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Profil delete",error, req?.params?.id)
             next(error)
         }
     }

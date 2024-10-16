@@ -13,7 +13,7 @@ module.exports = {
           res.send(doesExist)
     
         } catch (error) {
-          logErreur(error, req?.params?.id)
+          logErreur("Antenne getByNom",error, req?.params?.id)
           next(error)
         }
       },
@@ -28,7 +28,7 @@ module.exports = {
           res.send(doesExist)
     
         } catch (error) {
-          logErreur(error, req?.params?.id)
+          logErreur("Antenne getById",error, req?.params?.id)
           next(error)
         }
       },
@@ -40,7 +40,7 @@ module.exports = {
           res.send(antennes)
         } catch (error) {
           if (error.isJoi === true) error.status = 422
-          logErreur(error, req?.params?.id)
+          logErreur("Antenne getAll",error, req?.params?.id)
           next(error)
         }
       },
@@ -53,7 +53,7 @@ module.exports = {
             res.send(doesExist.id)
 
         } catch (error) {
-          logErreur(error, req?.params?.id)
+          logErreur("Antenne delete",error, req?.params?.id)
             if (error.isJoi === true) error.status = 422
             next(error)
         }

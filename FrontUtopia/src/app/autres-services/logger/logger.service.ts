@@ -12,7 +12,7 @@ export class LoggerService {
   public handleError<T>(operation = 'operation', publique = false, result?: T) {
     return (error: any): Observable<T> => {
 
-      this.log(`${operation} failed: ${error.message} ${error?.error?.error?.message}`, publique);
+      this.log(`${operation} failed: ${error.message} ${error?.error?.error?.message}`, publique, operation);
       
       this.erreurService.setErreur("Erreur : Veuillez contacter votre administrateur.");
 
@@ -21,9 +21,9 @@ export class LoggerService {
     };
   }
 
-  public log(message: string, publique: boolean) {
-    if (publique) this.logService.logPublic(message, "Erreur").subscribe()
-    else this.logService.log(message, "Erreur").subscribe()
+  public log(message: string, publique: boolean, operation:string) {
+    if (publique) this.logService.logPublic(message, "Erreur", operation).subscribe()
+    else this.logService.log(message, "Erreur", operation).subscribe()
   }
 
 

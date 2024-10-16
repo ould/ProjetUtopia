@@ -49,6 +49,7 @@ const logSchema = Joi.object({
   message: Joi.string().required(),
   type: Joi.string().required(),
   application: Joi.string().required(),
+  operation: Joi.string().required(),
   utilisateurId: Joi.string().optional(),
   date: Joi.date().optional(),
   

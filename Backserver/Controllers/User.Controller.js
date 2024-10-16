@@ -15,7 +15,7 @@ module.exports = {
             res.send(users)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getAll",error, req?.params?.id)
             next(error)
         }
     },
@@ -34,7 +34,7 @@ module.exports = {
             res.send(utilisateurId)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur save",error, req?.params?.id)
             next(error)
         }
     },
@@ -66,7 +66,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur update",error, req?.params?.id)
             next(error)
         }
     },
@@ -83,7 +83,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getById",error, req?.params?.id)
             next(error)
         }
     },
@@ -99,7 +99,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getCurrentUser",error, req?.params?.id)
             next(error)
         }
     },
@@ -122,7 +122,7 @@ module.exports = {
             }
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur accesSection",error, req?.params?.id)
             next(error)
         }
     },
@@ -140,7 +140,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getDroitsSection",error, req?.params?.id)
             next(error)
         }
     },
@@ -164,7 +164,7 @@ module.exports = {
             }
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur isProfile",error, req?.params?.id)
             next(error)
         }
     },
@@ -177,7 +177,7 @@ module.exports = {
             res.send(userDroits)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getUserDroits",error, req?.params?.id)
             next(error)
         }
     },
@@ -192,7 +192,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur delete",error, req?.params?.id)
             next(error)
         }
     },
@@ -215,7 +215,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getAntennesUser",error, req?.params?.id)
             next(error)
         }
     },
@@ -233,7 +233,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur getAntennesDefautUser",error, req?.params?.id)
             next(error)
         }
     },
@@ -268,7 +268,7 @@ module.exports = {
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur changeAntennesUser",error, req?.params?.id)
             next(error)
         }
     },
@@ -281,7 +281,7 @@ module.exports = {
             res.send(isAdmin)
         } catch (error) {
             if (error.isJoi === true) error.status = 422
-            logErreur(error, req?.params?.id)
+            logErreur("Utilisateur isAdmin",error, req?.params?.id)
             next(error)
         }
     }

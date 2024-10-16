@@ -17,7 +17,7 @@ module.exports = {
       res.send(savedMessageIdPers, savedMessageMessage)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Message save",error, req?.params?.id)
       next(error)
     }
   },
@@ -39,7 +39,7 @@ module.exports = {
       res.send(updatedMessage.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Message update",error, req?.params?.id)
       next(error)
     }
   },
@@ -55,7 +55,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Message get",error, req?.params?.id)
       next(error)
     }
   },
@@ -69,7 +69,7 @@ module.exports = {
 
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      logErreur(error, req?.params?.id)
+      logErreur("Message delete",error, req?.params?.id)
       next(error)
     }
   }
