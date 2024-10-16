@@ -107,9 +107,9 @@ module.exports = {
 
     delete: async (req, res, next) => {
         try {
-            const nom = req.params.nom
+            const id = req.params.id
             const userReferent = await UserController.getCurrentUser(req, res, next);
-            const filtre = { nom: nom, antenneId: userReferent.antenneDefautId }
+            const filtre = { _id: id, antenneId: userReferent.antenneDefautId }
 
             const doesExist = await Referentiel.findOneAndDelete(filtre);
             res.send(doesExist.nom);

@@ -45,8 +45,13 @@ const profilSchema = Joi.object({
 })
 
 const logSchema = Joi.object({
+  _id: Joi.string().hex().length(24).optional(),
   message: Joi.string().required(),
-  type: Joi.string().required()
+  type: Joi.string().required(),
+  application: Joi.string().required(),
+  utilisateurId: Joi.string().optional(),
+  date: Joi.date().optional(),
+  
 })
 
 const familleSchema = Joi.object({

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { LoggerService } from 'src/app/autres-services/logger/logger.service';
 import { Log } from 'src/app/gestionApp/interfaces/log';
 import { Section } from 'src/app/gestionApp/interfaces/section';
@@ -10,16 +10,46 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LogsService {
-  private apiUrl = environment.apiUrl + Section.admin + '/log';
+  private apiUrlAdmin = environment.apiUrl + Section.admin + '/log';
+  private apiUrlPublique = environment.apiUrl + 'public/log';
+  private apiUrl = environment.apiUrl + 'log';
 
-  constructor(private http: HttpClient,
-    private logger: LoggerService
-  ) {}
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
+  };
+
+  constructor(private http: HttpClient
+  ) { }
 
   getLogParPage(page: number, itemsPerPage: number): Observable<{ total: number, logs: Log[] }> {
     const params = { page: page.toString(), limit: itemsPerPage.toString() };
-    return this.http.get<{ total: number, logs: Log[] }>(`${this.apiUrl + "/getParPage"}`, { params }).pipe(
-      catchError(this.logger.handleError<{ total: number, logs: Log[] }>('getLogParPage'))
+    return this.http.get<{ total: number, logs: Log[] }>(`${this.apiUrlAdmin + "/getParPage"}`, { params }).pipe(
+      catchError(error => {
+        console.log(error);
+        return of({ total: 0, logs: [] }); 
+      })
     )
+  }
+
+  logPublic(message: string, type: string): Observable<boolean> {
+    const log: Log = { message: message, type: type, application: "Front", utilisateurId: "Public" };
+    console.log("rrr")
+    return this.http.post<boolean>(`${this.apiUrlPublique}`, log, this.httpOptions).pipe(
+      catchError(error => {
+        console.log("Erreur log : " + message);
+        console.log(error);
+        return of(false); 
+      })
+    );
+  }
+
+  log(message: string, type: string): Observable<boolean> {
+    const log: Log = { message: message, type: type, application: "Front" };
+    return this.http.post<boolean>(`${this.apiUrl}`, log, this.httpOptions).pipe(
+      catchError(error => {
+        console.log("Erreur log : " + message );
+        console.log(error);
+        return of(false); 
+      }))
   }
 }

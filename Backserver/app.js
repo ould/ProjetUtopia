@@ -50,12 +50,12 @@ app.use('/api/message', verifyAccessToken, haveDroits, messageRouter) //TODO fai
 app.use('/api/antenne', verifyAccessToken, antenneRouter)
 app.use('/api/selfUtilisateur', verifyAccessToken, selfUserRouter)
 app.use('/api/referentiel', verifyAccessToken, referentielRouter)
+app.use('/api/log', verifyAccessToken, logRouter)
 
 //Routes publiques
 app.use('/api/auth', AuthRoute)
 app.use('/api/public', publicRouter)
 app.use('/api/initialise', initialiseRouter)
-app.use('/api/log', logRouter)
 
 
 app.get('/api', async (req, res, next) => {

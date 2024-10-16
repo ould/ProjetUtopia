@@ -5,6 +5,6 @@ const publicRouter = express.Router()
 
 publicRouter.get('/antenne/getAll/', AntennesController.getAll) 
 
-publicRouter.post('/Logs/', logController.save)
+publicRouter.post('/log/', logController.save)
 
 module.exports =  publicRouter

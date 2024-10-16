@@ -57,7 +57,7 @@ export class FamilleService {
     }
     const url = `${this.familleUrl}`;
     return this.http.get<Famille[]>(`${url}/search/${term}`).pipe(
-      catchError(this.logger.handleError<Famille[]>('searchFamilles', []))
+      catchError(this.logger.handleError<Famille[]>('searchFamilles'))
     );
   }
 

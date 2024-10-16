@@ -89,7 +89,6 @@ module.exports = {
 
   recentes: async (req, res, next) => {
     try {
-      console.log("test")
       const userReferent = await UserController.getCurrentUser(req, res, next)
 
       const filter = {"antenneId": userReferent.antenneDefautId };

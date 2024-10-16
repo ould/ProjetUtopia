@@ -23,11 +23,7 @@ export class ChatService {
       return of([]);
     }
     return this.http.get<Chat[]>(this.chatUrl + "/search/" + term, this.httpOptions).pipe(
-      tap(x => x.length ?
-        this.logger.log(`found famille matching "${term}"`) :
-        this.logger.log(`no famille matching "${term}"`)),
-        tap(x => this.logger.log(` "${x[0]._id}"`)),
-      catchError(this.logger.handleError<Chat[]>('searchChats', []))
+      catchError(this.logger.handleError<Chat[]>('searchChats'))
     );
   }
 
