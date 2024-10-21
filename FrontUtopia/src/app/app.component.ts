@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +10,6 @@ export class AppComponent {
   title = 'Utopia56 App';
   active = 1;
 
-  constructor(public AuthService: AuthService) {}
+  constructor() {}
 
 }

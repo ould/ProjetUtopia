@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
-import { LoggerService } from 'src/app/autres-services/logger/logger.service';
 import { Log } from 'src/app/gestionApp/interfaces/log';
 import { Section } from 'src/app/gestionApp/interfaces/section';
 import { environment } from 'src/environments/environment';

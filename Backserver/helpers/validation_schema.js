@@ -1,176 +1,219 @@
-const Joi = require('@hapi/joi')
+const Joi = require('@hapi/joi');
 
-//Validations entre API et Front (different de la validation en base de données => models)
-// En resumé, ce que le back doit recevoir pour accepter l'objet 
+// Validations entre API et Front (différent de la validation en base de données => models)
 
 const authSchema = Joi.object({
-  email: Joi.string().email().lowercase().required(),
-  password: Joi.string().min(2).required(),
-
+  email: Joi.string().email().lowercase().required().messages({
+    'string.email': '"email" doit être une adresse email valide',
+    'string.empty': '"email" ne peut pas être vide',
+    'any.required': '"email" est un champ requis'
+  }),
+  password: Joi.string().min(2).required().messages({
+    'string.min': '"password" doit contenir au moins 2 caractères',
+    'string.empty': '"password" ne peut pas être vide',
+    'any.required': '"password" est un champ requis'
+  }),
   passwordConfirm: Joi.string().optional(),
-  profilId: Joi.array().optional(),
-  profilId: Joi.array().optional(),
+  profilId: Joi.array().items(Joi.string().hex().length(24)).optional().messages({
+    'array.base': '"profilId" doit être un tableau de chaînes',
+    'string.hex': 'Chaque "profilId" doit être un identifiant valide'
+  }),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
-  antennes: Joi.array().optional()
-})
+  antennes: Joi.array().items(Joi.string().hex().length(24)).optional()
+});
 
 const userSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  prenom: Joi.string().required(),
-  email: Joi.string().email().lowercase().required(),
-  
+  nom: Joi.string().required().messages({
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
+  }),
+  prenom: Joi.string().required().messages({
+    'string.empty': '"prenom" ne peut pas être vide',
+    'any.required': '"prenom" est un champ requis'
+  }),
+  email: Joi.string().email().lowercase().required().messages({
+    'string.email': '"email" doit être une adresse email valide',
+    'string.empty': '"email" ne peut pas être vide',
+    'any.required': '"email" est un champ requis'
+  }),
   password: Joi.string().min(2).optional(),
-  profilId: Joi.string().optional(),
-  antennes: Joi.array().optional(),
-  antenneDefautId: Joi.string().optional()
-})
+  profilId: Joi.string().hex().length(24).optional(),
+  antennes: Joi.array().items(Joi.string().hex().length(24)).optional(),
+  antenneDefautId: Joi.string().hex().length(24).optional()
+});
 
 const profilSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
+  nom: Joi.string().required().messages({
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
+  }),
   tableauDroits: Joi.array().items(
     Joi.object({
-      section: Joi.string().required(),
-      drtois: Joi.string().optional()
+      section: Joi.string().required().messages({
+        'string.empty': '"section" ne peut pas être vide',
+        'any.required': '"section" est un champ requis'
+      }),
+      droits: Joi.string().optional()
     })
-  ).required(),
-
+  ).required().messages({
+    'array.base': '"tableauDroits" doit être un tableau',
+    'any.required': '"tableauDroits" est un champ requis'
+  }),
   commentaire: Joi.string().optional(),
-  creePar: Joi.string().optional(),
+  creePar: Joi.string().hex().length(24).optional(),
   dateCreation: Joi.date().optional(),
-  modifiePar: Joi.string().optional(),
+  modifiePar: Joi.string().hex().length(24).optional(),
   dateModification: Joi.date().optional()
-})
+});
 
 const logSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  message: Joi.string().required(),
-  type: Joi.string().required(),
-  application: Joi.string().required(),
-  operation: Joi.string().required(),
-  utilisateurId: Joi.string().optional(),
-  date: Joi.date().optional(),
-  
-})
+  message: Joi.string().required().messages({
+    'string.empty': '"message" ne peut pas être vide',
+    'any.required': '"message" est un champ requis'
+  }),
+  type: Joi.string().required().messages({
+    'string.empty': '"type" ne peut pas être vide',
+    'any.required': '"type" est un champ requis'
+  }),
+  application: Joi.string().required().messages({
+    'string.empty': '"application" ne peut pas être vide',
+    'any.required': '"application" est un champ requis'
+  }),
+  operation: Joi.string().required().messages({
+    'string.empty': '"operation" ne peut pas être vide',
+    'any.required': '"operation" est un champ requis'
+  }),
+  utilisateurId: Joi.string().hex().length(24).optional(),
+  date: Joi.date().optional()
+});
 
 const familleSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().min(5).required(),
-  beneficiairesId : Joi.array().required(),
-  
+  nom: Joi.string().min(5).required().messages({
+    'string.min': '"nom" doit contenir au moins 5 caractères',
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
+  }),
+  beneficiairesId: Joi.array().items(Joi.string().hex().length(24)).required().messages({
+    'array.base': '"beneficiairesId" doit être un tableau',
+    'any.required': '"beneficiairesId" est un champ requis'
+  }),
   composition: Joi.string().optional(),
-  antenneId:Joi.string().optional(),
+  antenneId: Joi.string().hex().length(24).optional(),
   commentaire: Joi.string().optional()
-})
+});
 
 const beneficiaireSchema = Joi.object({
-  nom: Joi.string().required(),
-
   _id: Joi.string().hex().length(24).optional(),
-  parentId:Joi.string().optional(),
-  type: Joi.string().optional(),
-  
+  nom: Joi.string().required().messages({
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
+  }),
   prenom: Joi.string().optional(),
+  parentId: Joi.string().hex().length(24).optional(),
+  type: Joi.string().optional(),
   nationalite: Joi.string().optional(),
-  ddn: Joi.string().optional(),
+  ddn: Joi.date().optional().messages({
+    'date.base': '"ddn" doit être une date valide'
+  }),
   situation: Joi.string().optional(),
   procedure: Joi.string().optional(),
   email: Joi.string().email().lowercase().optional(),
   telephone: Joi.string().optional(),
   commentaire: Joi.string().optional(),
-  antenneId:Joi.string().optional()
-  
-})
+  antenneId: Joi.string().hex().length(24).optional()
+});
 
 const chatSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  nom: Joi.string().required(),
-  messagesId: Joi.array().required(),
-  droitsLecturePersonneId: Joi.array().required(),
-  droitsEcriturePersonneId: Joi.array().required(),
-  antenneId:Joi.string().optional()
-})
+  nom: Joi.string().required().messages({
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
+  }),
+  messagesId: Joi.array().items(Joi.string().hex().length(24)).required().messages({
+    'array.base': '"messagesId" doit être un tableau',
+    'any.required': '"messagesId" est un champ requis'
+  }),
+  droitsLecturePersonneId: Joi.array().items(Joi.string().hex().length(24)).required().messages({
+    'array.base': '"droitsLecturePersonneId" doit être un tableau',
+    'any.required': '"droitsLecturePersonneId" est un champ requis'
+  }),
+  droitsEcriturePersonneId: Joi.array().items(Joi.string().hex().length(24)).required().messages({
+    'array.base': '"droitsEcriturePersonneId" doit être un tableau',
+    'any.required': '"droitsEcriturePersonneId" est un champ requis'
+  }),
+  antenneId: Joi.string().hex().length(24).optional()
+});
 
 const messageSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
-  idPersonne: Joi.string().required(),
-  message: Joi.string().required(),
-  date: Joi.date().required(),
-  antenne:Joi.string().optional()
-})
-
+  idPersonne: Joi.string().hex().length(24).required().messages({
+    'string.empty': '"idPersonne" ne peut pas être vide',
+    'any.required': '"idPersonne" est un champ requis'
+  }),
+  message: Joi.string().required().messages({
+    'string.empty': '"message" ne peut pas être vide',
+    'any.required': '"message" est un champ requis'
+  }),
+  date: Joi.date().required().messages({
+    'date.base': '"date" doit être une date valide',
+    'any.required': '"date" est un champ requis'
+  }),
+  antenne: Joi.string().hex().length(24).optional()
+});
 
 const referentielSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
   nom: Joi.string().required().messages({
-    'string.base': `"nom" doit être un type de chaîne`,
-    'string.empty': `"nom" ne peut pas être vide`,
-    'any.required': `"nom" est un champ requis`
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
   }),
-  donnees: Joi.array().items(Joi.string()).optional().messages({
-    'array.base': `"donnees" doit être un tableau`,
-    'string.base': `"donnees" doit contenir des chaînes`
+  donnees: Joi.array().items(Joi.string()).optional(),
+  creePar: Joi.string().hex().length(24).required().messages({
+    'string.empty': '"creePar" ne peut pas être vide',
+    'any.required': '"creePar" est un champ requis'
   }),
-  creePar: Joi.string().required().messages({
-    'string.base': `"creePar" doit être un type de chaîne`,
-    'string.empty': `"creePar" ne peut pas être vide`,
-    'any.required': `"creePar" est un champ requis`
-  }),
-  dateCreation: Joi.date().optional().messages({
-    'date.base': `"dateCreation" doit être une date valide`
-  }),
-  dateModification: Joi.date().optional().messages({
-    'date.base': `"dateModification" doit être une date valide`
-  }),
-  modifiePar: Joi.string().optional().messages({
-    'string.base': `"modifiePar" doit être un type de chaîne`
-  })
+  dateCreation: Joi.date().optional(),
+  dateModification: Joi.date().optional(),
+  modifiePar: Joi.string().hex().length(24).optional()
 });
 
 const evenementSchema = Joi.object({
   _id: Joi.string().hex().length(24).optional(),
   entitee: Joi.string().required().messages({
-      'string.base': `"entitee" doit être un type de chaîne`,
-      'string.empty': `"entitee" ne peut pas être vide`,
-      'any.required': `"entitee" est un champ requis`
+    'string.empty': '"entitee" ne peut pas être vide',
+    'any.required': '"entitee" est un champ requis'
   }),
-  entiteeId: Joi.string().required().messages({
-      'string.base': `"entiteeId" doit être un type de chaîne`,
-      'string.empty': `"entiteeId" ne peut pas être vide`,
-      'any.required': `"entiteeId" est un champ requis`
+  entiteeId: Joi.string().hex().length(24).required().messages({
+    'string.empty': '"entiteeId" ne peut pas être vide',
+    'any.required': '"entiteeId" est un champ requis'
   }),
   nom: Joi.string().required().messages({
-      'string.base': `"nom" doit être un type de chaîne`,
-      'string.empty': `"nom" ne peut pas être vide`,
-      'any.required': `"nom" est un champ requis`
+    'string.empty': '"nom" ne peut pas être vide',
+    'any.required': '"nom" est un champ requis'
   }),
-  date: Joi.string().optional().messages({
-      'string.base': `"date" doit être un type de chaîne`
+  date: Joi.date().optional(),
+  commentaire: Joi.string().optional(),
+  creePar: Joi.string().hex().length(24).required().messages({
+    'string.empty': '"creePar" ne peut pas être vide',
+    'any.required': '"creePar" est un champ requis'
   }),
-  commentaire: Joi.string().optional().messages({
-      'string.base': `"commentaire" doit être un type de chaîne`
-  }),
-  creePar: Joi.string().required().messages({
-      'string.base': `"creePar" doit être un type de chaîne`,
-      'string.empty': `"creePar" ne peut pas être vide`,
-      'any.required': `"creePar" est un champ requis`
-  }),
-  dateCreation: Joi.date().optional().messages({
-      'date.base': `"dateCreation" doit être une date valide`
-  })
+  dateCreation: Joi.date().optional()
 });
 
 module.exports = {
   authSchema,
-  beneficiaireSchema,
-  familleSchema,
   userSchema,
-  chatSchema,
-  messageSchema,
   profilSchema,
   logSchema,
+  familleSchema,
+  beneficiaireSchema,
+  chatSchema,
+  messageSchema,
   referentielSchema,
   evenementSchema
-}
+};
