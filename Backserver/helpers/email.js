@@ -3,7 +3,9 @@ const nodemailer = require('nodemailer');
 class EmailHelper {
     constructor() {
         this.transporter = nodemailer.createTransport({
-            service: 'gmail', // Change this to your email provider
+            service: process.env.MAIL_HOST, 
+            port: process.env.MAIL_PORT,
+            secure: true,
             auth: {
                 user: 'your-email@gmail.com', // Replace with your email
                 pass: 'your-email-password', // Replace with your email password
