@@ -1,9 +1,9 @@
-import nodemailer from 'nodemailer';
+const {nodemailer}=  require('nodemailer');
 
-module.exports = {
+module.exports ={
 
     envoyerMail: async (to, subject, text) => {
-        sendEmail(to, subject, text);
+        await sendEmail(to, subject, text);
     },
 };
 
