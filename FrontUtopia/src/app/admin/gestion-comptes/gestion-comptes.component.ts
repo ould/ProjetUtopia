@@ -54,7 +54,13 @@ export class ManageComptesComponent implements OnInit {
   }
 
 
-  reinitialiseMotDePasse(utilisateur: Utilisateur): void {
+  reinitialiseMotDePasse(utilisateur: Utilisateur) {
+    if(utilisateur._id === undefined) {
+      return false;
+    }
+    this.utilisateurService.reinitaliseMotDePasse(utilisateur._id).subscribe();
+    //TODO : Afficher un message de confirmation
+  return true;
   }
 
 

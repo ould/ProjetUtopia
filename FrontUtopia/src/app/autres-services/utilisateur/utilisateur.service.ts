@@ -96,6 +96,12 @@ export class UtilisateurService {
     )
   }
 
+  reinitaliseMotDePasse(id: string): Observable<Boolean> {
+    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/reinitialiseMotDePasse/" + id, "", this.httpOptions).pipe(
+      catchError(this.logger.handleError<any>('reinitaliseMotDePasse'))
+    )
+  }
+
   private mapDroitsToAutorisations(section: string, droit: Droit): Autorisations {
 
     const autorisations: Autorisations = {

@@ -6,6 +6,7 @@ const Profil = require('../Models/Profil.model');
 const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 const HistoriqueController = require('./Historique.Controller');
 const { logErreur, logInfo } = require('../helpers/logs');
+const { envoyerMail } = require('../helpers/email');
 
 module.exports = {
 
@@ -282,6 +283,23 @@ module.exports = {
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             logErreur("Utilisateur isAdmin",error, req?.params?.id)
+            next(error)
+        }
+    },
+
+
+    reinitialiseMotDePasse: async (req, res, next) => {
+        try {
+            const idUser = req.payload.userId
+            const utilisateurExistant = await User.findOne({ _id: idUser })
+            if (!utilisateurExistant) {
+                throw createError.NotFound(`${idUser} not found`);
+            }
+            envoyerMail(utilisateurExistant.email, "Réinitialisation de mot de passe", "Votre mot de passe a été réinitialisé. Veuillez le modifier")
+            res.send(true)
+        } catch (error) {
+            if (error.isJoi === true) error.status = 422
+            logErreur("Utilisateur reinitialiseMotDePasse",error, req?.params?.id)
             next(error)
         }
     }
