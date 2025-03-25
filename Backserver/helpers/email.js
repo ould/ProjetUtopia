@@ -1,4 +1,5 @@
-const {nodemailer}=  require('nodemailer');
+const nodemailer=  require('nodemailer');
+const {logInfo, logErreur} = require('./logs');
 
 module.exports ={
 
@@ -7,19 +8,21 @@ module.exports ={
     },
 };
 
+const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST, 
+    port: process.env.MAIL_PORT,
+    secure: true,
+    auth: {
+        user:  process.env.MAIL_USER, 
+        pass:  process.env.MAIL_MDP,
+    },
+});
+
 async function sendEmail(to, subject, text, html = null) {
-    let transporter = nodemailer.createTransport({
-        service: process.env.MAIL_HOST, 
-        port: process.env.MAIL_PORT,
-        secure: true,
-        auth: {
-            user:  process.env.MAIL_USER, 
-            pass:  process.env.MAIL_MDP,
-        },
-    });
+   
     const mailOptions = {
         from:  process.env.MAIL_EXP, 
-        to: "denishellal@gmail.com",
+        to,
         subject,
         text,
         html,
@@ -27,10 +30,10 @@ async function sendEmail(to, subject, text, html = null) {
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response);
+        logInfo('Email sent: ' + info.response);
         return info;
     } catch (error) {
-        console.error('Error sending email:', error);
+        logErreur('Error sending email:' + error);
         throw error;
     }
 }

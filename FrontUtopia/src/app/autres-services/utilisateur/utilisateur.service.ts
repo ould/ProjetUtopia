@@ -97,7 +97,7 @@ export class UtilisateurService {
   }
 
   reinitaliseMotDePasse(id: string): Observable<Boolean> {
-    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/reinitialiseMotDePasse/" + id, "", this.httpOptions).pipe(
+    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/reinitialiseMotDePasse", "", this.httpOptions).pipe(
       catchError(this.logger.handleError<any>('reinitaliseMotDePasse'))
     )
   }

@@ -295,6 +295,7 @@ module.exports = {
             if (!utilisateurExistant) {
                 throw createError.NotFound(`${idUser} not found`);
             }
+            logInfo("Réinitialisation de mot de passe pour " + utilisateurExistant.email)   
             envoyerMail(utilisateurExistant.email, "Réinitialisation de mot de passe", "Votre mot de passe a été réinitialisé. Veuillez le modifier")
             res.send(true)
         } catch (error) {
