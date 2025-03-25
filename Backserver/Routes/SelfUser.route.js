@@ -15,7 +15,7 @@ selfUserRouter.get('/droits/:nomSectionDemandee', userController.getDroitsSectio
 
 selfUserRouter.post('/antenneDefaut', userController.changeAntennesUser)
 
-selfUserRouter.post('/reinitialiseMotDePasse', userController.reinitialiseMotDePasse)
+selfUserRouter.post('/demandeReinitialiseMotDePasseByEmail', userController.demandeReinitialiseMotDePasseByEmail)
 
 
 module.exports = selfUserRouter

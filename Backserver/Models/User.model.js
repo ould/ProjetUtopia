@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
+const e = require('express')
 
 const UserSchema = new Schema({
   email: {
@@ -39,6 +40,10 @@ const UserSchema = new Schema({
   },
   tentativeConnexion: { //TODO a mettre en place 
     type: Number,
+    required: false,
+  },
+  emailValide: {
+    type: Boolean,
     required: false,
   },
   derniereModificationMdp: {

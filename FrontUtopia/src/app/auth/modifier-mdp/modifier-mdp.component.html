@@ -1,0 +1,25 @@
+<div class="modifier-mdp-container">
+    <h2>Modifier le mot de passe</h2>
+    
+    <!-- Message de succès -->
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+    </div>
+    
+    <!-- Message d'échec -->
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
+    
+    <form (ngSubmit)="updatePassword()">
+        <div class="form-group">
+            <label for="newPassword">Nouveau mot de passe</label>
+            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirmer le mot de passe</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirmez votre mot de passe" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>

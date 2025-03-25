@@ -13,6 +13,16 @@ function historique_ChercheChampsModifies(ancienObjet, nouveauObjet) {
     }
 }
 
+function generationMotAleatoire(longeur) {
+    const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789*_";
+    let mot = "";
+    for (let i = 0; i < longeur; i++) {
+        mot += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return mot;
+}
+
 module.exports = {
-    historique_ChercheChampsModifies
+    historique_ChercheChampsModifies,
+    generationMotAleatoire
 }

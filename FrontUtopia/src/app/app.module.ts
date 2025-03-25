@@ -35,6 +35,7 @@ import { ReferentielDetailComponent } from './admin/gestion-referentiels/referen
 import { GestionHistoriqueComponent } from './admin/gestion-historique/gestion-historique.component';
 import { GestionLogsComponent } from './admin/gestion-logs/gestion-logs.component';
 import { AffichageErreurComponent } from './gestionApp/affichage-erreur/affichage-erreur.component';
+import { ModifierMdpComponent } from './auth/modifier-mdp/modifier-mdp.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AffichageErreurComponent } from './gestionApp/affichage-erreur/affichag
     ReferentielDetailComponent,
     GestionHistoriqueComponent,
     GestionLogsComponent,
-    AffichageErreurComponent
+    AffichageErreurComponent,
+    ModifierMdpComponent
   ],
   imports: [
     BrowserModule,
