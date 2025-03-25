@@ -8,10 +8,10 @@
 
 # Node
 /node_modules
-Backserver/node_modules
+/Backserver/node_modules
 npm-debug.log
 yarn-error.log
-.env
+/Backserver/.env
 
 # IDEs and editors
 .idea/
