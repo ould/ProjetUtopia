@@ -96,17 +96,6 @@ export class UtilisateurService {
     )
   }
 
-  demandeReinitialiseMotDePasseByEmail(email: string): Observable<Boolean> {
-    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/demandeReinitialiseMotDePasseByEmail", {email}, this.httpOptions).pipe(
-      catchError(this.logger.handleError<any>('demandeReinitialiseMotDePasseByEmail'))
-    )
-  }
-  
-  accepteReinitialisationMotDePasse(hash:string, mdp:string): Observable<Boolean> {
-    return this.http.post<Boolean>(this.selfUtilisateurUrl + "/accepteReinitialisationMotDePasse", {hash,mdp} , this.httpOptions).pipe(
-      catchError(this.logger.handleError<any>('accepteReinitialisationMotDePasse'))
-    )
-  }
 
   private mapDroitsToAutorisations(section: string, droit: Droit): Autorisations {
 

@@ -8,6 +8,4 @@ publicRouter.get('/antenne/getAll/', AntennesController.getAll)
 
 publicRouter.post('/log/', logController.save)
 
-publicRouter.post('/accepteReinitialisationMotDePasse/', userController.accepteReinitialisationMotDePasse)
-
 module.exports =  publicRouter

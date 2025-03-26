@@ -25,12 +25,12 @@ export class RegisterComponent implements OnInit{
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)],Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)],
       passwordConfirm: ['', [Validators.required]],
       antennes: ['', [Validators.required]]
     });
 
-  }
+  }//TODO : mettre message erreur si mot de passe pas assez fort
   ngOnInit(): void {
     this.antenneService.getAllPublic().subscribe(
       data => {

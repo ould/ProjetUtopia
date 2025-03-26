@@ -1,4 +1,4 @@
-<div class="modifier-mdp-container">
+newMdpForm<div class="modifier-mdp-container">
     <h2>Modifier le mot de passe</h2>
     
     <!-- Message de succès -->
@@ -7,19 +7,24 @@
     </div>
     
     <!-- Message d'échec -->
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    <div *ngIf="afficherErreur && errorMessage" class="alert alert-danger" role="alert">
         {{ errorMessage }}
     </div>
     
-    <form (ngSubmit)="updatePassword()">
-        <div class="form-group">
+  <form [formGroup]="newMdpForm">
+    <fieldset>
+        <div class="form-field">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
+            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" formControlName="newPassword" required>
         </div>
-        <div class="form-group">
+        <div class="form-field">
             <label for="confirmPassword">Confirmer le mot de passe</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirmez votre mot de passe" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirmez votre mot de passe" formControlName="confirmPassword" required>
         </div>
-        <button type="submit" class="btn btn-primary">Modifier</button>
-    </form>
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" 
+                (click)="updatePassword()">Modifier</button>
+    </div>
+</form>
 </div>

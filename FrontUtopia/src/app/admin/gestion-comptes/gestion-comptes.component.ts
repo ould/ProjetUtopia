@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth/auth.service';
 import { AntenneService } from 'src/app/autres-services/antenne/antenne.service';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 import { UtilisateurService } from 'src/app/autres-services/utilisateur/utilisateur.service';
@@ -58,7 +59,7 @@ export class ManageComptesComponent implements OnInit {
     if(utilisateur._id === undefined) {
       return false;
     }
-    this.utilisateurService.demandeReinitialiseMotDePasseByEmail(utilisateur.email).subscribe();
+    this.authService.demandeReinitialiseMotDePasseByEmail(utilisateur.email).subscribe();
     //TODO : Afficher un message de confirmation
   return true;
   }
@@ -94,6 +95,7 @@ export class ManageComptesComponent implements OnInit {
   constructor(
     private utilisateurService: UtilisateurService,
     private antenneService: AntenneService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private fb: FormBuilder) { }
 }

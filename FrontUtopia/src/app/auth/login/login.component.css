@@ -19,6 +19,20 @@ legend {
   margin-bottom: 15px;
 }
 
+button.button-link {
+  background: none;
+  border: none;
+  color: var(--utopia-primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1em;
+}
+
+button.button-link:hover {
+  color: darken(var(--utopia-primary-color), 10%);
+}
+
 label {
   display: block;
   margin-bottom: 5px;

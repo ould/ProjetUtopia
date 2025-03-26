@@ -8,8 +8,8 @@ const authSchema = Joi.object({
     'string.empty': '"email" ne peut pas être vide',
     'any.required': '"email" est un champ requis'
   }),
-  password: Joi.string().min(2).required().messages({
-    'string.min': '"password" doit contenir au moins 2 caractères',
+  password: Joi.string().min(8).required().messages({
+    'string.min': '"password" doit contenir au moins 8 caractères',
     'string.empty': '"password" ne peut pas être vide',
     'any.required': '"password" est un champ requis'
   }),
@@ -38,7 +38,7 @@ const userSchema = Joi.object({
     'string.empty': '"email" ne peut pas être vide',
     'any.required': '"email" est un champ requis'
   }),
-  password: Joi.string().min(2).optional(),
+  password: Joi.string().min(8).optional(),
   profilId: Joi.string().hex().length(24).optional(),
   antennes: Joi.array().items(Joi.string().hex().length(24)).optional(),
   antenneDefautId: Joi.string().hex().length(24).optional()

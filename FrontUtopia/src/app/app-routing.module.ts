@@ -13,6 +13,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { authGuard } from './auth/auth.guard';
 import { AccueilComponent } from './accueil/accueil.component';
 import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
+import { ModifierMdpComponent } from './auth/modifier-mdp/modifier-mdp.component';
+import { MdpOublieComponent } from './auth/mdp-oublie/mdp-oublie.component';
 
 
 // path case sensitive
@@ -30,6 +32,8 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'reinitialisation-mot-de-passe/:id', component: ModifierMdpComponent },
+  { path: 'mdp-oublie', component: MdpOublieComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'accueil', component: AccueilComponent },
   { path: '**', component: AccueilComponent },

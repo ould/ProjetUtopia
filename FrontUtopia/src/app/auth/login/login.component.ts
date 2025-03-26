@@ -44,6 +44,7 @@ export class LoginComponent {
           
       }
   }
-
-  
+  mdpOublie() {
+    window.location.href = '/mdp-oublie';
+  }
 }

@@ -93,7 +93,14 @@ UserSchema.pre('save', async function (next) {
 
 UserSchema.pre('updateOne', async function (next) {
   try {
-      this.dateModification = Date.now()
+    const update = this.getUpdate();
+    if (update['password']) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(update.password, salt);
+      update.password = hashedPassword;
+      update.derniereModificationMdp = Date.now();
+    }
+    update.dateModification = Date.now()
     next()
   } catch (error) {
     next(error)

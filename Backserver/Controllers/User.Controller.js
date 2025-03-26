@@ -1,14 +1,11 @@
 const createError = require('http-errors')
-const moment = require('moment');
 const User = require('../Models/User.model')
 const { userSchema } = require('../helpers/validation_schema');
 const Antenne = require('../Models/Antenne.model');
 const Profil = require('../Models/Profil.model');
-const { historique_ChercheChampsModifies, generationMotAleatoire } = require('../helpers/methodes');
+const { historique_ChercheChampsModifies } = require('../helpers/methodes');
 const HistoriqueController = require('./Historique.Controller');
 const { logErreur, logInfo } = require('../helpers/logs');
-const { envoyerMail } = require('../helpers/email');
-const {LienTemp, OperationEnum} = require('../Models/LienTemporaire.model');
 
 module.exports = {
 
@@ -53,19 +50,19 @@ module.exports = {
             if(utilisateurExistant.profilId  === profilAdmin._id || utilisateurRequete.profilAdmin === profilAdmin._id){
                 logInfo("Modification d'un profil admin par " + req.payload.userId)                
             }
-                utilisateurRequete.modifiePar = req.payload.userId
-                utilisateurRequete.dateModification = Date.now();
+            utilisateurRequete.modifiePar = req.payload.userId
+            utilisateurRequete.dateModification = Date.now();
     
-                const filter = { _id: utilisateurRequete._id };
-                const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
+            const filter = { _id: utilisateurRequete._id };
+            const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
                     returnOriginal: false
                 });
     
-                //Historisation des modifications
-                const champsModifies = historique_ChercheChampsModifies(profilExistant, nouveauProfil);
-                HistoriqueController.save("Utilisateur", champsModifies, utilisateurRequete._id );
+            //Historisation des modifications
+            const champsModifies = historique_ChercheChampsModifies(utilisateurExistant, utilisateurRequete);
+            HistoriqueController.save("Utilisateur", champsModifies, utilisateurRequete._id );
 
-                res.send(updateduser._id)
+            res.send(updateduser._id)
 
         } catch (error) {
             if (error.isJoi === true) error.status = 422
@@ -290,58 +287,8 @@ module.exports = {
     },
 
 
-    demandeReinitialiseMotDePasseByEmail: async (req, res, next) => {
-        try {
-            const idUser = req.payload?.userId ?? "0"
-            const emailUserAModifier = req.body.email
-            const utilisateurExistant = await User.findOne({ email: emailUserAModifier })
-            if (!utilisateurExistant) {
-                logInfo("Mauvaise réinitialisation de mot de passe pour " + emailUserAModifier)  
-                return res.send(true) // Pas de message d'erreur pour eviter de donner des infos sur les utilisateurs
-            }
-            logInfo("Réinitialisation de mot de passe pour " + utilisateurExistant.email)  
 
-            let hashTemporaire = generationMotAleatoire(16)
-            let lien = process.env.URL_FRONT+ "/reinitialisation-mot-de-passe/" + hashTemporaire
-            
-            let dateExpiration = moment(Date.now()).add(30, 'm').toDate();
 
-            let lienTemporaire = new LienTemp({ dateExpiration: dateExpiration, hash: hashTemporaire, cibleId: utilisateurExistant._id, creePar: idUser , operation : OperationEnum.REINITIALISATION_MDP})
-            lienTemporaire.save()
-
-            envoyerMail(utilisateurExistant.email, "Réinitialisation de mot de passe", "Votre demande de réinitialisation de mot de passe est prise en compte. Veuillez cliquer sur le lien suivant pour le modifier : " + lien)
-
-            res.send(true)
-        } catch (error) {
-            logErreur("Utilisateur reinitialiseMotDePasse",error, req?.params?.id)
-            next(error)
-        }
-    },
-
-    accepteReinitialisationMotDePasse: async (req, res, next) => {
-        try {
-            const hash = req.body.hash
-            const nouveauMdp = req.body.nouveauMdp
-            const lienTemporaire = await LienTemp.findOne({ hash: hash })
-            if (!lienTemporaire || lienTemporaire.operation !== LienTemp.OperationEnum.REINITIALISATION_MDP || lienTemporaire.dateExpiration < Date.now()) {
-                return res.send(false)
-            }
-            const utilisateurExistant = await User.findOne({ _id: lienTemporaire.cibleId })
-            if (!utilisateurExistant) {
-                return res.send(false)
-            }
-
-            utilisateurExistant.motDePasse = nouveauMdp
-            utilisateurExistant.modifiePar = lienTemporaire.creePar
-            utilisateurExistant.dateModification = Date.now()
-            utilisateurExistant.save()
-            lienTemporaire.delete()
-
-            res.send(true)
-        } catch (error) {
-            logErreur("Utilisateur reinitialiseMotDePasse",error, req?.params?.id)
-            next(error)
-        }
-    },
+    
 
 }
