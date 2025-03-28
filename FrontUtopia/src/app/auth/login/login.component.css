@@ -19,6 +19,19 @@ legend {
   margin-bottom: 15px;
 }
 
+.form-field .align-left {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: var(--utopia-secondary-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-field .align-left:hover {
+  color: darken(var(--utopia-secondary-color), 10%);
+}
+
 button.button-link {
   background: none;
   border: none;

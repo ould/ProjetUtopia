@@ -1,0 +1,55 @@
+/* Style pour la page de mot de passe oublié */
+.mdp-oublie-container {
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--utopia-background-color);
+    border: 2px solid var(--utopia-primary-color);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.mdp-oublie-container h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--utopia-primary-color);
+    margin-bottom: 10px;
+}
+
+.mdp-oublie-container p {
+    font-size: 1em;
+    color: var(--utopia-secondary-color);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--utopia-primary-color);
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--utopia-primary-color);
+    border-radius: 4px;
+}
+
+button.btn-submit {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--utopia-background-color);
+    background-color: var(--utopia-primary-color);
+    transition: background-color 0.3s ease;
+}
+
+button.btn-submit:hover {
+    background-color: darken(var(--utopia-primary-color), 10%);
+}

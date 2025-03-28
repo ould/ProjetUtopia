@@ -14,7 +14,7 @@ import { authGuard } from './auth/auth.guard';
 import { AccueilComponent } from './accueil/accueil.component';
 import { CalendrierComponent } from './benevole/calendrier/calendrier.component';
 import { ModifierMdpComponent } from './auth/modifier-mdp/modifier-mdp.component';
-import { MdpOublieComponent } from './auth/mdp-oublie/mdp-oublie.component';
+import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 
 
 // path case sensitive

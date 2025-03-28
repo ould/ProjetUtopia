@@ -31,8 +31,7 @@ export class LogsService {
   }
 
   logPublic(message: string, type: string, operation:string): Observable<boolean> {
-    const log: Log = { message: message, type: type, application: "Front", utilisateurId: "Public", operation: operation };
-    console.log("rrr")
+    const log: Log = { message: message, type: type, application: "Front", utilisateurId: "000000000000000000002456", operation: operation };
     return this.http.post<boolean>(`${this.apiUrlPublique}`, log, this.httpOptions).pipe(
       catchError(error => {
         console.log("Erreur log : " + message);

@@ -44,7 +44,7 @@ module.exports = {
     save: async (req, res, next) => {
         try {
             const result = await logSchema.validateAsync(req.body)
-            result.utilisateurId = req.payload.userId;
+            result.utilisateurId = req?.payload?.userId ?? "000000000000000000002456";
             result.application = "Front";
             result.date = Date.now();
 
