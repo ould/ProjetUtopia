@@ -52,6 +52,7 @@ export class ManageComptesComponent implements OnInit {
       this.utilisateurService.addUtilisateur(newUtilisateur).subscribe(
         (response) => {
           this.utilisateurs.push(newUtilisateur);
+          alert('Utilisateur ajouté avec succès !');
           location.reload();
         },
         (error) => {

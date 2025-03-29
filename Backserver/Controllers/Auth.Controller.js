@@ -144,7 +144,6 @@ module.exports = {
       const hash = req.body.hash
       let userCibleId = await CheckEtDeleteLienTemporaire(hash, OperationEnum.CONFIRMATION_EMAIL)
       if (!userCibleId) {
-        logInfo("Confirmation de mail non valide " + userCibleId)
         return res.send(false)
       }
       const utilisateurExistant = await User.findOne({ _id: userCibleId })

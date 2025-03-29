@@ -21,6 +21,7 @@ export class SessionService {
 
 
   public setSession(authResult: any) {
+    this.removeSession();
     localStorage.setItem('user_name', authResult.utilisateur.nom);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem("expires_at", authResult.expiresAt);

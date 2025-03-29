@@ -67,7 +67,12 @@ export class CompteDetailComponent implements OnInit {
       this.utilisateur.profilId = this.updateUtilisateurForm.get('profil')?.value;
 
       this.utilisateurService.updateUtilisateur(this.utilisateur).subscribe({
-        
+        next: (response) => {
+          this.location.back();
+        },
+        error: (err) => {
+          alert('Une erreur est survenue lors de la mise à jour de l\'utilisateur.');
+        }
       });
     }
   }
