@@ -1,13 +1,13 @@
 import {inject} from '@angular/core';
 import { Router } from '@angular/router';
 
-import {AuthService} from './auth.service';
+import { SessionService } from './session.service';
 
 export const authGuard = () => {
-  const authService = inject(AuthService);
+  const sessionService = inject(SessionService);
   const router = inject(Router);
   
-  if (authService.isLoggedIn()) {
+  if (sessionService.isLoggedIn()) {
     return true;
   }
   var baseUrl = window.location.href.split('/')[3];

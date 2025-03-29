@@ -4,7 +4,7 @@
 
     <div class="form-field">
       <label for="nom" class="form-label">Nom :</label>
-      <input type="text" class="form-control" id="nom" formControlName="nom" required minlength="3">
+      <input type="text" class="form-control" id="nom" formControlName="nom">
       <div *ngIf="newUtilisateurForm.get('nom')?.invalid && newUtilisateurForm.get('nom')?.touched" class="error-message">
         Le nom est requis et doit contenir au moins 3 caractères.
       </div>

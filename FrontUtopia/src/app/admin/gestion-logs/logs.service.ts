@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { SessionService } from 'src/app/auth/session.service';
 import { Log } from 'src/app/gestionApp/interfaces/log';
 import { Section } from 'src/app/gestionApp/interfaces/section';
 import { environment } from 'src/environments/environment';
@@ -18,7 +20,12 @@ export class LogsService {
   };
 
   constructor(private http: HttpClient
-  ) { }
+    , private sessionService : SessionService ) { }
+
+  log(message: string, operation:string) {
+    if (this.sessionService.isLoggedIn()) this.logPrive(message, "Erreur", operation).subscribe()
+    else this.logPublic(message, "Erreur", operation).subscribe()
+  }
 
   getLogParPage(page: number, itemsPerPage: number): Observable<{ total: number, logs: Log[] }> {
     const params = { page: page.toString(), limit: itemsPerPage.toString() };
@@ -41,7 +48,7 @@ export class LogsService {
     );
   }
 
-  log(message: string, type: string, operation:string): Observable<boolean> {
+  logPrive(message: string, type: string, operation:string): Observable<boolean> {
     const log: Log = { message: message, type: type, application: "Front", operation: operation};
     return this.http.post<boolean>(`${this.apiUrl}`, log, this.httpOptions).pipe(
       catchError(error => {

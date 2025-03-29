@@ -6,6 +6,7 @@ import { Login } from '../gestionApp/interfaces/login';
 import { environment } from 'src/environments/environment';
 import { Utilisateur } from '../autres-services/utilisateur/utilisateur';
 import { LoggerService } from '../autres-services/logger/logger.service';
+import { SessionService } from './session.service';
 
 
 @Injectable({
@@ -15,7 +16,6 @@ export class AuthService {
 
   private authUrl = environment.apiUrl + 'auth';
   
-
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
@@ -42,46 +42,23 @@ export class AuthService {
 
   login(utilisateur: Utilisateur): Observable<string> {
     return this.http.post<string>(this.authUrl + "/login", utilisateur, this.httpOptions).pipe(
-      tap(token => this.setSession(token)),
+      tap(token => this.sessionService.setSession(token)),
       catchError(this.logger.handleError<string>('login'))
     )
   }
 
   logout() {
-    this.removeSession();
+    this.sessionService.removeSession();
     this.http.get<Login>(this.authUrl + "/logout").pipe(
-      tap(_ => this.removeSession()),
+      tap(_ => this.sessionService.removeSession()),
       catchError(this.logger.handleError<string>('logout'))
     );
   }
 
-  private setSession(authResult: any) {
-    localStorage.setItem('user_name', authResult.utilisateur.nom);
-    localStorage.setItem('id_token', authResult.accessToken);
-    localStorage.setItem("expires_at", authResult.expiresAt);
-  }
 
-  public isLoggedIn() {
-    return Date.now() <  this.getExpiration() ;
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration ?? '0');
-    return expiresAt;
-  }
-
-  private removeSession() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("user_name");
-    localStorage.removeItem("expires_at");
-  }
 
   constructor(
     private http: HttpClient,
-    private logger:LoggerService) { }
+    private logger:LoggerService,
+    private sessionService : SessionService) { }
 }

@@ -13,7 +13,7 @@ export class LoggerService {
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      this.log(`${operation} failed: ${error.message} ${error?.error?.error?.message}`, operation);
+      this.logService.log(`${operation} failed: ${error.message} ${error?.error?.error?.message}`, operation);
       
       this.erreurService.setErreur("Erreur : Veuillez contacter votre administrateur.");
 
@@ -22,14 +22,7 @@ export class LoggerService {
     };
   }
 
-  public log(message: string, operation:string) {
-    if (this.authService.isLoggedIn()) this.logService.log(message, "Erreur", operation).subscribe()
-    else this.logService.logPublic(message, "Erreur", operation).subscribe()
-  }
-
-
   constructor(private erreurService: ErreurService,
-    private logService: LogsService,
-    private authService: AuthService,
+    private logService: LogsService
   ) { }
 }

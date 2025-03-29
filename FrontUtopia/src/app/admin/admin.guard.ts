@@ -1,13 +1,13 @@
 import {inject} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth/auth.service';
+import { SessionService } from '../auth/session.service';
 
 export const adminGuard = () => {
-  const authService = inject(AuthService);
+  const sessionService = inject(SessionService);
   const router = inject(Router);
 
-  if (authService.isLoggedIn()) {
+  if (sessionService.isLoggedIn()) {
     
     return true;
   }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.service';
 import { Antenne } from '../gestionApp/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Section } from '../gestionApp/interfaces/section';
+import { SessionService } from '../auth/session.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   section = Section
   antenneDefautForm: FormGroup;
   public activeTab: String = ''
-  public isLoggedIn: boolean = this.AuthService.isLoggedIn()
+  public isLoggedIn: boolean = this.sessionService.isLoggedIn()
   public utilisateurMultipleAntennes: Boolean = false
   public antennesUtilisateur: Antenne[] = []
 
@@ -123,7 +123,7 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  constructor(public AuthService: AuthService,
+  constructor(private sessionService: SessionService,
     public utilisateurService: UtilisateurService,
     private fb: FormBuilder) {
 

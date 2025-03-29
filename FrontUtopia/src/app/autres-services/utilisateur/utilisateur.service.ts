@@ -8,7 +8,7 @@ import { Utilisateur } from './utilisateur';
 import { LoggerService } from '../logger/logger.service';
 import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 import { Droit, DroitPossible } from 'src/app/admin/gestion-profil/profil';
-import { AuthService } from 'src/app/auth/auth.service';
+import { SessionService } from 'src/app/auth/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +91,7 @@ export class UtilisateurService {
   }
 
   getDroits(section: string): Observable<Autorisations> {
-    if(this.authService.isLoggedIn()){  
+    if(this.sessionService.isLoggedIn()){  
       return this.http.get<Droit>(this.selfUtilisateurUrl + "/droits/" + section).pipe(
         map(droit => this.mapDroitsToAutorisations(section, droit)),
         catchError(this.logger.handleError<Autorisations>('getDroits'))
@@ -145,5 +145,5 @@ export class UtilisateurService {
   constructor(
     private http: HttpClient,
     private logger: LoggerService,
-  private authService: AuthService) { }
+private sessionService:SessionService) { }
 }
