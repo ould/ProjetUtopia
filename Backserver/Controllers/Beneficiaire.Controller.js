@@ -45,9 +45,7 @@ module.exports = {
       beneficaireRequete.modifiePar = utilisateurReferent._id
       beneficaireRequete.dateModification = Date.now();
 
-      const updatedBeneficiaire = await Beneficiaire.findOneAndUpdate(filter, beneficaireRequete, {
-        returnOriginal: false
-      });
+      const updatedBeneficiaire = await Beneficiaire.updateOne(filter, beneficaireRequete);
       //Historisation des modifications
       const champsModifies = historique_ChercheChampsModifies(beneficiaireExistant, beneficaireRequete)
       HistoriqueController.save("beneficiaire", champsModifies, utilisateurReferent._id)
@@ -74,9 +72,7 @@ module.exports = {
 
           membre.modifiePar = utilisateurReferent._id;
 
-          const updatedBeneficiaire = await Beneficiaire.findOneAndUpdate(filter, beneficaireRequete, {
-            returnOriginal: false
-          });
+          const updatedBeneficiaire = await Beneficiaire.updateOne(filter, beneficaireRequete);
           //Historisation des modifications
           const champsModifies = historique_ChercheChampsModifies(beneficiaireExistant, membre)
           HistoriqueController.save("beneficiaire", champsModifies, utilisateurReferent._id)

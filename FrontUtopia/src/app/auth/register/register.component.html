@@ -1,38 +1,64 @@
+<form [formGroup]="newUtilisateurForm" (ngSubmit)="register()">
+  <fieldset>
+    <legend>Nouveau utilisateur</legend>
 
-  <form [formGroup]="newUtilisateurForm">
-    <fieldset>
-        <legend>Nouveau utilisateur</legend>
-        <div class="form-field">
-          <label for="nom" class="form-label">Nom :</label>
-          <input type="text" class="form-control" id="nom" formControlName="nom">
-        </div>
-        <div class="form-field">
-          <label for="prenom" class="form-label">Prénom :</label>
-          <input type="text" class="form-control" id="prenom" formControlName="prenom">
-        </div>
-        <div class="form-field">
-            <label>Email:</label>
-            <input name="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-field">
-            <label>Mot de passe:</label>
-            <input name="password" class="form-control" formControlName="password" 
-                   type="password">
-        </div>
-        <div class="form-field">
-          <label>Confirmez votre mot de passe:</label>
-          <input name="passwordConfirm" class="form-control" formControlName="passwordConfirm" 
-                 type="password">
+    <div class="form-field">
+      <label for="nom" class="form-label">Nom :</label>
+      <input type="text" class="form-control" id="nom" formControlName="nom" required minlength="3">
+      <div *ngIf="newUtilisateurForm.get('nom')?.invalid && newUtilisateurForm.get('nom')?.touched" class="error-message">
+        Le nom est requis et doit contenir au moins 3 caractères.
       </div>
-      <div class="form-field">
-        <label for="role-utilisateur">Antenne principale :</label>
-      <select class="custom-select"  formControlName="antennes">
-      <option *ngFor="let antenne of antennes" value="{{antenne._id}}">{{antenne.nom}}</option>
-    </select>
     </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="register()">Enregistrer</button>
+
+    <div class="form-field">
+      <label for="prenom" class="form-label">Prénom :</label>
+      <input type="text" class="form-control" id="prenom" formControlName="prenom" required minlength="3">
+      <div *ngIf="newUtilisateurForm.get('prenom')?.invalid && newUtilisateurForm.get('prenom')?.touched" class="error-message">
+        Le prénom est requis et doit contenir au moins 3 caractères.
+      </div>
     </div>
+
+    <div class="form-field">
+      <label for="email" class="form-label">Email :</label>
+      <input type="email" class="form-control" id="email" formControlName="email" required>
+      <div *ngIf="newUtilisateurForm.get('email')?.invalid && newUtilisateurForm.get('email')?.touched" class="error-message">
+        Un email valide est requis.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="password" class="form-label">Mot de passe :</label>
+      <input type="password" class="form-control" id="password" formControlName="password" required minlength="8">
+      <div *ngIf="newUtilisateurForm.get('password')?.invalid && newUtilisateurForm.get('password')?.touched" class="error-message">
+        Le mot de passe est requis (minimum 8 caractères, incluant au moins un chiffre, une lettre et un caractère spécial).
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="passwordConfirm" class="form-label">Confirmez votre mot de passe :</label>
+      <input type="password" class="form-control" id="passwordConfirm" formControlName="passwordConfirm" required>
+      <div *ngIf="newUtilisateurForm.get('passwordConfirm')?.invalid && newUtilisateurForm.get('passwordConfirm')?.touched" class="error-message">
+        La confirmation du mot de passe est requise.
+      </div>
+      <div *ngIf="newUtilisateurForm.hasError('passwordMismatch') && newUtilisateurForm.get('passwordConfirm')?.touched" class="error-message">
+        Les mots de passe ne correspondent pas.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="antenneDefautId" class="form-label">Antenne principale :</label>
+      <select id="antenneDefautId" class="custom-select" formControlName="antenneDefautId" required>
+        <option value="" disabled selected>Veuillez sélectionner une antenne</option>
+        <option *ngFor="let antenne of antennes" [value]="antenne._id">{{ antenne.nom }}</option>
+      </select>
+      <div *ngIf="newUtilisateurForm.get('antennes')?.invalid && newUtilisateurForm.get('antennes')?.touched" class="error-message">
+        Veuillez sélectionner une antenne.
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-buttons">
+    <button type="submit" class="button button-primary" [disabled]="newUtilisateurForm.invalid">Enregistrer</button>
+
+  </div>
 </form>

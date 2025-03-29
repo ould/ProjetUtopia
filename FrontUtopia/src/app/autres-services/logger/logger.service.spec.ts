@@ -53,9 +53,9 @@ describe('LoggerService', () => {
     const operation = 'Test operation';
 
     // Simulez le comportement de logPublic pour retourner un observable
-    logServiceMock.logPublic.and.returnValue(of(null));
+    logServiceMock.logPublic.and.returnValue(of(true));
 
-    service.log(message, true, operation);
+    service.log(message, operation);
 
     // Vérifiez que logPublic a été appelé avec les bons arguments
     expect(logServiceMock.logPublic).toHaveBeenCalledWith(message, "Erreur", operation);
@@ -66,9 +66,9 @@ describe('LoggerService', () => {
     const operation = 'Test operation';
 
     // Simulez le comportement de log pour retourner un observable
-    logServiceMock.log.and.returnValue(of(null));
+    logServiceMock.log.and.returnValue(of(true));
 
-    service.log(message, false, operation);
+    service.log(message, operation);
 
     // Vérifiez que log a été appelé avec les bons arguments
     expect(logServiceMock.log).toHaveBeenCalledWith(message, "Erreur", operation);

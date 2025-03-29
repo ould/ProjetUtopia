@@ -30,8 +30,8 @@ export class ProfilComponent implements OnInit {
       this.profilService.ajouterProfil(newProfil).subscribe(
         (response) => {
           console.log('Profile created successfully', response);
-          this.profils.push(response); // Optionally update the list of profiles
-          newType.value = ''; // Clear the input field
+          this.profils.push(response); 
+          newType.value = ''; 
         },
         (error) => {
           console.error('Error creating profile', error);

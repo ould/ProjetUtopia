@@ -20,6 +20,14 @@ const authSchema = Joi.object({
   }),
   nom: Joi.string().optional(),
   prenom: Joi.string().optional(),
+  antenneDefautId: Joi.string().hex().length(24).optional(),
+  creePar: Joi.string().hex().length(24).optional(),
+  dateCreation: Joi.date().optional(),
+  modifiePar: Joi.string().hex().length(24).optional(),
+  dateModification: Joi.date().optional(),
+  tentativeConnexion: Joi.number().optional(),
+  dateDerniereConnexion: Joi.date().optional(),
+  dateDernierMotDePasse: Joi.date().optional(),
   antennes: Joi.array().items(Joi.string().hex().length(24)).optional()
 });
 

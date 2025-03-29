@@ -23,7 +23,7 @@ export class AuthService {
 
   register(utilisateur: Utilisateur): Observable<boolean> {
     return this.http.post<boolean>(this.authUrl + "/register", utilisateur, this.httpOptions).pipe(
-      catchError(this.logger.handleError<boolean>('register', true))
+      catchError(this.logger.handleError<boolean>('register'))
     )
   };
 
@@ -43,7 +43,7 @@ export class AuthService {
   login(utilisateur: Utilisateur): Observable<string> {
     return this.http.post<string>(this.authUrl + "/login", utilisateur, this.httpOptions).pipe(
       tap(token => this.setSession(token)),
-      catchError(this.logger.handleError<string>('login', true))
+      catchError(this.logger.handleError<string>('login'))
     )
   }
 

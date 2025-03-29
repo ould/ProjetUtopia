@@ -54,9 +54,7 @@ module.exports = {
             utilisateurRequete.dateModification = Date.now();
     
             const filter = { _id: utilisateurRequete._id };
-            const updateduser = await User.findOneAndUpdate(filter, utilisateurRequete, {
-                    returnOriginal: false
-                });
+            const updateduser = await User.updateOne(filter, utilisateurRequete);
     
             //Historisation des modifications
             const champsModifies = historique_ChercheChampsModifies(utilisateurExistant, utilisateurRequete);
@@ -109,17 +107,22 @@ module.exports = {
         try {
             const userId = req.payload.userId;
             const user = await User.findOne({ _id: userId });
+            if (typeof(user?.profilId) !== 'string' || user?.profilId === null || user?.profilId === undefined || user?.profilId === "0") {
+                res.send(false)
+                return
+            }
             //Si admin, toujours ok (TODO à voir selon les regles metier, admin perimetre etc)
             const profilAdmin = await Profil.findOne({ nom: process.env.contexte_admin });
-            if (user.profilId.includes(profilAdmin._id)) {
+            if (user.profilId?.includes(profilAdmin?._id)) {
                 res.send(true)
             }
             else {
-                const nomSectionDemandee = req.params.nomSectionDemandee
-                const profilUtilisateur = await Profil.findOne({ _id: user.profilId });
-                const accesAutorise = profilUtilisateur.tableauDroits.find(item => item.section === nomSectionDemandee).droits.length > 0
-                res.send(accesAutorise)
-            }
+                 const nomSectionDemandee = req.params.nomSectionDemandee
+                 const profilUtilisateur = await Profil.findOne({ _id: user?.profilId });
+                 const sectionDroits = profilUtilisateur?.tableauDroits?.find(item => item.section === nomSectionDemandee);
+                 const accesAutorise = sectionDroits?.droits?.length > 0;
+                 res.send(accesAutorise);
+             }
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             logErreur("Utilisateur accesSection",error, req?.params?.id)
@@ -205,7 +208,6 @@ module.exports = {
             if (!doesExist) {
                 throw createError.NotFound(`${idUser} not found`);
             }
-
             let listeAntennes = []
             for (const antenneId of doesExist.antennes) {
                 const result = await Antenne.findOne({ _id: antenneId });
@@ -254,14 +256,10 @@ module.exports = {
             }
             utilisateurExistant.antenneDefautId = resultAntenne._id
             utilisateurExistant.modifiePar = req.payload.userId
-            utilisateurExistant.antenneDefautId = resultAntenne._id
-            utilisateurExistant.modifiePar = req.payload.userId
 
             //MAJ de l'utilisateur
             const filter = { _id: utilisateurExistant._id };
-            const updateduser = await User.findOneAndUpdate(filter, utilisateurExistant, {
-                returnOriginal: false
-            });
+            const updateduser = await User.updateOne(filter, utilisateurExistant);
             //Renvoie la nouvelle antenne 
             res.send(resultAntenne)
 

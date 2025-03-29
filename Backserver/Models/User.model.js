@@ -77,7 +77,7 @@ UserSchema.pre('save', async function (next) {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
       this.password = hashedPassword
-      this.profilId = "0" // empeche la creation d'un utilisateur avec profil prerempli => assignation profil manuelle 
+      this.profilId =  // empeche la creation d'un utilisateur avec profil prerempli => assignation profil manuelle 
       this.dateCreation = Date.now()
       this.antenneDefautId = this.antennes[0]
       this.derniereModificationMdp = null

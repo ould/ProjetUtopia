@@ -22,6 +22,8 @@ module.exports = {
 
       nouvelUtilisateur.profilId = "" // par securité on emepche la création d'un utilisateur avec directement un profil
       nouvelUtilisateur.creePar = "self"; //Créé par lui meme 
+      nouvelUtilisateur.modifiePar = "self"; //Créé par lui meme
+      nouvelUtilisateur.tentativeConnexion = 0; //Initialisation du nombre de tentatives de connexion
 
       const user = new User(nouvelUtilisateur);
       await user.save();
@@ -53,13 +55,15 @@ module.exports = {
       const isMatch = await utilisateur.isValidPassword(utilisateurRequete.password);
       if (!isMatch) {
         logErreur("Auth login","Erreur authentification mdp: " + utilisateurRequete?.email , "authentification")
-        utilisateur.tentativeConnexion = utilisateur.tentativeConnexion +1;
-        await User.findOneAndUpdate({ email: utilisateurRequete.email }, utilisateur)
+        let nbrTentative = utilisateur.tentativeConnexion +1;
+        await User.updateOne({ email: utilisateurRequete.email },
+          { tentativeConnexion: nbrTentative })
         throw createError.Unauthorized('Email ou mot de passe invalide');
       }
 
       utilisateur.tentativeConnexion = 0;
-      await User.findOneAndUpdate({ email: utilisateurRequete.email }, utilisateur)
+      await User.updateOne({ email: utilisateurRequete.email },
+         { tentativeConnexion: 0 })
 
       const accessToken = await signAccessToken(utilisateur);
       const expiresAt = addDateHours(20);

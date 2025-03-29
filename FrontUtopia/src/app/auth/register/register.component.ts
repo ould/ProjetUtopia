@@ -11,10 +11,29 @@ import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
   newUtilisateurForm: FormGroup;
-  antennes: Antenne[] = []
+  antennes: Antenne[] = [];
+  successMessage?: string;
+  errorMessage?: string;
+  afficherErreur: boolean = false;
+
+  ngOnInit(): void {
+    this.antenneService.getAllPublic().subscribe({
+      next: (data) => {
+        this.antennes = data;
+      }
+    });
+
+    this.newUtilisateurForm.get('password')?.valueChanges.subscribe(() => {
+      this.updateErrorMessage();
+    });
+
+    this.newUtilisateurForm.get('passwordConfirm')?.valueChanges.subscribe(() => {
+      this.updateErrorMessage();
+    });
+  }
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -22,43 +41,57 @@ export class RegisterComponent implements OnInit{
     private router: Router) {
 
     this.newUtilisateurForm = this.fb.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
+      nom: ['', [Validators.required, Validators.minLength(3)]],
+      prenom: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)],Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]],
       passwordConfirm: ['', [Validators.required]],
-      antennes: ['', [Validators.required]]
-    });
+      antenneDefautId: ['', [Validators.required]]
+    }, { validators: this.passwordMatchValidator });
+  }
 
-  }//TODO : mettre message erreur si mot de passe pas assez fort
-  ngOnInit(): void {
-    this.antenneService.getAllPublic().subscribe(
-      data => {
-        this.antennes = data
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('passwordConfirm')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+  updateErrorMessage() {
+    const passwordControl = this.newUtilisateurForm.get('password');
+    const errors = passwordControl ? passwordControl.errors : null;
+
+    if (errors) {
+      if (errors['required']) {
+        this.errorMessage = 'Le mot de passe est requis.';
+      } else if (errors['minlength']) {
+        this.errorMessage = 'Le mot de passe doit contenir au moins 8 caractères.';
+      } else if (errors['pattern']) {
+        this.errorMessage = 'Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.';
+      } else {
+        this.errorMessage = undefined;
       }
-    )
-  }
-
-
-  passwordMatchValidator() {
-    const password = this.newUtilisateurForm?.value?.password;
-    const confirmPassword = this.newUtilisateurForm?.value?.passwordConfirm;
-    
-    return password == confirmPassword;
-  }
-
-  register() {
-    if (this.newUtilisateurForm.valid && this.passwordMatchValidator()) {
-      const newUtilisateur: Utilisateur = this.newUtilisateurForm.value;
-      newUtilisateur.antennes = [this.newUtilisateurForm.get('antennes')?.value];
-      this.authService.register(newUtilisateur)
-        .subscribe(
-          result => {
-            this.router.navigateByUrl('/accueil');
-          }
-        );
+    } else if (this.newUtilisateurForm.hasError('passwordMismatch')) {
+      this.errorMessage = 'Les mots de passe ne correspondent pas.';
+    } else {
+      this.errorMessage = undefined;
     }
   }
 
-
+  register() {
+    if (this.newUtilisateurForm.valid) {
+      const newUtilisateur: Utilisateur = this.newUtilisateurForm.value;
+      newUtilisateur.antennes = [this.newUtilisateurForm.get('antenneDefautId')?.value];
+      this.authService.register(newUtilisateur)
+        .subscribe({
+          next: (response) => {
+            if(response) {
+              this.router.navigateByUrl('/accueil');
+            }
+          },
+          error: () => {
+            this.errorMessage = 'Une erreur est survenue lors de l’enregistrement.';
+          }
+        });
+    }
+  }
 }

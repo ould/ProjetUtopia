@@ -104,8 +104,8 @@ export class NavbarComponent implements OnInit {
         data => {
           this.aAccesChat = data
         });
-      this.utilisateurService.getAntennes().subscribe(
-        data => {
+        this.utilisateurService.getAntennes().subscribe(
+          data => {
           this.antennesUtilisateur = data;
           this.utilisateurMultipleAntennes = this.antennesUtilisateur.length > 1;
           this.utilisateurService.getAntenneDefaut().subscribe(

@@ -33,6 +33,7 @@ module.exports = {
         await creationProfil("Reporting", userId, "Acces restreint aux rapports et chat", "", "", "c", "", "", "", "", "crwd", "", "crwd", "");
         await creationProfil("Stock", userId, "Acces gestion stocks", "", "", "", "", "", "", "", "crwd", "crwd", "crwd", "");
         await creationProfil("Chat", userId, "Acces restreint chat", "", "", "", "", "", "", "", "", "", "crwd", "");
+        await creationProfil("Basique", userId, "Acces accueil", "", "", "", "", "", "", "", "", "", "", "");
 
         //Ajoute les Antennes
         console.log("Antenne..")
@@ -106,7 +107,8 @@ async function creationProfil(nom, userId, commentaire, admin, famille, hebergeu
       { section: process.env.contexte_reporting, droits: reporting },
       { section: process.env.contexte_stock, droits: stock },
       { section: process.env.contexte_chat, droits: chat },
-      { section: process.env.contexte_astreinte, droits: astreinte }]
+      { section: process.env.contexte_astreinte, droits: astreinte },
+      { section: process.env.contexte_accueil, droits: "crwd" }],
     })
     const savedProfil = await nouveauProfil.save()
     console.log("Profil crée :" + savedProfil.nom)

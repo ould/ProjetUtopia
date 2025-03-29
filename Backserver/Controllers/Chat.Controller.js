@@ -40,9 +40,7 @@ module.exports = {
       result.modifiePar = req.payload.userId
 
       const filter = { _id: result.id };
-      const updatedChat = await Chat.findOneAndUpdate(filter, result, {
-        returnOriginal: false
-      });
+      const updatedChat = await Chat.updateOne(filter, result);
       res.send(updatedChat.id)
     } catch (error) {
       if (error.isJoi === true) error.status = 422

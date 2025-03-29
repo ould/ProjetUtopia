@@ -40,7 +40,7 @@ export class ManageComptesComponent implements OnInit {
     nom: ['', [Validators.required]],
     prenom: ['', [Validators.required]],
     antennes: ['', [Validators.required]],
-    password:['', [Validators.required, Validators.minLength(5)]]
+    password:['', [Validators.required, Validators.minLength(8),Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]]
   })
 
   ajouterUtilisateur() {
@@ -49,8 +49,15 @@ export class ManageComptesComponent implements OnInit {
       const newUtilisateur: Utilisateur = this.newUtilisateurForm.value;
       newUtilisateur.antennes = [this.newUtilisateurForm.get('antennes')?.value]
       newUtilisateur.antenneDefautId = newUtilisateur.antennes[0]
-      this.utilisateurService.addUtilisateur(newUtilisateur).subscribe()
-      this.utilisateurs.push(newUtilisateur);
+      this.utilisateurService.addUtilisateur(newUtilisateur).subscribe(
+        (response) => {
+          this.utilisateurs.push(newUtilisateur);
+          location.reload();
+        },
+        (error) => {
+          alert('Erreur lors de l\'ajout de l\'utilisateur');
+        }
+      )
       }
   }
 
@@ -60,7 +67,7 @@ export class ManageComptesComponent implements OnInit {
       return false;
     }
     this.authService.demandeReinitialiseMotDePasseByEmail(utilisateur.email).subscribe();
-    //TODO : Afficher un message de confirmation
+    alert('Un email de réinitialisation a été envoyé à ' + utilisateur.email);
   return true;
   }
 
@@ -79,8 +86,11 @@ export class ManageComptesComponent implements OnInit {
       if (result === true) {
         // Action lorsque le bouton "Oui" est cliqué
         if (utilisateur._id)
-          this.utilisateurService.deleteUtilisateur(utilisateur._id).subscribe()
-        location.reload()
+          this.utilisateurService.deleteUtilisateur(utilisateur._id).subscribe(
+            () => {
+              location.reload()
+            }
+          );
       } else if (result === false) {
         // Action lorsque le bouton "Non" est cliqué
         console.log('Bouton Non cliqué');
