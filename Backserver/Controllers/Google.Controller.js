@@ -11,14 +11,17 @@ module.exports = {
         const userReferent = await UserController.getCurrentUser(req, res, next)
         const antenneId = userReferent.antenneDefautId
 
-        values = [["ID", "Nom", "Prénom"], ["1", "Dupont", "Jean"], ["2", "Martin", "Sophie"]]
-        range = `A1:C${values.length}` // Adjust the range as needed
-        spreadsheetId = '1LfjXm0a80JfJ_XcdyES2OKDVyaP0yfpnrEXY285xKSQ' // Replace with your actual spreadsheet ID
-        const data = await updateSheetData(spreadsheetId, range,values)
-        if (!data) {
-            throw createError.NotFound(`No data found in the specified range.`);
-        }
+        let Evalues = [["ID", "Nom", "Prénom"], ["1", "Dupont", "Jean"], ["2", "Martin", "Sophie"]]
+        let Erange = `Sheet1!A:C` // Adjust the range as needed
+        let EspreadsheetId = '1LfjXm0a80JfJ_XcdyES2OKDVyaP0yfpnrEXY285xKSQ' // Replace with your actual spreadsheet ID
+        // Fetch the existing data to determine the last filled row
+        const existingData = await getSheetData(EspreadsheetId, Erange);
+        const lastRow = existingData.length;
 
+        // Update the range to start from the next empty row
+        Erange = `Sheet1!A${lastRow + 1}:C${lastRow + Evalues.length}`;
+         await updateSheetData(EspreadsheetId, Erange,Evalues)
+        
         res.send(true)
 
     } catch (error) {

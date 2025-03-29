@@ -4,10 +4,10 @@ const path = require('path');
 module.exports ={
 
     getSheetData: async (spreadsheetId, range) => {
-        await getSheetData(spreadsheetId, range);
+        return await getSheetData(spreadsheetId, range);
     },
     updateSheetData: async (spreadsheetId, range, values) => {
-        await updateSheetData(spreadsheetId, range, values);
+        return await updateSheetData(spreadsheetId, range, values);
     },
 };
 
@@ -25,7 +25,7 @@ async function initializeGoogleAuth() {
 
 async function getSheetData(spreadsheetId, range) {
 
-    let auth = initializeGoogleAuth();
+    let auth = await initializeGoogleAuth();
     if (!auth) {
         console.error('Google Auth not initialized');
         return;
@@ -42,7 +42,7 @@ async function getSheetData(spreadsheetId, range) {
             spreadsheetId,
             range,
         });
-        return response.data.values;
+        return response.data.values || []; // Return an empty array if no values are found
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
         throw error;
@@ -50,7 +50,7 @@ async function getSheetData(spreadsheetId, range) {
 }
 
 async function updateSheetData(spreadsheetId, range, values) {
-    let auth = initializeGoogleAuth();
+    let auth = await initializeGoogleAuth();
     if (!auth) {
         console.error('Google Auth not initialized');
         return;
@@ -66,7 +66,7 @@ async function updateSheetData(spreadsheetId, range, values) {
         const response = await sheets.spreadsheets.values.update({
             spreadsheetId,
             range,
-            valueInputOption: 'RAW',
+            valueInputOption: 'USER_ENTERED',
             resource: { values },
         });
         return response.data;
