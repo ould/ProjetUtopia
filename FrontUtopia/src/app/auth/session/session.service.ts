@@ -19,7 +19,6 @@ export class SessionService {
     return expiresAt;
   }
 
-
   public setSession(authResult: any) {
     this.removeSession();
     localStorage.setItem('user_name', authResult.utilisateur.nom);

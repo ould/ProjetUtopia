@@ -4,6 +4,7 @@ import { Antenne } from '../gestionApp/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Section } from '../gestionApp/interfaces/section';
 import { SessionService } from '../auth/session/session.service';
+import { ReportingService } from '../reporting/reporting.service';
 
 @Component({
   selector: 'app-navbar',
@@ -45,6 +46,10 @@ export class NavbarComponent implements OnInit {
     this.activeTab = term
     this.utilisateurService.getDroits(term).subscribe();
     this.collapseNavbar();
+  }
+
+  lance() {
+    this.reportingService.lance().subscribe();
   }
 
   changeAntenneDefaut(idNouvelleAntenne: any) {
@@ -125,7 +130,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private sessionService: SessionService,
     public utilisateurService: UtilisateurService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+  private reportingService: ReportingService) {
 
     this.antenneDefautForm = this.fb.group({
       antenneDefaut: ['', Validators.required]

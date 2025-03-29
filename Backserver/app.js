@@ -21,6 +21,7 @@ const logRouter = require('./Routes/Log.route')
 const publicRouter = require('./Routes/Public.route')
 const adminRouter = require('./Routes/Admin.route')
 const referentielRouter = require('./Routes/Referentiel.route')
+const reportingRouter = require('./Routes/Reporting.route')
 
 const corsOptions = {
   origin: '*',
@@ -44,6 +45,7 @@ app.use('/api/'+ process.env.contexte_admin, verifyAccessToken,haveDroits, admin
 
 //Routes beneficiaire
 app.use('/api/'+ process.env.contexte_famille, verifyAccessToken, haveDroits, familleRouter)
+app.use('/api/'+ process.env.contexte_reporting, verifyAccessToken, haveDroits, reportingRouter)
 
 //Routes communes internes restreintes
 app.use('/api/'+process.env.contexte_chat, verifyAccessToken, haveDroits, chatRouter) 

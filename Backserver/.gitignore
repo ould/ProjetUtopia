@@ -19,6 +19,7 @@ dist/
 build/
 out/
 
+/config
 
 # Dependency directories
 bower_components/

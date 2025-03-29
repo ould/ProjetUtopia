@@ -100,7 +100,6 @@ export class ManageComptesComponent implements OnInit {
         console.log('Boîte de dialogue fermée');
       }
     });
-
   }
 
   constructor(
