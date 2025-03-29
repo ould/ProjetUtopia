@@ -5,9 +5,10 @@ import { PopupComponent } from 'src/app/gestionApp/popup/popup.component';
 import { ProfilService } from './profil.service';
 
 @Component({
-  selector: 'app-profil',
-  templateUrl: './profil.component.html',
-  styleUrls: ['./profil.component.css']
+    selector: 'app-profil',
+    templateUrl: './profil.component.html',
+    styleUrls: ['./profil.component.css'],
+    standalone: false
 })
 export class ProfilComponent implements OnInit {
 

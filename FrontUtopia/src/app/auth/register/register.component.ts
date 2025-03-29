@@ -7,9 +7,10 @@ import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { Utilisateur } from 'src/app/autres-services/utilisateur/utilisateur';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+    standalone: false
 })
 export class RegisterComponent implements OnInit {
 

@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-requete-detail',
-  templateUrl: './requete-detail.component.html',
-  styleUrls: ['./requete-detail.component.css']
+    selector: 'app-requete-detail',
+    templateUrl: './requete-detail.component.html',
+    styleUrls: ['./requete-detail.component.css'],
+    standalone: false
 })
 export class RequeteDetailComponent {
 

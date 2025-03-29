@@ -9,9 +9,10 @@ import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { PopupComponent } from 'src/app/gestionApp/popup/popup.component';
 
 @Component({
-  selector: 'app-gestion-comptes',
-  templateUrl: './gestion-comptes.component.html',
-  styleUrls: ['./gestion-comptes.component.css']
+    selector: 'app-gestion-comptes',
+    templateUrl: './gestion-comptes.component.html',
+    styleUrls: ['./gestion-comptes.component.css'],
+    standalone: false
 })
 export class ManageComptesComponent implements OnInit {
 

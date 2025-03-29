@@ -11,10 +11,11 @@ import { Section } from 'src/app/gestionApp/interfaces/section';
 import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 
 @Component({
-  selector: 'app-famille-detail',
-  templateUrl: './famille-detail.component.html',
-  styleUrls: ['./famille-detail.component.css'],
-  providers: [DatePipe]
+    selector: 'app-famille-detail',
+    templateUrl: './famille-detail.component.html',
+    styleUrls: ['./famille-detail.component.css'],
+    providers: [DatePipe],
+    standalone: false
 })
 export class FamilleDetailComponent implements OnInit {
 

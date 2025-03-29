@@ -7,9 +7,10 @@ import { Section } from 'src/app/gestionApp/interfaces/section';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-profil-detail',
-  templateUrl: './profil-detail.component.html',
-  styleUrls: ['./profil-detail.component.css']
+    selector: 'app-profil-detail',
+    templateUrl: './profil-detail.component.html',
+    styleUrls: ['./profil-detail.component.css'],
+    standalone: false
 })
 export class ProfilDetailComponent implements OnInit {
 

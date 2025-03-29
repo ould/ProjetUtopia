@@ -7,9 +7,10 @@ import { Antenne } from 'src/app/gestionApp/interfaces/antenne';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-gestion-referentiels',
-  templateUrl: './gestion-referentiels.component.html',
-  styleUrls: ['./gestion-referentiels.component.css']
+    selector: 'app-gestion-referentiels',
+    templateUrl: './gestion-referentiels.component.html',
+    styleUrls: ['./gestion-referentiels.component.css'],
+    standalone: false
 })
 export class GestionReferentielsComponent implements OnInit {
 

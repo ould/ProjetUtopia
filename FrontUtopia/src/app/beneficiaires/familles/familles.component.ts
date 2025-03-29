@@ -12,9 +12,10 @@ import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 
 
 @Component({
-  selector: 'app-familles',
-  templateUrl: './familles.component.html',
-  styleUrls: ['./familles.component.css']
+    selector: 'app-familles',
+    templateUrl: './familles.component.html',
+    styleUrls: ['./familles.component.css'],
+    standalone: false
 })
 
 export class FamillesComponent {

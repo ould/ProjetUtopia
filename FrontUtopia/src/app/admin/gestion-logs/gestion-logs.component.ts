@@ -4,9 +4,10 @@ import { LogsService } from './logs.service';
 import { catchError, of } from 'rxjs';
 
 @Component({
-  selector: 'app-gestion-logs',
-  templateUrl: './gestion-logs.component.html',
-  styleUrls: ['./gestion-logs.component.css']
+    selector: 'app-gestion-logs',
+    templateUrl: './gestion-logs.component.html',
+    styleUrls: ['./gestion-logs.component.css'],
+    standalone: false
 })
 export class GestionLogsComponent implements OnInit {
   logs: Log[] = [];

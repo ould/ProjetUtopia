@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-modifier-mdp',
-  templateUrl: './modifier-mdp.component.html',
-  styleUrls: ['./modifier-mdp.component.css']
+    selector: 'app-modifier-mdp',
+    templateUrl: './modifier-mdp.component.html',
+    styleUrls: ['./modifier-mdp.component.css'],
+    standalone: false
 })
 export class ModifierMdpComponent {
   successMessage?: string;

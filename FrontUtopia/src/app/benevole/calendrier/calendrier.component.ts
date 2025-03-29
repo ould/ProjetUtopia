@@ -3,9 +3,10 @@ import { NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ActionService } from '../services/action.service';
 
 @Component({
-  selector: 'app-calendrier',
-  templateUrl: './calendrier.component.html',
-  styleUrls: ['./calendrier.component.css']
+    selector: 'app-calendrier',
+    templateUrl: './calendrier.component.html',
+    styleUrls: ['./calendrier.component.css'],
+    standalone: false
 })
 export class CalendrierComponent implements OnInit {
   missions: any[] = [];

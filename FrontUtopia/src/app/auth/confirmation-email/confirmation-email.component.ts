@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-confirmation-email',
-  templateUrl: './confirmation-email.component.html',
-  styleUrls: ['./confirmation-email.component.css']
+    selector: 'app-confirmation-email',
+    templateUrl: './confirmation-email.component.html',
+    styleUrls: ['./confirmation-email.component.css'],
+    standalone: false
 })
 export class ConfirmationEmailComponent {
   confirmationEmail: boolean = false;

@@ -10,9 +10,10 @@ import { Profil } from '../../gestion-profil/profil';
 import { ProfilService } from '../../gestion-profil/profil.service';
 
 @Component({
-  selector: 'app-compte-detail',
-  templateUrl: './compte-detail.component.html',
-  styleUrls: ['./compte-detail.component.css']
+    selector: 'app-compte-detail',
+    templateUrl: './compte-detail.component.html',
+    styleUrls: ['./compte-detail.component.css'],
+    standalone: false
 })
 export class CompteDetailComponent implements OnInit {
 

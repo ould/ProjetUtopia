@@ -7,10 +7,11 @@ import { Section } from 'src/app/gestionApp/interfaces/section';
 import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 
 @Component({
-  selector: 'app-membre',
-  templateUrl: './membre.component.html',
-  styleUrls: ['./membre.component.css'],
-  viewProviders: [{provide: ControlContainer, useExisting: NgForm}]
+    selector: 'app-membre',
+    templateUrl: './membre.component.html',
+    styleUrls: ['./membre.component.css'],
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    standalone: false
 })
 export class MembreComponent implements OnInit {
   @Input() membresInput: Membre[] = [];

@@ -4,9 +4,10 @@ import { HistoriqueService } from './historique.service';
 import { catchError, of } from 'rxjs';
 
 @Component({
-  selector: 'app-gestion-historique',
-  templateUrl: './gestion-historique.component.html',
-  styleUrls: ['./gestion-historique.component.css']
+    selector: 'app-gestion-historique',
+    templateUrl: './gestion-historique.component.html',
+    styleUrls: ['./gestion-historique.component.css'],
+    standalone: false
 })
 export class GestionHistoriqueComponent implements OnInit {
   historiques: Historique[] = [];

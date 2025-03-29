@@ -3,9 +3,10 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-mdp-oublie',
-  templateUrl: './mdp-oublie.component.html',
-  styleUrls: ['./mdp-oublie.component.css']
+    selector: 'app-mdp-oublie',
+    templateUrl: './mdp-oublie.component.html',
+    styleUrls: ['./mdp-oublie.component.css'],
+    standalone: false
 })
 export class MdpOublieComponent {
   email: string = '';

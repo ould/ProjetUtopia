@@ -3,9 +3,10 @@ import { Chat } from 'src/app/gestionApp/interfaces/chat';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-chat-detail',
-  templateUrl: './chat-detail.component.html',
-  styleUrls: ['./chat-detail.component.css']
+    selector: 'app-chat-detail',
+    templateUrl: './chat-detail.component.html',
+    styleUrls: ['./chat-detail.component.css'],
+    standalone: false
 })
 export class ChatDetailComponent {
 

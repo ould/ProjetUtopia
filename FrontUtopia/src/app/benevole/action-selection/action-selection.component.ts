@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-action-selection',
-  templateUrl: './action-selection.component.html',
-  styleUrls: ['./action-selection.component.css']
+    selector: 'app-action-selection',
+    templateUrl: './action-selection.component.html',
+    styleUrls: ['./action-selection.component.css'],
+    standalone: false
 })
 export class ActionSelectionComponent implements OnInit {
   @Input() mission: any;

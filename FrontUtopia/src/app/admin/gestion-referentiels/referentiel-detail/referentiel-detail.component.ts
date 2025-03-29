@@ -5,9 +5,10 @@ import { ReferentielsService } from '../referentiels.service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-referentiel-detail',
-  templateUrl: './referentiel-detail.component.html',
-  styleUrls: ['./referentiel-detail.component.css']
+    selector: 'app-referentiel-detail',
+    templateUrl: './referentiel-detail.component.html',
+    styleUrls: ['./referentiel-detail.component.css'],
+    standalone: false
 })
 export class ReferentielDetailComponent implements OnInit {
   @Input() referentielId!: string; // ID du référentiel à afficher/modifier

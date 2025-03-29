@@ -11,9 +11,10 @@ import { PopupComponent } from '../gestionApp/popup/popup.component';
 
 
 @Component({
-  selector: 'app-chats',
-  templateUrl: './chats.component.html',
-  styleUrls: ['./chats.component.css']
+    selector: 'app-chats',
+    templateUrl: './chats.component.html',
+    styleUrls: ['./chats.component.css'],
+    standalone: false
 })
 export class ChatsComponent {
 
