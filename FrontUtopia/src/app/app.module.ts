@@ -36,7 +36,8 @@ import { GestionHistoriqueComponent } from './admin/gestion-historique/gestion-h
 import { GestionLogsComponent } from './admin/gestion-logs/gestion-logs.component';
 import { AffichageErreurComponent } from './gestionApp/affichage-erreur/affichage-erreur.component';
 import { ModifierMdpComponent } from './auth/modifier-mdp/modifier-mdp.component';
-import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
+import { MdpOublieComponent } from './auth/modifier-mdp/mdp-oublie/mdp-oublie.component';
+import { ConfirmationEmailComponent } from './auth/confirmation-email/confirmation-email.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
     GestionLogsComponent,
     AffichageErreurComponent,
     ModifierMdpComponent,
-    MdpOublieComponent
+    MdpOublieComponent,
+    ConfirmationEmailComponent
   ],
   imports: [
     BrowserModule,

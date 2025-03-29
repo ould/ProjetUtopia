@@ -65,7 +65,11 @@ const UserSchema = new Schema({
   modifiePar : {
     type: String,
     required: false,
-  }
+  },
+  newsletter: {
+    type: Boolean,
+    required: false,
+  },
 })
 
 UserSchema.pre('save', async function (next) {
@@ -76,8 +80,7 @@ UserSchema.pre('save', async function (next) {
     if (this.isNew) {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
-      this.password = hashedPassword
-      this.profilId =  // empeche la creation d'un utilisateur avec profil prerempli => assignation profil manuelle 
+      this.password = hashedPassword  // empeche la creation d'un utilisateur avec profil prerempli => assignation profil manuelle 
       this.dateCreation = Date.now()
       this.antenneDefautId = this.antennes[0]
       this.derniereModificationMdp = null

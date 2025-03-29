@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { SessionService } from 'src/app/auth/session.service';
+import { SessionService } from 'src/app/auth/session/session.service';
 import { Log } from 'src/app/gestionApp/interfaces/log';
 import { Section } from 'src/app/gestionApp/interfaces/section';
 import { environment } from 'src/environments/environment';

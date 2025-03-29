@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {  catchError, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../gestionApp/interfaces/login';
 import { environment } from 'src/environments/environment';
 import { Utilisateur } from '../autres-services/utilisateur/utilisateur';
 import { LoggerService } from '../autres-services/logger/logger.service';
-import { SessionService } from './session.service';
+import { SessionService } from './session/session.service';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ import { SessionService } from './session.service';
 export class AuthService {
 
   private authUrl = environment.apiUrl + 'auth';
-  
+
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
@@ -28,17 +28,23 @@ export class AuthService {
   };
 
   demandeReinitialiseMotDePasseByEmail(email: string): Observable<Boolean> {
-      return this.http.post<Boolean>(this.authUrl + "/demandeReinitialiseMotDePasseByEmail", {email}, this.httpOptions).pipe(
-        catchError(this.logger.handleError<any>('demandeReinitialiseMotDePasseByEmail'))
-      )
+    return this.http.post<Boolean>(this.authUrl + "/demandeReinitialiseMotDePasseByEmail", { email }, this.httpOptions).pipe(
+      catchError(this.logger.handleError<any>('demandeReinitialiseMotDePasseByEmail'))
+    )
   };
-    
-    
-  accepteReinitialisationMotDePasse(hash:string, mdp:string): Observable<Boolean> {
-      return this.http.post<Boolean>(this.authUrl + "/accepteReinitialisationMotDePasse", {hash,mdp} , this.httpOptions).pipe(
-        catchError(this.logger.handleError<any>('accepteReinitialisationMotDePasse'))
-      )
-    };
+
+
+  accepteReinitialisationMotDePasse(hash: string, mdp: string): Observable<Boolean> {
+    return this.http.post<Boolean>(this.authUrl + "/accepteReinitialisationMotDePasse", { hash, mdp }, this.httpOptions).pipe(
+      catchError(this.logger.handleError<any>('accepteReinitialisationMotDePasse'))
+    )
+  };
+
+  confirmerEmail(hash: string): Observable<Boolean> {
+    return this.http.post<Boolean>(this.authUrl + "/confirmerEmail", { hash }, this.httpOptions).pipe(
+      catchError(this.logger.handleError<any>('confirmerEmail'))
+    )
+  };
 
   login(utilisateur: Utilisateur): Observable<string> {
     return this.http.post<string>(this.authUrl + "/login", utilisateur, this.httpOptions).pipe(
@@ -59,6 +65,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private logger:LoggerService,
-    private sessionService : SessionService) { }
+    private logger: LoggerService,
+    private sessionService: SessionService) { }
 }

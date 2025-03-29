@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { authGuard } from './auth.guard';
-import { SessionService } from './session.service';
+import { SessionService } from './session/session.service';
 
 describe('authGuard', () => {
   let sessionService: jasmine.SpyObj<SessionService>;

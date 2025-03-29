@@ -9,5 +9,6 @@ export enum Section {
     reporting = "reporting",
     stock = "stock",
     chat = "chat",
-    astreinte = "astreinte"
+    astreinte = "astreinte",
+    accueil = "accueil"
   }

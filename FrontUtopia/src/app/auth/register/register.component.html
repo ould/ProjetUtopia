@@ -1,4 +1,4 @@
-<form [formGroup]="newUtilisateurForm" (ngSubmit)="register()">
+<form [formGroup]="newUtilisateurForm" (ngSubmit)="register()" *ngIf="!confirmation">
   <fieldset>
     <legend>Nouveau utilisateur</legend>
 
@@ -12,7 +12,7 @@
 
     <div class="form-field">
       <label for="prenom" class="form-label">Prénom :</label>
-      <input type="text" class="form-control" id="prenom" formControlName="prenom" required minlength="3">
+      <input type="text" class="form-control" id="prenom" formControlName="prenom">
       <div *ngIf="newUtilisateurForm.get('prenom')?.invalid && newUtilisateurForm.get('prenom')?.touched" class="error-message">
         Le prénom est requis et doit contenir au moins 3 caractères.
       </div>
@@ -20,7 +20,7 @@
 
     <div class="form-field">
       <label for="email" class="form-label">Email :</label>
-      <input type="email" class="form-control" id="email" formControlName="email" required>
+      <input type="email" class="form-control" id="email" formControlName="email">
       <div *ngIf="newUtilisateurForm.get('email')?.invalid && newUtilisateurForm.get('email')?.touched" class="error-message">
         Un email valide est requis.
       </div>
@@ -28,7 +28,7 @@
 
     <div class="form-field">
       <label for="password" class="form-label">Mot de passe :</label>
-      <input type="password" class="form-control" id="password" formControlName="password" required minlength="8">
+      <input type="password" class="form-control" id="password" formControlName="password">
       <div *ngIf="newUtilisateurForm.get('password')?.invalid && newUtilisateurForm.get('password')?.touched" class="error-message">
         Le mot de passe est requis (minimum 8 caractères, incluant au moins un chiffre, une lettre et un caractère spécial).
       </div>
@@ -36,7 +36,7 @@
 
     <div class="form-field">
       <label for="passwordConfirm" class="form-label">Confirmez votre mot de passe :</label>
-      <input type="password" class="form-control" id="passwordConfirm" formControlName="passwordConfirm" required>
+      <input type="password" class="form-control" id="passwordConfirm" formControlName="passwordConfirm">
       <div *ngIf="newUtilisateurForm.get('passwordConfirm')?.invalid && newUtilisateurForm.get('passwordConfirm')?.touched" class="error-message">
         La confirmation du mot de passe est requise.
       </div>
@@ -47,18 +47,37 @@
 
     <div class="form-field">
       <label for="antenneDefautId" class="form-label">Antenne principale :</label>
-      <select id="antenneDefautId" class="custom-select" formControlName="antenneDefautId" required>
+      <select id="antenneDefautId" class="custom-select" formControlName="antenneDefautId">
         <option value="" disabled selected>Veuillez sélectionner une antenne</option>
         <option *ngFor="let antenne of antennes" [value]="antenne._id">{{ antenne.nom }}</option>
       </select>
-      <div *ngIf="newUtilisateurForm.get('antennes')?.invalid && newUtilisateurForm.get('antennes')?.touched" class="error-message">
+      <div *ngIf="newUtilisateurForm.get('antenneDefautId')?.invalid && newUtilisateurForm.get('antenneDefautId')?.touched" class="error-message">
         Veuillez sélectionner une antenne.
       </div>
     </div>
   </fieldset>
-
+  <div class="form-field">
+    <label for="rgpd" class="form-label d-inline">
+      <input type="checkbox" id="rgpd" formControlName="rgpd">
+      J'accepte les <a href="/conditions-generales" target="_blank" class="link">conditions générales</a> et la <a href="/politique-confidentialite" target="_blank" class="link">politique de confidentialité</a>.
+    </label>
+    <div *ngIf="newUtilisateurForm.get('rgpd')?.invalid && newUtilisateurForm.get('rgpd')?.touched" class="error-message">
+      Vous devez accepter les conditions générales et la politique de confidentialité.
+    </div>
+  </div>
+  <div class="form-field">
+    <label for="newsletter" class="form-label d-inline">
+      <input type="checkbox" id="newsletter" formControlName="newsletter">
+      Je souhaite m'abonner à la newsletter pour recevoir les dernières actualités.
+    </label>
+  </div>
   <div class="form-buttons">
     <button type="submit" class="button button-primary" [disabled]="newUtilisateurForm.invalid">Enregistrer</button>
 
   </div>
 </form>
+<div *ngIf="confirmation" class="confirmation-email">
+  <h1>Compte créé</h1>
+  <p>Votre compte a été créé avec succès ! Un email de confirmation a été envoyé à votre adresse.</p>
+  <a href="/login" class="btn btn-primary">Retour à la connexion</a>
+</div>

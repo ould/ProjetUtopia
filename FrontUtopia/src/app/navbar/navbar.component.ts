@@ -3,7 +3,7 @@ import { UtilisateurService } from '../autres-services/utilisateur/utilisateur.s
 import { Antenne } from '../gestionApp/interfaces/antenne';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Section } from '../gestionApp/interfaces/section';
-import { SessionService } from '../auth/session.service';
+import { SessionService } from '../auth/session/session.service';
 
 @Component({
   selector: 'app-navbar',

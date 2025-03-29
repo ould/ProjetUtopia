@@ -28,7 +28,9 @@ const authSchema = Joi.object({
   tentativeConnexion: Joi.number().optional(),
   dateDerniereConnexion: Joi.date().optional(),
   dateDernierMotDePasse: Joi.date().optional(),
-  antennes: Joi.array().items(Joi.string().hex().length(24)).optional()
+  antennes: Joi.array().items(Joi.string().hex().length(24)).optional(),
+  rgpd: Joi.boolean().optional(),
+  newsletter: Joi.boolean().optional(),
 });
 
 const userSchema = Joi.object({

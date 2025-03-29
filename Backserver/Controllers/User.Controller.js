@@ -105,6 +105,7 @@ module.exports = {
     //Permet de visualiser sur l'appli front les entités selon ses acces aux sections (contexte metier)
     accesSection: async (req, res, next) => {
         try {
+            console.log("accesSection")
             const userId = req.payload.userId;
             const user = await User.findOne({ _id: userId });
             if (typeof(user?.profilId) !== 'string' || user?.profilId === null || user?.profilId === undefined || user?.profilId === "0") {

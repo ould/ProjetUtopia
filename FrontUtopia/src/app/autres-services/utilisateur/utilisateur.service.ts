@@ -8,7 +8,7 @@ import { Utilisateur } from './utilisateur';
 import { LoggerService } from '../logger/logger.service';
 import { Autorisations } from 'src/app/gestionApp/interfaces/autorisations';
 import { Droit, DroitPossible } from 'src/app/admin/gestion-profil/profil';
-import { SessionService } from 'src/app/auth/session.service';
+import { SessionService } from 'src/app/auth/session/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +49,9 @@ export class UtilisateurService {
     );
   }
 
-  deleteUtilisateur(id: string): Observable<Utilisateur> {
+  deleteUtilisateur(id: string): Observable<string> {
     const url = `${this.utilisateurUrl}/${id}`;
-    return this.http.delete<Utilisateur>(url, this.httpOptions).pipe(
+    return this.http.delete<string>(url, this.httpOptions).pipe(
       catchError(this.logger.handleError<any>('deleteUtilisateur'))
     );
   }

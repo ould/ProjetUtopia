@@ -75,8 +75,8 @@ export class ManageComptesComponent implements OnInit {
   openPopupSupprimer(utilisateur: Utilisateur) {
     const dialogRef = this.dialog.open(PopupComponent, {
       data: {
-        title: 'Ajouter un rôle/groupe',
-        message: 'Etes vous sur de vouloir créer l\'utilisateur avec l\'email ' + utilisateur.email + ' ?',
+        title: 'Supprimer un utilisateur',
+        message: 'Etes vous sur de vouloir supprimer l\'utilisateur avec l\'email ' + utilisateur.email + ' ?',
         buttonYes: 'Oui',
         buttonNo: 'Non'
       }

@@ -1,7 +1,7 @@
 import {inject} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SessionService } from './session.service';
+import { SessionService } from './session/session.service';
 
 export const authGuard = () => {
   const sessionService = inject(SessionService);

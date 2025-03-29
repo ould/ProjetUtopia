@@ -10,6 +10,8 @@ Authrouter.post('/demandeReinitialiseMotDePasseByEmail', AuthController.demandeR
 
 Authrouter.post('/accepteReinitialisationMotDePasse', AuthController.accepteReinitialisationMotDePasse)
 
+Authrouter.post('/confirmerEmail', AuthController.confirmerEmail)
+
 // Authrouter.post('/refresh-token', AuthController.refreshToken)
 
 // Authrouter.delete('/logout', AuthController.logout)

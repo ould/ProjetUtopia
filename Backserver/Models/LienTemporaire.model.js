@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const OperationEnum = Object.freeze({
     REINITIALISATION_MDP: 'REINITIALISATION_MDP',
-    CONFIRMEMAIL: 'CONFIRMEMAIL'
+    CONFIRMATION_EMAIL: 'CONFIRMATION_EMAIL'
 });
 
 const LienTempSchema = new Schema({

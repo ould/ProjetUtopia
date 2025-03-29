@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   successMessage?: string;
   errorMessage?: string;
   afficherErreur: boolean = false;
+  confirmation:boolean = false;
 
   ngOnInit(): void {
     this.antenneService.getAllPublic().subscribe({
@@ -46,7 +47,9 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]],
       passwordConfirm: ['', [Validators.required]],
-      antenneDefautId: ['', [Validators.required]]
+      antenneDefautId: ['', [Validators.required]],
+      rgpd: [false, [Validators.requiredTrue]],
+      newsletter: [false],
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -85,7 +88,7 @@ export class RegisterComponent implements OnInit {
         .subscribe({
           next: (response) => {
             if(response) {
-              this.router.navigateByUrl('/accueil');
+              this.confirmation = true;;
             }
           },
           error: () => {
