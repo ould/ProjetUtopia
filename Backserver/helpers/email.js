@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(to, subject, text, html = null) {
    
     if(process.env.ENVIRONNEMENT !== 'production'){
-        to = process.env.MAIL_BACKOFFICE;
+        return true;
     }
 
     const mailOptions = {

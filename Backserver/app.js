@@ -5,6 +5,7 @@ require('dotenv').config()
 require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
 const { haveDroits} = require('./helpers/role_check')
+const requestIp = require('request-ip');
 //require('./helpers/init_redis')
 
 const cors = require("cors");
@@ -33,6 +34,9 @@ app.use(cors(corsOptions)) // Use this after the variable declaration
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// Middleware pour détecter l'adresse IP
+app.use(requestIp.mw());
 
 // Les routes avec "haveDroits" doivent avoir les memes nom que le nom des sections
 //Routes Admin
