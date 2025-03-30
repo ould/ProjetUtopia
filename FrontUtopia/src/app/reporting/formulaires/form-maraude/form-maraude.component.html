@@ -1,0 +1,882 @@
+<div class="form-layout">
+    <div class="form-row">
+      <!-- Première colonne : Prénom et Date -->
+      <div class="column">
+        <div class="form-group">
+          <label for="firstName">
+            Prénom <span class="required">*</span>
+          </label>
+          <input type="text" id="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="startDate">
+            📅 Date du debut shift <span class="required">*</span>
+          </label>
+          <div class="datepicker-wrap">
+            <input type="text" id="startDate" required readonly>
+            <a title="Effacer la date" class="datepicker-clear" style="display: none;"></a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Deuxième colonne : Informations complémentaires -->
+      <div class="column">
+        <div class="form-group">
+          <label for="team">Co-èquipe</label>
+          <input type="text" id="team">
+        </div>
+        <div class="form-group">
+          <label for="zone">Zone couverte</label>
+          <input type="text" id="zone">
+        </div>
+        <div class="form-group">
+          <label for="hours">Horaires ML</label>
+          <input type="text" id="hours">
+        </div>
+      </div>
+  
+      <!-- Troisième colonne : Champ caché -->
+      <div class="column">
+        <input type="hidden" id="hiddenField" value="🚤 ML">
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="form-layout">
+    <div class="form-row">
+      <!-- Première colonne : Personnes rencontrées -->
+      <div class="column">
+        <div class="form-group">
+          <label for="personnesRencontrees">Personnes rencontrées</label>
+          <input type="number" id="personnesRencontrees" step="any">
+        </div>
+        <div class="form-group">
+          <label for="mnasRencontres">MNAs rencontrés</label>
+          <input type="number" id="mnasRencontres" step="any">
+          <div class="description">Total des MNAs (inclut les primo-arrivants)</div>
+        </div>
+        <div class="form-group hidden">
+          <label for="mnaPrimoArrivants">dont MNA primo arrivant.e.s</label>
+          <input type="number" id="mnaPrimoArrivants" step="any">
+          <div class="description">
+            Tu as compté les primo dans le total des MNA rencontrées ?<br>
+            <strong>MNA primo-arrivant: DEFINITION</strong>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Deuxième colonne : Activités du shift -->
+      <div class="column">
+        <fieldset>
+          <legend>Dans ce shift, vous avez :</legend>
+          <ul class="checkbox-list">
+            <li>
+              <input type="checkbox" id="demande115" value="🏨 des demandes/refus du 115">
+              <label for="demande115">🏨 des demandes/refus du 115</label>
+            </li>
+            <li>
+              <input type="checkbox" id="orientationSolidaire" value="❤️ des orientations en hébergement solidaire">
+              <label for="orientationSolidaire">❤️ des orientations en hébergement solidaire</label>
+            </li>
+            <li>
+              <input type="checkbox" id="demandeMAB" value="🧒🏾 des demandes/refus de MAB pour les MNA">
+              <label for="demandeMAB">🧒🏾 des demandes/refus de MAB pour les MNA</label>
+            </li>
+            <li>
+              <input type="checkbox" id="distributionMateriel" value="⛺ distribué du matériel ou flyers">
+              <label for="distributionMateriel">⛺ distribué du matériel ou flyers</label>
+            </li>
+            <li>
+              <input type="checkbox" id="appelSecours" value="🚑 appelé les secours (17, 112, 15)">
+              <label for="appelSecours">🚑 appelé les secours (17, 112, 15)</label>
+            </li>
+            <li>
+              <input type="checkbox" id="violencesPolicieres" value="👮🏼 témoin de violences policières">
+              <label for="violencesPolicieres">👮🏼 témoin de violences policières</label>
+            </li>
+            <li>
+              <input type="checkbox" id="controlePolice" value="🚔 contrôlé par la police ou reçu des amendes">
+              <label for="controlePolice">🚔 contrôlé par la police ou reçu des amendes</label>
+            </li>
+            <li>
+              <input type="checkbox" id="portRetours" value="⛴️ été au port pour des retours">
+              <label for="portRetours">⛴️ été au port pour des retours</label>
+            </li>
+            <li>
+              <input type="checkbox" id="detresseCamion" value="🚚 eu des sollicitations pour détresse camion">
+              <label for="detresseCamion">🚚 eu des sollicitations pour détresse camion</label>
+            </li>
+            <li>
+              <input type="checkbox" id="tryPlage" value="🦺 eu affaire à des trys (plage/dunes)">
+              <label for="tryPlage">🦺 eu affaire à des trys (plage/dunes)</label>
+            </li>
+            <li>
+              <input type="checkbox" id="observationsDeparts" value="🔍 observé des départs">
+              <label for="observationsDeparts">🔍 observé des départs</label>
+            </li>
+            <li>
+              <input type="checkbox" id="temoignage" value="🖊️ besoin de témoigner et prévenir les coordos">
+              <label for="temoignage">🖊️ besoin de témoigner et prévenir les coordos</label>
+            </li>
+            <li>
+              <input type="checkbox" id="rien" value="🍄 rien de tout ça !">
+              <label for="rien">🍄 rien de tout ça !</label>
+            </li>
+          </ul>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="divider hidden">
+    <h3>🏨 🏩 MAB adults et familles</h3>
+  </div>
+  <div class="form-layout hidden">
+    <div class="form-row">
+      <!-- Colonne 1 : 115 accepté -->
+      <div class="column">
+        <div class="form-group">
+          <label for="acceptedMen">115 accepté hommes seuls</label>
+          <input type="number" id="acceptedMen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="acceptedWomen">115 accepté femmes seules</label>
+          <input type="number" id="acceptedWomen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="acceptedFamilies">115 accepté familles (family unit)</label>
+          <input type="number" id="acceptedFamilies" step="any">
+        </div>
+        <div class="form-group">
+          <label for="acceptedFamiliesMen">115 accepté familles - hommes</label>
+          <input type="number" id="acceptedFamiliesMen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="acceptedFamiliesWomen">115 accepté familles - femmes</label>
+          <input type="number" id="acceptedFamiliesWomen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="acceptedFamiliesChildren">115 accepté familles - enfants</label>
+          <input type="number" id="acceptedFamiliesChildren" step="any">
+        </div>
+      </div>
+  
+      <!-- Colonne 2 : refus 115 -->
+      <div class="column">
+        <div class="form-group">
+          <label for="refusedMen">refus 115 hommes seuls</label>
+          <input type="number" id="refusedMen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="refusedWomen">refus 115 femmes seules</label>
+          <input type="number" id="refusedWomen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="refusedFamilies">refus 115 familles (family unit)</label>
+          <input type="number" id="refusedFamilies" step="any">
+        </div>
+        <div class="form-group">
+          <label for="refusedFamiliesMen">refus 115 familles - hommes</label>
+          <input type="number" id="refusedFamiliesMen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="refusedFamiliesWomen">refus 115 familles - femmes</label>
+          <input type="number" id="refusedFamiliesWomen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="refusedFamiliesChildren">refus 115 familles - enfants</label>
+          <input type="number" id="refusedFamiliesChildren" step="any">
+        </div>
+        <div class="form-group">
+          <fieldset>
+            <legend>Refus 115: motifs <span class="required">*</span></legend>
+            <ul class="checkbox-list">
+              <li>
+                <input type="checkbox" id="motif1" value="Pas de place">
+                <label for="motif1">Pas de place</label>
+              </li>
+              <li>
+                <input type="checkbox" id="motif2" value="déjà passé par le 115 (3x)">
+                <label for="motif2">déjà passé par le 115 (3x)</label>
+              </li>
+              <li>
+                <input type="checkbox" id="motif3" value="autre (specifier)">
+                <label for="motif3">autre (specifier)</label>
+              </li>
+              <li>
+                <input type="checkbox" id="motif4" value="Je ne sais pas">
+                <label for="motif4">Je ne sais pas</label>
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <label for="otherRefusal">refus 115: autre motifs et commentaire</label>
+          <input type="text" id="otherRefusal">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-layout hidden">
+    <div class="form-row">
+      <!-- Colonne gauche -->
+      <div class="column">
+        <div class="divider hidden">
+          <h3>❤️ Hébergement solidaire, maisons et hôtel</h3>
+        </div>
+        <div class="form-group">
+          <label for="hebergementHommes">hébergement solidaire/maison/hôtel - hommes</label>
+          <input type="number" id="hebergementHommes" step="any">
+        </div>
+        <div class="form-group">
+          <label for="hebergementFamilles">hébergement solidaire/maison/hôtel - familles (family unit)</label>
+          <input type="number" id="hebergementFamilles" step="any">
+        </div>
+      </div>
+      
+      <!-- Colonne droite -->
+      <div class="column">
+        <div class="form-group">
+          <label for="hebergementFemmes">hébergement solidaire/maison/hôtel - femmes</label>
+          <input type="number" id="hebergementFemmes" step="any">
+        </div>
+        <div class="form-group">
+          <label for="caseVide">CASE VIDE</label>
+          <input type="number" id="caseVide" step="any">
+        </div>
+        <div class="form-group">
+          <label for="hebergementEnfants">hébergement solidaire/maison/hôtel - enfants</label>
+          <input type="number" id="hebergementEnfants" step="any">
+        </div>
+        <div class="form-group">
+          <label for="hebergementMNA">hébergement solidaire/maison/hôtel - MNA</label>
+          <input type="number" id="hebergementMNA" step="any">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-container">
+    <!-- Section : MAB des MNA -->
+    <div class="divider">
+      <h3>🧒🏾 MAB des MNA</h3>
+    </div>
+  
+    <div class="form-layout">
+      <div class="row">
+        <!-- Colonne gauche -->
+        <div class="column">
+          <div class="form-group">
+            <label for="totalMNA">Total MNA sollicitant MAB</label>
+            <input type="number" id="totalMNA" step="any">
+            <div class="description">total des MNA (inclus les primo)</div>
+          </div>
+          <div class="form-group">
+            <label for="primoMNA">Dont MNA primo-arrivant sollicitant MAB</label>
+            <input type="number" id="primoMNA" step="any">
+          </div>
+          <div class="form-group">
+            <label for="mnaFilles">Dont MNA filles</label>
+            <input type="number" id="mnaFilles" step="any">
+          </div>
+          <div class="form-group">
+            <label for="mnaFTDA">MNA MABès via FTDA (62)</label>
+            <input type="number" id="mnaFTDA" step="any">
+          </div>
+          <div class="form-group">
+            <label for="mnaComico1">MNA MABès via comico (62)</label>
+            <input type="number" id="mnaComico1" step="any">
+          </div>
+        </div>
+  
+        <!-- Colonne droite -->
+        <div class="column">
+          <div class="form-group">
+            <label for="mnaASE">MNA MABès via ASE (59)</label>
+            <input type="number" id="mnaASE" step="any">
+          </div>
+          <div class="form-group">
+            <label for="mnaComico2">MNA MABès via comico (59)</label>
+            <input type="number" id="mnaComico2" step="any">
+          </div>
+          <div class="form-group">
+            <label for="refusFTDA">refus MAB via FTDA (62)</label>
+            <input type="number" id="refusFTDA" step="any">
+          </div>
+          <div class="form-group">
+            <label for="refusASE">refus MAB via ASE (59)</label>
+            <input type="number" id="refusASE" step="any">
+          </div>
+          <div class="form-group">
+            <label for="refusComico1">refus MAB via comico (62)</label>
+            <input type="number" id="refusComico1" step="any">
+          </div>
+          <div class="form-group">
+            <label for="refusComico2">refus MAB via comico (59)</label>
+            <input type="number" id="refusComico2" step="any">
+          </div>
+          <div class="form-group">
+            <label for="refusMNAInfo">Refus MNA : autre informations</label>
+            <input type="text" id="refusMNAInfo">
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Distribution Materiel -->
+    <div class="divider">
+      <h3>⛺ Distribution Materiel</h3>
+      <div class="description">
+        Inclure le matériel pour les personnes rencontrées en try ou au port
+      </div>
+    </div>
+  
+    <div class="form-layout">
+      <div class="row">
+        <!-- Colonne gauche -->
+        <div class="column">
+          <div class="form-group">
+            <label for="flyerBateau">Flyer prevention bateau</label>
+            <input type="number" id="flyerBateau" step="any">
+          </div>
+          <div class="form-group">
+            <label for="flyerTruck">Flyer prevention truck</label>
+            <input type="number" id="flyerTruck" step="any">
+          </div>
+          <div class="form-group">
+            <label for="tentes">Tentes</label>
+            <input type="number" id="tentes" step="any">
+          </div>
+          <div class="form-group">
+            <label for="couvertures">Couvertures</label>
+            <input type="number" id="couvertures" step="any">
+          </div>
+          <div class="form-group">
+            <label for="couverturesSurvie">Couvertures de survie</label>
+            <input type="number" id="couverturesSurvie" step="any">
+          </div>
+          <div class="form-group">
+            <label for="sacsCouchage">Sacs de couchage</label>
+            <input type="number" id="sacsCouchage" step="any">
+          </div>
+        </div>
+  
+        <!-- Colonne droite -->
+        <div class="column">
+          <div class="form-group">
+            <label for="baches">Bâches</label>
+            <input type="number" id="baches" step="any">
+          </div>
+          <div class="form-group">
+            <label for="itemHygiene">Kit ou item hygiène</label>
+            <input type="number" id="itemHygiene" step="any">
+            <div class="description">
+              C'est que une estimation, ce n'est pas grave si ce n'est pas l'unité exacte :)
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="chaussures">Chaussures</label>
+            <input type="number" id="chaussures" step="any">
+          </div>
+          <div class="form-group">
+            <label for="shelterSuit">Shelter suit</label>
+            <input type="text" id="shelterSuit">
+          </div>
+          <div class="form-group">
+            <label for="itemsVetement">Items vêtement</label>
+            <input type="number" id="itemsVetement" step="any">
+          </div>
+          <div class="form-group">
+            <label for="bentoNourriture">Bento et item nourriture</label>
+            <input type="number" id="bentoNourriture" step="any">
+            <div class="description">
+              C'est que une estimation, ce n'est pas grave si ce n'est pas l'unité exacte :)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Violence et intimidation policière -->
+    <div class="divider">
+      <h3>👮🏼 Violence et intimidation policière</h3>
+      <div class="description">
+        Violences et intimidations vues ou reportées
+      </div>
+    </div>
+  
+    <!-- Section : Prévention des coordos et infos complémentaires -->
+    <div class="form-layout">
+      <div class="row">
+        <!-- Colonne gauche -->
+        <div class="column">
+          <div class="form-group">
+            <fieldset>
+              <legend>Je souhaite prévenir les coordos</legend>
+              <ul>
+                <li>
+                  <input type="checkbox" id="prevenirCoordos" value="Oui !">
+                  <label for="prevenirCoordos">Oui !</label>
+                </li>
+              </ul>
+              <div class="description">
+                Si tu souhaites témoigner ou aller plus loin sur la démarche, les coordos reviendront rapidement vers toi ! 
+                En attendant, merci de noter le plus possible dans la case du commentaire (ex : gaz/LBD, situation de try, horaires, plaques, lieux, ...)
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <!-- Colonne droite -->
+        <div class="column">
+          <div class="form-group">
+            <fieldset>
+              <legend>Les infos concernent : <span class="required">*</span></legend>
+              <ul>
+                <li>
+                  <input type="checkbox" id="infosExilees" value="Des personnes exilées, autour d'un try (dunes, mer, camion, port...)">
+                  <label for="infosExilees">Des personnes exilées, autour d'un try (dunes, mer, camion, port...)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="infosHorsTry" value="Des personnes exilées, hors try (lieu de vie, gare, bus, ville ...)">
+                  <label for="infosHorsTry">Des personnes exilées, hors try (lieu de vie, gare, bus, ville ...)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="infosMembreU56" value="Un.e membre d'U56">
+                  <label for="infosMembreU56">Un.e membre d'U56</label>
+                </li>
+              </ul>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Contenu sur la violence -->
+    <div class="content">
+      <p>
+        ❗ L'idée est de pouvoir rapporter le plus possible les violences policières. Les faits peuvent dériver de témoignages directs ou d'informations rapportées par les personnes exilées.
+      </p>
+      <p>
+        ❗ Les infos recueillies ici sont traitées par le backoffice ou la communication. Merci donc de nous laisser une description interprétable hors terrain.
+      </p>
+    </div>
+  </div>
+  <div class="form-layout">
+    <div class="row">
+      <!-- Colonne 1 : Violences pendant un try -->
+      <div class="column">
+        <div class="form-group">
+          <label for="tryPhysicalViolence">
+            🌅 Personne victimes de violence physique (FDO pendant un try)
+          </label>
+          <input type="number" id="tryPhysicalViolence" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryBoatSea">
+            🌅 Bateau coupé DANS LA MER pendant un try
+          </label>
+          <input type="number" id="tryBoatSea" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryBoatBeach">
+            🌅 Bateau coupé SUR LA PLAGE pendant un try
+          </label>
+          <input type="number" id="tryBoatBeach" step="any">
+          <div class="description">
+            Si tu n'es pas sûr de où le bateau a été coupé, merci de le noter ici
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tryVerbalAbuse">
+            🌅 Personne victimes d'intimidation verbale ou insults (FDO pendant un try)
+          </label>
+          <input type="number" id="tryVerbalAbuse" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryTearGas">
+            🌅 Usage du gaz lacrymo pendant un try
+          </label>
+          <input type="number" id="tryTearGas" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryTonfa">
+            🌅 Usage de tonfa pendant un try
+          </label>
+          <input type="number" id="tryTonfa" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryDispersalWeapons">
+            🌅 Usage de LBD / armes de dispersion pendant un try
+          </label>
+          <input type="number" id="tryDispersalWeapons" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryDestructionTheft">
+            🌅 Destruction/vol des affaires pendant un try
+          </label>
+          <input type="number" id="tryDestructionTheft" step="any">
+          <div class="description">
+            Hors bateau coupé
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tryOtherViolence">
+            🌅 Autre violence pendant un try
+          </label>
+          <input type="number" id="tryOtherViolence" step="any">
+        </div>
+        <div class="form-group">
+          <label for="tryOtherViolenceDesc">
+            🌅 Autre violence pendant un try (merci de préciser) <span class="required">*</span>
+          </label>
+          <input type="text" id="tryOtherViolenceDesc" required>
+        </div>
+      </div>
+  
+      <!-- Colonne 2 : Violences hors try et impacts sur les membres d'U56 -->
+      <div class="column">
+        <div class="form-group">
+          <label for="outsidePhysicalViolence">
+            ⛺ Personne victimes de violence physique (FDO hors try)
+          </label>
+          <input type="number" id="outsidePhysicalViolence" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideVerbalAbuse">
+            ⛺ Personne victimes d'intimidation verbale ou insults (FDO hors try)
+          </label>
+          <input type="number" id="outsideVerbalAbuse" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideTearGas">
+            ⛺ Usage du gaz lacrymo hors try
+          </label>
+          <input type="number" id="outsideTearGas" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideTonfa">
+            ⛺ Usage de tonfa hors try
+          </label>
+          <input type="number" id="outsideTonfa" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideDispersalWeapons">
+            ⛺ Usage de LBD / armes de dispersion hors try
+          </label>
+          <input type="number" id="outsideDispersalWeapons" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideDestructionTheft">
+            ⛺ Destruction/vol des affaires hors try
+          </label>
+          <input type="number" id="outsideDestructionTheft" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideOtherViolence">
+            ⛺ Autre violence hors try
+          </label>
+          <input type="number" id="outsideOtherViolence" step="any">
+        </div>
+        <div class="form-group">
+          <label for="outsideOtherViolenceDesc">
+            ⛺ Autre violence hors try (merci de préciser) <span class="required">*</span>
+          </label>
+          <input type="text" id="outsideOtherViolenceDesc" required>
+        </div>
+        <div class="form-group">
+          <label for="u56VerbalAbuse">
+            🧸 Membres d'U56 victimes d'intimidation verbale ou insults (FDO)
+          </label>
+          <input type="number" id="u56VerbalAbuse" step="any">
+        </div>
+        <div class="form-group">
+          <label for="u56PhysicalViolence">
+            🧸 Membres d'U56 victimes d'intimidation ou violence physique (FDO)
+          </label>
+          <input type="number" id="u56PhysicalViolence" step="any">
+        </div>
+        <div class="form-group">
+          <label for="u56OtherViolence">
+            🧸 Autre violences des FDO envers les membres d'U56
+          </label>
+          <input type="number" id="u56OtherViolence" step="any">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-container">
+    <!-- Section : Violences envers U56 -->
+    <div class="section">
+      <div class="form-group">
+        <label for="u56OtherViolenceNumber">
+          <!-- Champ 327 -->
+          <span>🧸 Autre violences envers U56</span>
+        </label>
+        <input type="number" id="u56OtherViolenceNumber" step="any">
+      </div>
+      <div class="form-group">
+        <label for="u56OtherViolenceText">
+          <!-- Champ 328 -->
+          🧸 Autre violences envers U56 (merci de préciser)
+        </label>
+        <input type="text" id="u56OtherViolenceText">
+      </div>
+      <div class="form-group">
+        <label for="violenceInfo">
+          <!-- Champ 329 -->
+          Information sur les violences
+        </label>
+        <textarea id="violenceInfo" aria-describedby="violenceInfoDesc"></textarea>
+        <div id="violenceInfoDesc" class="description">
+          Merci de donner autant d'info que possible (lieu, personnes impliquées, mineur.e.s, n try, détails des FDO, RIO, plaintes déposées, CMI, etc...)
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Contrôles sur l'équipe -->
+    <div class="divider">
+      <h3>🚔 Controls sur l'équipe</h3>
+      <div class="description">Violences et intimidations vues ou reportées</div>
+    </div>
+    <div class="form-layout two-columns">
+      <!-- Colonne gauche -->
+      <div class="column">
+        <div class="form-group">
+          <label for="controlIdentity">
+            Contrôle identité bénévole
+          </label>
+          <input type="number" id="controlIdentity" step="any">
+        </div>
+        <div class="form-group">
+          <label for="controlVehicle">
+            Contrôle véhicule
+          </label>
+          <input type="number" id="controlVehicle" step="any">
+        </div>
+      </div>
+      <!-- Colonne droite -->
+      <div class="column">
+        <div class="form-group">
+          <label for="vehicleVerbalisation">
+            Verbalisation véhicule
+          </label>
+          <input type="number" id="vehicleVerbalisation" step="any">
+        </div>
+        <div class="form-group">
+          <label for="policePresence">
+            Présence policière et contrôles
+          </label>
+          <textarea id="policePresence" aria-describedby="policePresenceDesc"></textarea>
+          <div id="policePresenceDesc" class="description">
+            Toute information, personnes concernées, contexte, plaques, etc...
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Accès aux soins et aux secours -->
+    <div class="divider">
+      <h3>🚑 Accès aux soins et aux secours</h3>
+    </div>
+    <div class="form-layout two-columns">
+      <!-- Colonne gauche -->
+      <div class="column">
+        <div class="form-group">
+          <label for="emergencyCalls">
+            Nombre d'appels aux secours sur le camp
+          </label>
+          <input type="number" id="emergencyCalls" step="any">
+          <div class="description">
+            Par ex, nombre d'appels au 112, 18, 15...
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="careOrientations">
+            Nombre orientations soins (compris message)
+          </label>
+          <input type="number" id="careOrientations" step="any">
+        </div>
+      </div>
+      <!-- Colonne droite -->
+      <div class="column">
+        <div class="form-group">
+          <label for="emergencyMotive">
+            Motif d'appel aux secours <span class="required">*</span>
+          </label>
+          <input type="text" id="emergencyMotive" required>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Retours au port -->
+    <div class="divider">
+      <h3>⛴️ Retours au port</h3>
+    </div>
+    <div class="form-layout two-columns">
+      <!-- Colonne gauche -->
+      <div class="column">
+        <div class="form-group">
+          <label for="portReturns">
+            Nombre de retours au port observés <span class="required">*</span>
+          </label>
+          <input type="number" id="portReturns" step="any" required>
+        </div>
+        <div class="form-group">
+          <fieldset>
+            <legend>Port <span class="required">*</span></legend>
+            <ul class="options">
+              <li>
+                <input type="radio" id="portCalais" name="port" value="Calais" required>
+                <label for="portCalais">Calais</label>
+              </li>
+              <li>
+                <input type="radio" id="portBoulogne" name="port" value="Boulogne-sur-mer" required>
+                <label for="portBoulogne">Boulogne-sur-mer</label>
+              </li>
+              <li>
+                <input type="radio" id="portDunkerque" name="port" value="Dunkerque" required>
+                <label for="portDunkerque">Dunkerque</label>
+              </li>
+              <li>
+                <input type="radio" id="portGravelines" name="port" value="Gravelines" required>
+                <label for="portGravelines">Gravelines</label>
+              </li>
+              <li>
+                <input type="radio" id="portOther" name="port" value="Autre (merci de spécifier)" required>
+                <label for="portOther">Autre (merci de spécifier)</label>
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <label for="otherPort">
+            Autre port <span class="required">*</span>
+          </label>
+          <input type="text" id="otherPort" required>
+        </div>
+        <div class="form-group">
+          <fieldset>
+            <legend>Secours en mer à la demande des personnes</legend>
+            <ul class="options">
+              <li>
+                <input type="radio" id="seaRescueYes" name="seaRescue" value="Oui">
+                <label for="seaRescueYes">Oui</label>
+              </li>
+              <li>
+                <input type="radio" id="seaRescueNo" name="seaRescue" value="Non (pull-back?)">
+                <label for="seaRescueNo">Non (pull-back?)</label>
+              </li>
+              <li>
+                <input type="radio" id="seaRescueNSP" name="seaRescue" value="NSP">
+                <label for="seaRescueNSP">NSP</label>
+              </li>
+            </ul>
+            <div class="description">
+              Un "pull-back" en matière d'immigration, également connu sous le terme de "push-back", désigne le renvoi des migrants sans leur permettre de demander l'asile.
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <!-- Colonne droite -->
+      <div class="column">
+        <div class="form-group">
+          <label for="portMotive">
+            Motif du secours
+          </label>
+          <input type="text" id="portMotive">
+        </div>
+        <div class="form-group">
+          <label for="peopleAtPort">
+            Personnes rencontrées au port
+          </label>
+          <input type="number" id="peopleAtPort" step="any">
+        </div>
+        <div class="form-group">
+          <label for="womenAtPort">
+            Dont femmes rencontrées au port
+          </label>
+          <input type="number" id="womenAtPort" step="any">
+        </div>
+        <div class="form-group">
+          <label for="childrenAtPort">
+            Dont enfants rencontrées au port
+          </label>
+          <input type="number" id="childrenAtPort" step="any">
+        </div>
+        <div class="form-group">
+          <label for="mnaAtPort">
+            Dont MNA rencontrées au port
+          </label>
+          <input type="number" id="mnaAtPort" step="any">
+        </div>
+        <div class="form-group">
+          <label for="notServedPeople">
+            Personnes non prises en charge au port
+          </label>
+          <input type="number" id="notServedPeople" step="any">
+        </div>
+        <div class="form-group">
+          <label for="notServedWomen">
+            Femmes non prises en charge au port
+          </label>
+          <input type="number" id="notServedWomen" step="any">
+        </div>
+        <div class="form-group">
+          <label for="notServedChildren">
+            Enfants non prises en charge au port
+          </label>
+          <input type="number" id="notServedChildren" step="any">
+        </div>
+        <div class="form-group">
+          <label for="notServedMNA">
+            MNA non prises en charge au port
+          </label>
+          <input type="number" id="notServedMNA" step="any">
+        </div>
+        <div class="form-group">
+          <label for="arrestedAtPort">
+            Personnes arrêtées par la PAF au port
+          </label>
+          <input type="number" id="arrestedAtPort" step="any">
+        </div>
+        <div class="form-group">
+          <label for="portAdditionalInfo">
+            Toute information sur les débarquements au port
+          </label>
+          <input type="text" id="portAdditionalInfo" aria-describedby="portAdditionalInfoDesc">
+          <div id="portAdditionalInfoDesc" class="description">
+            Que s'est-il passé ? Forces de l'ordre sur place, plaques observées, etc.
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section : Type de prise en charge proposé par l'État -->
+    <div class="form-group">
+      <fieldset>
+        <legend>Type de prise en charge proposé par l'État</legend>
+        <ul class="options">
+          <li>
+            <input type="checkbox" id="stateOption1" name="stateOptions" value="Re-habillage proposé (même partiel)">
+            <label for="stateOption1">Re-habillage proposé (même partiel)</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stateOption2" name="stateOptions" value="MAB adulte proposée">
+            <label for="stateOption2">MAB adulte proposée</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stateOption3" name="stateOptions" value="MAB familles-enfants proposée">
+            <label for="stateOption3">MAB familles-enfants proposée</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stateOption4" name="stateOptions" value="MAB MNA proposé">
+            <label for="stateOption4">MAB MNA proposé</label>
+          </li>
+          <li>
+            <input type="checkbox" id="stateOption5" name="stateOptions" value="NSP">
+            <label for="stateOption5">NSP</label>
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+  </div>
+<h3>🚚 Camions</h3>                

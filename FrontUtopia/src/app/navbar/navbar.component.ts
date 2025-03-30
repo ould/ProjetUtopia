@@ -49,10 +49,6 @@ export class NavbarComponent implements OnInit {
     this.collapseNavbar();
   }
 
-  lance() {
-    this.reportingService.lance().subscribe();
-  }
-
   changeAntenneDefaut(idNouvelleAntenne: any) {
     if (idNouvelleAntenne) this.utilisateurService.changeAntenneDefaut(idNouvelleAntenne).subscribe(
       data => {
@@ -131,8 +127,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(private sessionService: SessionService,
     public utilisateurService: UtilisateurService,
-    private fb: FormBuilder,
-  private reportingService: ReportingService) {
+    private fb: FormBuilder) {
 
     this.antenneDefautForm = this.fb.group({
       antenneDefaut: ['', Validators.required]

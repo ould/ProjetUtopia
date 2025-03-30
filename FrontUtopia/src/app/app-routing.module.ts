@@ -16,6 +16,7 @@ import { CalendrierComponent } from './benevole/calendrier/calendrier.component'
 import { ModifierMdpComponent } from './auth/modifier-mdp/modifier-mdp.component';
 import { MdpOublieComponent } from './auth/modifier-mdp/mdp-oublie/mdp-oublie.component';
 import { ConfirmationEmailComponent } from './auth/confirmation-email/confirmation-email.component';
+import { FormMaraudeComponent } from './reporting/formulaires/form-maraude/form-maraude.component';
 
 
 // path case sensitive
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'reinitialisation-mot-de-passe/:id', component: ModifierMdpComponent },
   { path: 'confirmation-email/:id', component: ConfirmationEmailComponent },
+  { path: 'form-maraude', component: FormMaraudeComponent },
   { path: 'mdp-oublie', component: MdpOublieComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'accueil', component: AccueilComponent },
